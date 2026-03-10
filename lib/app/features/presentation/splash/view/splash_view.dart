@@ -1,6 +1,5 @@
-import 'package:interior_ai/app/common/get_it/get_it.dart';
-import 'package:interior_ai/app/features/presentation/test/cubit/test_cubit.dart';
-import 'package:interior_ai/app/features/presentation/test/view/test_view.dart';
+import 'package:interior_ai/app/common/constants/app_strings.dart';
+import 'package:interior_ai/app/features/presentation/onboarding/view/onboarding_view.dart';
 import 'package:flutter/material.dart';
 
 class SplashView extends StatefulWidget {
@@ -19,10 +18,10 @@ class _SplashViewState extends State<SplashView> {
 
   Future<void> init() async {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      getIt.get<TestCubit>().getAllTests();
+      await Future.delayed(const Duration(seconds: 1));
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => const TestView()),
+        MaterialPageRoute(builder: (context) => const OnboardingView()),
         (_) => false,
       );
     });
@@ -31,7 +30,22 @@ class _SplashViewState extends State<SplashView> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Placeholder(),
+      backgroundColor: Colors.black,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              AppStrings.appName,
+              style: TextStyle(
+                color: Colors.red,
+                fontSize: 40,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

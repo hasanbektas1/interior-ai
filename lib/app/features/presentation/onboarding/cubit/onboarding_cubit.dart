@@ -1,25 +1,53 @@
-import 'package:interior_ai/app/features/data/repositories/test_repository.dart';
-import 'package:interior_ai/app/features/presentation/onboarding/cubit/onboarding_state.dart';
-import 'package:interior_ai/core/widgets/snackbar/app_snackbar.dart';
 import 'package:bloc/bloc.dart';
-import 'package:flutter/material.dart';
+import 'package:interior_ai/app/features/presentation/onboarding/cubit/onboarding_state.dart';
+import 'package:interior_ai/app/features/presentation/onboarding/onboarding_models.dart';
 
 final class OnboardingCubit extends Cubit<OnboardingState> {
-  OnboardingCubit({required TestRepository testRepository})
-    : _testRepository = testRepository,
-      super(const OnboardingState(isLoading: false, testList: []));
+  OnboardingCubit() : super(const OnboardingState());
 
-  final TestRepository _testRepository;
+  void goToPickSpace() {
+    emit(state.copyWith(step: OnboardingStep.pickSpace));
+  }
 
-  Future<void> getAllTests() async {
-    emit(state.copyWith(isLoading: true, testList: []));
-    await Future.delayed(Durations.extralong4 * 4);
-    var dataResult = await _testRepository.getAll();
-    if (!dataResult.success) {
-      AppSnackBar.show(dataResult.message ?? "Unknown error");
-      emit(state.copyWith(isLoading: false));
-      return;
+  void selectSpace(OnboardingSpace space) {
+    emit(state.copyWith(selectedSpace: space));
+  }
+
+  void goToFindStyle() {
+    emit(state.copyWith(step: OnboardingStep.findStyle));
+  }
+
+  void selectStyle(OnboardingStyle style) {
+    emit(state.copyWith(selectedStyle: style));
+  }
+
+  Future<void> processDesign() async {
+    emit(state.copyWith(step: OnboardingStep.processing));
+    await Future.delayed(const Duration(seconds: 3));
+    if (!isClosed) {
+      emit(state.copyWith(step: OnboardingStep.dreamSpace));
     }
-    emit(state.copyWith(isLoading: false, testList: dataResult.data));
+  }
+
+  void goToHelpUsGrow() {
+    emit(state.copyWith(step: OnboardingStep.helpUsGrow));
+  }
+
+  void onButtonPressed() {
+    switch (state.step) {
+      case OnboardingStep.welcome:
+        goToPickSpace();
+      case OnboardingStep.pickSpace:
+        if (state.selectedSpace != null) goToFindStyle();
+      case OnboardingStep.findStyle:
+        if (state.selectedStyle != null) processDesign();
+      case OnboardingStep.processing:
+        break;
+      case OnboardingStep.dreamSpace:
+        goToHelpUsGrow();
+      case OnboardingStep.helpUsGrow:
+        // TODO: Navigate to main app
+        break;
+    }
   }
 }

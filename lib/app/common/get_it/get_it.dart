@@ -1,6 +1,7 @@
 import 'package:interior_ai/app/features/data/datasources/local/test_local_datasource.dart';
 import 'package:interior_ai/app/features/data/datasources/remote/test_remote_datasource.dart';
 import 'package:interior_ai/app/features/data/repositories/test_repository.dart';
+import 'package:interior_ai/app/features/presentation/onboarding/cubit/onboarding_cubit.dart';
 import 'package:interior_ai/app/features/presentation/test/cubit/test_cubit.dart';
 import 'package:get_it/get_it.dart';
 
@@ -44,9 +45,11 @@ final class ServiceLocator {
 
   /// **BLoC, Cubit and ViewModel Dependency**
   void _setupCubit() {
-    getIt.registerLazySingleton<TestCubit>(
-      () => TestCubit(testRepository: getIt<TestRepository>()),
-    );
+    getIt
+      ..registerLazySingleton<OnboardingCubit>(() => OnboardingCubit())
+      ..registerLazySingleton<TestCubit>(
+        () => TestCubit(testRepository: getIt<TestRepository>()),
+      );
   }
 
   /// **Resets dependencies for Test and Debug**
