@@ -81,7 +81,7 @@ class HomeContent extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(width: context.height12),
+                  SizedBox(width: context.width12),
                   SizedBox(
                     width: tileWidth,
                     height: tileHeight * 2 + context.height12,
