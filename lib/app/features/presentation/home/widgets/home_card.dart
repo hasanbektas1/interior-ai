@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/enums/app_home_assets.dart';
+import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 
 class HomeCard extends StatelessWidget {
-  const HomeCard({
-    super.key,
-    required this.image,
-    required this.onTap,
-  });
+  const HomeCard({super.key, required this.image, required this.onTap});
 
   final AppHomeImage image;
   final VoidCallback onTap;
@@ -18,14 +15,13 @@ class HomeCard extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       onTap: onTap,
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(context.width16),
         child: Image.asset(
           image.path,
           fit: BoxFit.cover,
           gaplessPlayback: true,
-          errorBuilder: (_, __, ___) => const ColoredBox(
-            color: AppColors.magnolia,
-          ),
+          errorBuilder: (_, __, ___) =>
+              const ColoredBox(color: AppColors.magnolia),
         ),
       ),
     );

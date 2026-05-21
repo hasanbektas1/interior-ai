@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
 import 'package:interior_ai/app/features/presentation/home/cubit/home_state.dart';
+import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 
 class AppBottomNavBar extends StatelessWidget {
   const AppBottomNavBar({
@@ -16,24 +17,27 @@ class AppBottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: AppColors.ghostWhite,
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
+          topLeft: Radius.circular(context.width20),
+          topRight: Radius.circular(context.width20),
         ),
         boxShadow: [
           BoxShadow(
-            color: Color(0x14000000),
-            blurRadius: 20,
-            offset: Offset(0, -4),
+            color: const Color(0x14000000),
+            blurRadius: context.width20,
+            offset: Offset(0, -context.height4),
           ),
         ],
       ),
       child: SafeArea(
         top: false,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 24),
+          padding: EdgeInsets.symmetric(
+            vertical: context.height10,
+            horizontal: context.width24,
+          ),
           child: Row(
             children: [
               Expanded(
@@ -82,15 +86,15 @@ class _NavItem extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, color: color, size: 24),
-          const SizedBox(height: 4),
+          Icon(icon, color: color, size: context.width24),
+          SizedBox(height: context.height4),
           Text(
             label,
-            style: TextStyle(
-              color: color,
+            style: const TextStyle(
+              color: AppColors.nickel,
               fontSize: 12,
               fontWeight: FontWeight.w600,
-            ),
+            ).copyWith(color: color),
           ),
         ],
       ),
