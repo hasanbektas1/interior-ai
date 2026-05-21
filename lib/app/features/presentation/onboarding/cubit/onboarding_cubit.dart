@@ -46,7 +46,6 @@ final class OnboardingCubit extends Cubit<OnboardingState> {
       case OnboardingStep.dreamSpace:
         goToHelpUsGrow();
       case OnboardingStep.helpUsGrow:
-        // TODO: Navigate to main app
         break;
     }
   }

@@ -16,6 +16,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_cache_manager: ^3.4.1
+  flutter_svg: ^2.0.10+1
   get_it: ^9.2.0
 
 dev_dependencies:
@@ -26,7 +27,8 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/images/
-    - assets/onboarding/
-    - assets/onboarding_mini/
-    - assets/onboarding_result/
+    - assets/png/home/
+    - assets/png/onboarding/
+    - assets/png/onboarding_mini/
+    - assets/png/onboarding_result/
+    - assets/svg/home/

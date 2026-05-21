@@ -13,7 +13,8 @@ final class AppStrings {
 
   // ONBOARDING
   static const String onboardingWelcomeTo = "Welcome to";
-  static const String onboardingSubtitle = "AI reimagines your space in seconds.";
+  static const String onboardingSubtitle =
+      "AI reimagines your space in seconds.";
   static const String onboardingLetsCreate = "Let's Create";
   static const String onboardingPickSpaceTitle = "Pick a space to\ntransform.";
   static const String onboardingPickSpaceSubtitle =
@@ -21,7 +22,8 @@ final class AppStrings {
   static const String onboardingFindStyleTitle = "Find your perfect\nstyle.";
   static const String onboardingFindStyleSubtitle =
       "Choose a style that speaks to you and brings your space to life.";
-  static const String onboardingProcessingTitle = "Your design is\nalmost ready.";
+  static const String onboardingProcessingTitle =
+      "Your design is\nalmost ready.";
   static const String onboardingProcessingSubtitle = "Be patient.";
   static const String onboardingDreamSpaceTitle = "Your dream space\nawaits.";
   static const String onboardingDreamSpaceSubtitle =
@@ -46,4 +48,8 @@ final class AppStrings {
     "Scandinavian",
     "Mediterranean",
   ];
+
+  // BOTTOM NAV
+  static const String navHome = "Home";
+  static const String navCollection = "Collection";
 }

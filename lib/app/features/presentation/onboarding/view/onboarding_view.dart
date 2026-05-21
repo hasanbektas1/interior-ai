@@ -11,6 +11,7 @@ import 'package:interior_ai/app/features/presentation/onboarding/view/pick_space
 import 'package:interior_ai/app/features/presentation/onboarding/view/processing_view.dart';
 import 'package:interior_ai/app/features/presentation/onboarding/view/welcome_view.dart';
 import 'package:interior_ai/app/features/presentation/onboarding/widgets/onboarding_page_indicator.dart';
+import 'package:interior_ai/app/features/presentation/home/view/home_view.dart';
 
 class OnboardingView extends StatelessWidget {
   const OnboardingView({super.key});
@@ -84,8 +85,21 @@ class OnboardingView extends StatelessWidget {
                           const SizedBox(height: 16),
                           AppButton.fill(
                             text: state.buttonText,
-                            onPressed:
-                                state.isButtonEnabled ? cubit.onButtonPressed : null,
+                            onPressed: state.isButtonEnabled
+                                ? () {
+                                    if (state.step ==
+                                        OnboardingStep.helpUsGrow) {
+                                      Navigator.of(context).pushAndRemoveUntil(
+                                        MaterialPageRoute(
+                                          builder: (_) => const HomeView(),
+                                        ),
+                                        (_) => false,
+                                      );
+                                      return;
+                                    }
+                                    cubit.onButtonPressed();
+                                  }
+                                : null,
                             borderRadius: 14,
                             height: 54,
                           ),

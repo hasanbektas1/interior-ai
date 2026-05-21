@@ -20,7 +20,7 @@ enum AppOnboardingSelectImage {
 }
 
 extension AppOnboardingSelectImageExtension on AppOnboardingSelectImage {
-  String get path => 'assets/onboarding/$filename.png';
+  String get path => 'assets/png/onboarding/$filename.png';
 }
 
 enum AppOnboardingMiniImage {
@@ -36,7 +36,7 @@ enum AppOnboardingMiniImage {
 }
 
 extension AppOnboardingMiniImageExtension on AppOnboardingMiniImage {
-  String get path => 'assets/onboarding_mini/$filename.png';
+  String get path => 'assets/png/onboarding_mini/$filename.png';
 }
 
 enum AppOnboardingResultSpaceImage {
@@ -52,11 +52,11 @@ enum AppOnboardingResultSpaceImage {
 }
 
 extension AppOnboardingResultSpaceImageExtension on AppOnboardingResultSpaceImage {
-  String basePath() => 'assets/onboarding_result/${filenamePrefix}_png.png';
+  String basePath() => 'assets/png/onboarding_result/${filenamePrefix}_png.png';
 
   String variantPath(int variantIndex) {
     if (variantIndex <= 0) return basePath();
-    return 'assets/onboarding_result/${filenamePrefix}_${variantIndex + 1}_png.png';
+    return 'assets/png/onboarding_result/${filenamePrefix}_${variantIndex + 1}_png.png';
   }
 }
 
