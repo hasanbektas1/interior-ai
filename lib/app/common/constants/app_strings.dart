@@ -28,7 +28,8 @@ final class AppStrings {
   static const String onboardingDreamSpaceTitle = "Your dream space\nawaits.";
   static const String onboardingDreamSpaceSubtitle =
       "You can find your design in your collection and save it to your gallery.";
-  static const String onboardingHelpUsGrowTitle = "Help Us Grow";
+  static const String onboardingHelpUsGrowTitle =
+      "How is your experience so far?";
   static const String onboardingHelpUsGrowSubtitle =
       "Show your support by giving us a review on the App Store.";
   static const String continueButton = "Continue";

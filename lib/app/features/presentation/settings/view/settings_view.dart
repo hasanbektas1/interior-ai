@@ -7,7 +7,7 @@ import 'package:interior_ai/app/common/get_it/get_it.dart';
 import 'package:interior_ai/app/features/presentation/paywall/view/paywall_view.dart';
 import 'package:interior_ai/app/features/presentation/settings/cubit/settings_cubit.dart';
 import 'package:interior_ai/app/features/presentation/settings/cubit/settings_state.dart';
-import 'package:interior_ai/app/features/presentation/settings/widgets/rate_us_dialog.dart';
+import 'package:interior_ai/app/common/widgets/dialogs/rate_us_dialog.dart';
 import 'package:interior_ai/app/features/presentation/settings/widgets/settings_confirmation_dialog.dart';
 import 'package:interior_ai/app/features/presentation/settings/widgets/settings_premium_banner.dart';
 import 'package:interior_ai/app/features/presentation/settings/widgets/settings_section_label.dart';

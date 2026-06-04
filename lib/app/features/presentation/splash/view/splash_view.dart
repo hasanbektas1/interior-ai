@@ -1,3 +1,4 @@
+import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
 import 'package:interior_ai/app/features/presentation/onboarding/view/onboarding_view.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,7 @@ class _SplashViewState extends State<SplashView> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: AppColors.ghostWhite,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -38,9 +39,9 @@ class _SplashViewState extends State<SplashView> {
             Text(
               AppStrings.appName,
               style: TextStyle(
-                color: Colors.red,
+                color: AppColors.hanPurple,
                 fontSize: 40,
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w800,
               ),
             ),
           ],

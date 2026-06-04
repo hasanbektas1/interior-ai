@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
+import 'package:interior_ai/app/common/enums/app_assets.dart';
 
 class HelpUsGrowView extends StatelessWidget {
   const HelpUsGrowView({super.key});
@@ -36,46 +37,18 @@ class HelpUsGrowView extends StatelessWidget {
             ],
           ),
         ),
-        const Expanded(
-          child: Center(child: _StarIllustration()),
+        Expanded(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Image.asset(
+                AppAsset.onboardingRateStars.path,
+                fit: BoxFit.contain,
+              ),
+            ),
+          ),
         ),
         const SizedBox(height: 16),
-      ],
-    );
-  }
-}
-
-class _StarIllustration extends StatelessWidget {
-  const _StarIllustration();
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        Container(
-          width: 200,
-          height: 200,
-          decoration: const BoxDecoration(
-            color: AppColors.magnolia,
-            shape: BoxShape.circle,
-          ),
-        ),
-        const Icon(Icons.star_rounded, size: 120, color: AppColors.hanPurple),
-        Positioned(
-          top: 20,
-          right: 20,
-          child: Icon(
-            Icons.star_rounded,
-            size: 32,
-            color: AppColors.mediumPurple.withOpacity(0.5),
-          ),
-        ),
-        Positioned(
-          bottom: 20,
-          left: 20,
-          child: const Icon(Icons.star_rounded, size: 24, color: AppColors.lavender),
-        ),
       ],
     );
   }

@@ -12,6 +12,7 @@ import 'package:interior_ai/app/features/presentation/onboarding/view/processing
 import 'package:interior_ai/app/features/presentation/onboarding/view/welcome_view.dart';
 import 'package:interior_ai/app/features/presentation/onboarding/widgets/onboarding_page_indicator.dart';
 import 'package:interior_ai/app/features/presentation/home/view/home_view.dart';
+import 'package:interior_ai/app/common/widgets/dialogs/rate_us_dialog.dart';
 
 class OnboardingView extends StatelessWidget {
   const OnboardingView({super.key});
@@ -86,9 +87,14 @@ class OnboardingView extends StatelessWidget {
                           AppButton.fill(
                             text: state.buttonText,
                             onPressed: state.isButtonEnabled
-                                ? () {
+                                ? () async {
                                     if (state.step ==
                                         OnboardingStep.helpUsGrow) {
+                                      await RateUsDialog.show(
+                                        context,
+                                        (_) => Navigator.of(context).maybePop(),
+                                      );
+                                      if (!context.mounted) return;
                                       Navigator.of(context).pushAndRemoveUntil(
                                         MaterialPageRoute(
                                           builder: (_) => const HomeView(),
