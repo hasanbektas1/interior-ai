@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
-import 'package:interior_ai/app/features/presentation/interior_design/widgets/gradient_button.dart';
+import 'package:interior_ai/app/common/widgets/buttons/gradient_button.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 
 class ResultActionDialog extends StatelessWidget {

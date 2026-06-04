@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:interior_ai/app/common/constants/app_theme_data.dart';
 import 'package:interior_ai/app/common/functions/app_functions.dart';
 import 'package:interior_ai/app/common/get_it/get_it.dart';
+import 'package:interior_ai/app/features/presentation/collection/cubit/collection_cubit.dart';
 import 'package:interior_ai/app/features/presentation/home/cubit/home_cubit.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/cubit/interior_design_cubit.dart';
 import 'package:interior_ai/app/features/presentation/onboarding/cubit/onboarding_cubit.dart';
@@ -27,6 +28,7 @@ class MainApp extends StatelessWidget {
         BlocProvider(create: (context) => getIt.get<OnboardingCubit>()),
         BlocProvider(create: (context) => getIt.get<SettingsCubit>()),
         BlocProvider(create: (context) => getIt.get<InteriorDesignCubit>()),
+        BlocProvider(create: (context) => getIt.get<CollectionCubit>()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

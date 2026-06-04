@@ -1,41 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
-import 'package:interior_ai/app/common/enums/app_assets.dart';
-import 'package:interior_ai/app/features/presentation/interior_design/cubit/interior_design_state.dart';
-import 'package:interior_ai/app/features/presentation/interior_design/enums/design_style.dart';
-import 'package:interior_ai/app/features/presentation/interior_design/enums/room_type.dart';
 import 'package:interior_ai/app/common/widgets/buttons/gradient_button.dart';
 import 'package:interior_ai/app/common/widgets/dialogs/result_action_dialog.dart';
 import 'package:interior_ai/app/common/widgets/result_info_chip.dart';
+import 'package:interior_ai/app/features/presentation/collection/models/collection_item.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 import 'package:interior_ai/core/extensions/widgets/padding_extensions.dart';
 import 'package:share_plus/share_plus.dart';
 
-class InteriorResultView extends StatelessWidget {
-  const InteriorResultView({
+class CollectionResultView extends StatelessWidget {
+  const CollectionResultView({
     super.key,
-    required this.state,
+    required this.item,
     required this.onClose,
-    required this.onRegenerate,
+    required this.onDeleted,
   });
 
-  final InteriorDesignState state;
+  final CollectionItem item;
   final VoidCallback onClose;
-  final VoidCallback onRegenerate;
-
-  bool get _isCustom => state.style == DesignStyle.custom;
-
-  String get _roomValue {
-    final roomType = state.roomType;
-    if (roomType == null) return '';
-    if (roomType == RoomType.other) {
-      return state.customRoomName?.trim().isNotEmpty ?? false
-          ? state.customRoomName!
-          : roomType.label;
-    }
-    return roomType.label;
-  }
+  final VoidCallback onDeleted;
 
   Future<void> _onSave(BuildContext context) async {
     await ResultActionDialog.show(
@@ -58,18 +42,14 @@ class InteriorResultView extends StatelessWidget {
       primaryLabel: AppStrings.interiorDeleteDesign,
       showCancel: true,
     );
-    if (confirmed ?? false) onClose();
-  }
-
-  Future<void> _onRegenerate(BuildContext context) async {
-    final confirmed = await ResultActionDialog.show(
+    if (!(confirmed ?? false) || !context.mounted) return;
+    await ResultActionDialog.show(
       context,
-      title: AppStrings.interiorRegenerateTitle,
-      subtitle: AppStrings.interiorRegenerateSubtitle,
-      primaryLabel: AppStrings.interiorRegenerate,
-      showCancel: true,
+      title: AppStrings.collectionDesignDeletedTitle,
+      subtitle: AppStrings.collectionDesignDeletedSubtitle,
+      primaryLabel: AppStrings.interiorDone,
     );
-    if (confirmed ?? false) onRegenerate();
+    onDeleted();
   }
 
   @override
@@ -79,7 +59,7 @@ class InteriorResultView extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            _Header(onShare: _onShare, onClose: onClose),
+            _Header(title: item.title, onShare: _onShare, onClose: onClose),
             Expanded(
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
@@ -94,7 +74,7 @@ class InteriorResultView extends StatelessWidget {
                         width: double.infinity,
                         height: context.height340,
                         child: Image.asset(
-                          AppAsset.interiorResult.path,
+                          item.image.path,
                           fit: BoxFit.cover,
                           errorBuilder: (_, __, ___) =>
                               const ColoredBox(color: AppColors.magnolia),
@@ -102,22 +82,22 @@ class InteriorResultView extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: context.height20),
-                    if (_isCustom && (state.customPrompt?.isNotEmpty ?? false))
-                      _PromptSection(prompt: state.customPrompt!),
+                    if (item.prompt?.isNotEmpty ?? false)
+                      _PromptSection(prompt: item.prompt!),
                     Row(
                       children: [
                         Expanded(
                           child: ResultInfoChip(
                             label: AppStrings.interiorRoomType,
-                            value: _roomValue,
-                            icon: state.roomType?.icon,
+                            value: item.roomType.label,
+                            icon: item.roomType.icon,
                           ),
                         ),
                         SizedBox(width: context.width12),
                         Expanded(
                           child: ResultInfoChip(
                             label: AppStrings.interiorStyle,
-                            value: state.style?.label ?? '',
+                            value: item.styleLabel,
                           ),
                         ),
                       ],
@@ -126,10 +106,31 @@ class InteriorResultView extends StatelessWidget {
                 ),
               ),
             ),
-            _BottomBar(
-              onDelete: () => _onDelete(context),
-              onRegenerate: () => _onRegenerate(context),
-              onSave: () => _onSave(context),
+            Row(
+              children: [
+                GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () => _onDelete(context),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: context.width8),
+                    child: const Text(
+                      AppStrings.collectionDelete,
+                      style: TextStyle(
+                        color: AppColors.nickel,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(width: context.width12),
+                Expanded(
+                  child: GradientButton(
+                    text: AppStrings.interiorSaveButton,
+                    onPressed: () => _onSave(context),
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: context.height16),
           ],
@@ -140,8 +141,13 @@ class InteriorResultView extends StatelessWidget {
 }
 
 class _Header extends StatelessWidget {
-  const _Header({required this.onShare, required this.onClose});
+  const _Header({
+    required this.title,
+    required this.onShare,
+    required this.onClose,
+  });
 
+  final String title;
   final VoidCallback onShare;
   final VoidCallback onClose;
 
@@ -152,9 +158,9 @@ class _Header extends StatelessWidget {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          const Text(
-            AppStrings.interiorResultHeader,
-            style: TextStyle(
+          Text(
+            title,
+            style: const TextStyle(
               color: AppColors.smokyBlack,
               fontSize: 18,
               fontWeight: FontWeight.w700,
@@ -228,60 +234,6 @@ class _PromptSection extends StatelessWidget {
         ),
         SizedBox(height: context.height16),
       ],
-    );
-  }
-}
-
-class _BottomBar extends StatelessWidget {
-  const _BottomBar({
-    required this.onDelete,
-    required this.onRegenerate,
-    required this.onSave,
-  });
-
-  final VoidCallback onDelete;
-  final VoidCallback onRegenerate;
-  final VoidCallback onSave;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        _CircleIconButton(icon: Icons.delete_outline_rounded, onTap: onDelete),
-        SizedBox(width: context.width12),
-        _CircleIconButton(icon: Icons.refresh_rounded, onTap: onRegenerate),
-        SizedBox(width: context.width12),
-        Expanded(
-          child: GradientButton(
-            text: AppStrings.interiorSaveButton,
-            onPressed: onSave,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _CircleIconButton extends StatelessWidget {
-  const _CircleIconButton({required this.icon, required this.onTap});
-
-  final IconData icon;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: onTap,
-      child: Container(
-        width: context.width52,
-        height: context.width52,
-        decoration: const BoxDecoration(
-          color: AppColors.cloudGray,
-          shape: BoxShape.circle,
-        ),
-        child: Icon(icon, size: context.width24, color: AppColors.smokyBlack),
-      ),
     );
   }
 }

@@ -153,6 +153,20 @@ final class AppStrings {
       "This design will be lost if you regenerate.";
   static const String interiorRegenerate = "Regenerate";
 
+  // COLLECTION
+  static const String collectionTitle = "Your Design Collection";
+  static const String collectionFilterAll = "All";
+  static const String collectionGenerating = "Generating...";
+  static const String collectionEmptyTitle = "No design here.";
+  static const String collectionEmptySubtitle =
+      "Go to “Home” page and start create.";
+  static const String collectionDownload = "Download";
+  static const String collectionShare = "Share";
+  static const String collectionDelete = "Delete";
+  static const String collectionDesignDeletedTitle = "Design Deleted";
+  static const String collectionDesignDeletedSubtitle =
+      "Design successfully removed from your collection.";
+
   static const List<String> interiorPromptLibraryItems = [
     "Modern Scandinavian living room with natural light, light wood furniture, and cozy textures",
     "Luxury master bedroom with dark tones, velvet accents, and gold lighting fixtures",
