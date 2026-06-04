@@ -103,7 +103,7 @@ class _CustomStyleBottomSheetState extends State<CustomStyleBottomSheet> {
                 context.width20,
                 context.height8,
                 context.width20,
-                context.height20,
+                context.height40,
               ),
               child: AppButton.fill(
                 text: AppStrings.interiorSave,

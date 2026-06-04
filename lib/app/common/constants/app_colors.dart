@@ -30,4 +30,5 @@ final class AppColors {
   static const Color disabledText = Color(0xffAFADB8);
   static const Color gradientBlue = Color(0xff539CF6);
   static const Color gradientPurple = Color(0xffA66CEC);
+  static const Color paletteScrim = Color(0x995E5E5E);
 }
