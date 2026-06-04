@@ -25,6 +25,7 @@ class MainApp extends StatelessWidget {
         BlocProvider(create: (context) => getIt.get<OnboardingCubit>()),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         navigatorKey: Navigation.navigationKey,
         scaffoldMessengerKey: AppKeys.scaffoldMessengerKey,
         theme: AppThemeData.themeData,

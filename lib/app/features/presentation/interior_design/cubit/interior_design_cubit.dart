@@ -67,6 +67,7 @@ final class InteriorDesignCubit extends Cubit<InteriorDesignState> {
       case InteriorStep.colorPalette:
         startProcessing();
       case InteriorStep.processing:
+      case InteriorStep.result:
       case InteriorStep.error:
         break;
     }
@@ -82,20 +83,23 @@ final class InteriorDesignCubit extends Cubit<InteriorDesignState> {
         emit(state.copyWith(step: InteriorStep.style));
       case InteriorStep.addPhoto:
       case InteriorStep.processing:
+      case InteriorStep.result:
       case InteriorStep.error:
         break;
     }
   }
 
-  void startProcessing() {
+  Future<void> startProcessing() async {
     emit(state.copyWith(step: InteriorStep.processing));
+    await Future.delayed(const Duration(seconds: 3));
+    if (!isClosed && state.step == InteriorStep.processing) {
+      emit(state.copyWith(step: InteriorStep.result));
+    }
   }
 
   void setError() {
     emit(state.copyWith(step: InteriorStep.error));
   }
 
-  void retry() {
-    emit(state.copyWith(step: InteriorStep.processing));
-  }
+  void retry() => startProcessing();
 }

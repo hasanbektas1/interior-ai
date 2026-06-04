@@ -4,6 +4,7 @@ enum InteriorStep {
   style,
   colorPalette,
   processing,
+  result,
   error,
 }
 
@@ -20,6 +21,7 @@ extension InteriorStepX on InteriorStep {
         InteriorStep.style => 2,
         InteriorStep.colorPalette => 3,
         InteriorStep.processing => 3,
+        InteriorStep.result => 3,
         InteriorStep.error => 3,
       };
 }

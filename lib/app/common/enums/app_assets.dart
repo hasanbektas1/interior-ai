@@ -52,7 +52,10 @@ enum AppAsset {
   roomOffice('assets/svg/interior_design/office_svg.svg'),
   roomHall('assets/svg/interior_design/hall_svg.svg'),
   roomDeck('assets/svg/interior_design/deck_svg.svg'),
-  roomOther('assets/svg/interior_design/other_svg.svg');
+  roomOther('assets/svg/interior_design/other_svg.svg'),
+
+  // INTERIOR DESIGN RESULT
+  interiorResult('assets/png/interrior_design/interrior_ai_result_png.png');
 
   final String path;
   const AppAsset(this.path);

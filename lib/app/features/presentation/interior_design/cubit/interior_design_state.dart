@@ -82,6 +82,7 @@ final class InteriorDesignState extends Equatable {
                 (customPrompt?.trim().isNotEmpty ?? false)),
         InteriorStep.colorPalette => colorPalette != null,
         InteriorStep.processing => false,
+        InteriorStep.result => false,
         InteriorStep.error => false,
       };
 

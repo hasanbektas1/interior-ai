@@ -28,4 +28,6 @@ final class AppColors {
   static const Color cloudGray = Color(0xffF3F2F6);
   static const Color disabledGray = Color(0xffE3E1E8);
   static const Color disabledText = Color(0xffAFADB8);
+  static const Color gradientBlue = Color(0xff539CF6);
+  static const Color gradientPurple = Color(0xffA66CEC);
 }

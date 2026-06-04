@@ -129,6 +129,29 @@ final class AppStrings {
       "Can not process the image right now. Please try again.";
   static const String interiorTryAgain = "Try Again";
 
+  // INTERIOR RESULT
+  static const String interiorResultHeader = "Result";
+  static const String interiorPrompt = "Prompt";
+  static const String interiorRoomType = "Room Type";
+  static const String interiorStyle = "Style";
+  static const String interiorSaveButton = "Save";
+  static const String interiorImageSavedTitle = "Image Saved";
+  static const String interiorImageSavedSubtitle =
+      "Image successfully added to your gallery.";
+  static const String interiorDone = "Done";
+  static const String interiorSaveErrorTitle = "Error";
+  static const String interiorSaveErrorSubtitle =
+      "Can not save the image right now. Please try again.";
+  static const String interiorDeleteTitle = "Do you want to delete this design?";
+  static const String interiorDeleteSubtitle =
+      "If you delete this design, it cannot be recovered.";
+  static const String interiorDeleteDesign = "Delete Design";
+  static const String interiorRegenerateTitle =
+      "Are you sure you want to regenerate?";
+  static const String interiorRegenerateSubtitle =
+      "This design will be lost if you regenerate.";
+  static const String interiorRegenerate = "Regenerate";
+
   static const List<String> interiorPromptLibraryItems = [
     "Modern Scandinavian living room with natural light, light wood furniture, and cozy textures",
     "Luxury master bedroom with dark tones, velvet accents, and gold lighting fixtures",

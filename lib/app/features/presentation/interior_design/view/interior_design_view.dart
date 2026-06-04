@@ -11,6 +11,7 @@ import 'package:interior_ai/app/features/presentation/interior_design/view/steps
 import 'package:interior_ai/app/features/presentation/interior_design/view/steps/color_palette_step.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/view/steps/interior_error_view.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/view/steps/interior_processing_view.dart';
+import 'package:interior_ai/app/features/presentation/interior_design/view/steps/interior_result_view.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/view/steps/room_type_step.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/view/steps/style_step.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/widgets/interior_header.dart';
@@ -50,6 +51,13 @@ class _InteriorDesignBody extends StatelessWidget {
 
         if (state.step == InteriorStep.processing) {
           return InteriorProcessingView(onBackToHome: () => _exit(context));
+        }
+        if (state.step == InteriorStep.result) {
+          return InteriorResultView(
+            state: state,
+            onClose: () => _exit(context),
+            onRegenerate: cubit.retry,
+          );
         }
         if (state.step == InteriorStep.error) {
           return InteriorErrorView(
@@ -114,6 +122,7 @@ class _StepContent extends StatelessWidget {
       InteriorStep.style => StyleStep(state: state),
       InteriorStep.colorPalette => ColorPaletteStep(state: state),
       InteriorStep.processing => const SizedBox.shrink(),
+      InteriorStep.result => const SizedBox.shrink(),
       InteriorStep.error => const SizedBox.shrink(),
     };
   }
