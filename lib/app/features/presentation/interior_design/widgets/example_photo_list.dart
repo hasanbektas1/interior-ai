@@ -16,7 +16,7 @@ class ExamplePhotoList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: context.height64,
+      height: context.height96,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(),
@@ -32,7 +32,7 @@ class ExamplePhotoList extends StatelessWidget {
               duration: const Duration(milliseconds: 200),
               opacity: isDimmed ? 0.4 : 1,
               child: Container(
-                width: context.width64,
+                width: context.width96,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(context.width12),
                   border: Border.all(
