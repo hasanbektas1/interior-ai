@@ -3,10 +3,9 @@ import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/enums/app_assets.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 
-class HomeCard extends StatelessWidget {
-  const HomeCard({super.key, required this.image, required this.onTap});
+class SettingsPremiumBanner extends StatelessWidget {
+  const SettingsPremiumBanner({super.key, required this.onTap});
 
-  final AppAsset image;
   final VoidCallback onTap;
 
   @override
@@ -17,11 +16,13 @@ class HomeCard extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(context.width16),
         child: Image.asset(
-          image.path,
+          AppAsset.settingsPremiumBanner.path,
+          width: double.infinity,
           fit: BoxFit.cover,
-          gaplessPlayback: true,
-          errorBuilder: (_, __, ___) =>
-              const ColoredBox(color: AppColors.magnolia),
+          errorBuilder: (_, __, ___) => Container(
+            height: context.height88,
+            color: AppColors.smokyBlack,
+          ),
         ),
       ),
     );

@@ -13,6 +13,8 @@ final class AppButton extends StatelessWidget {
   final TextStyle? textStyle;
   final double? width;
   final double? borderRadius;
+  final Color disabledBackgroundColor;
+  final Color? disabledTextColor;
 
   const AppButton({
     super.key,
@@ -27,6 +29,8 @@ final class AppButton extends StatelessWidget {
     this.textStyle,
     this.width,
     this.borderRadius,
+    this.disabledBackgroundColor = AppColors.nickel,
+    this.disabledTextColor,
   });
 
   factory AppButton.fill({
@@ -41,6 +45,8 @@ final class AppButton extends StatelessWidget {
     TextStyle? textStyle,
     double? width,
     double? borderRadius,
+    Color disabledBackgroundColor = AppColors.nickel,
+    Color? disabledTextColor,
   }) {
     return AppButton(
       key: key,
@@ -55,6 +61,8 @@ final class AppButton extends StatelessWidget {
       textStyle: textStyle,
       width: width,
       borderRadius: borderRadius,
+      disabledBackgroundColor: disabledBackgroundColor,
+      disabledTextColor: disabledTextColor,
     );
   }
 
@@ -82,14 +90,16 @@ final class AppButton extends StatelessWidget {
                 : null,
         elevation: 0,
         shadowColor: Colors.transparent,
-        disabledBackgroundColor: AppColors.nickel,
+        disabledBackgroundColor: disabledBackgroundColor,
       ),
       child: icon == null
           ? Text(
               text,
               style: textStyle ??
                   TextStyle(
-                    color: onPressed == null ? AppColors.white : textColor,
+                    color: onPressed == null
+                        ? (disabledTextColor ?? AppColors.white)
+                        : textColor,
                     fontWeight: FontWeight.w500,
                     fontSize: 16,
                   ),

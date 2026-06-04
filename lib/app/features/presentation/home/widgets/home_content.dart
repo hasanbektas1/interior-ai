@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:interior_ai/app/common/enums/app_home_assets.dart';
+import 'package:interior_ai/app/common/enums/app_assets.dart';
 import 'package:interior_ai/app/features/presentation/home/widgets/home_card.dart';
+import 'package:interior_ai/app/features/presentation/interior_design/view/interior_design_view.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 
 class HomeContent extends StatelessWidget {
@@ -28,8 +29,12 @@ class HomeContent extends StatelessWidget {
                 width: double.infinity,
                 height: context.height240,
                 child: HomeCard(
-                  image: AppHomeImage.interiorDesign,
-                  onTap: () {},
+                  image: AppAsset.homeInteriorDesign,
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => const InteriorDesignView(),
+                    ),
+                  ),
                 ),
               ),
               SizedBox(height: context.height12),
@@ -40,7 +45,7 @@ class HomeContent extends StatelessWidget {
                     width: tileWidth,
                     height: tileHeight,
                     child: HomeCard(
-                      image: AppHomeImage.exteriorDesign,
+                      image: AppAsset.homeExteriorDesign,
                       onTap: () {},
                     ),
                   ),
@@ -49,7 +54,7 @@ class HomeContent extends StatelessWidget {
                     width: tileWidth,
                     height: tileHeight,
                     child: HomeCard(
-                      image: AppHomeImage.replaceObjects,
+                      image: AppAsset.homeReplaceObjects,
                       onTap: () {},
                     ),
                   ),
@@ -66,7 +71,7 @@ class HomeContent extends StatelessWidget {
                         SizedBox(
                           height: tileHeight,
                           child: HomeCard(
-                            image: AppHomeImage.floorRestyle,
+                            image: AppAsset.homeFloorRestyle,
                             onTap: () {},
                           ),
                         ),
@@ -74,7 +79,7 @@ class HomeContent extends StatelessWidget {
                         SizedBox(
                           height: tileHeight,
                           child: HomeCard(
-                            image: AppHomeImage.gardenDesign,
+                            image: AppAsset.homeGardenDesign,
                             onTap: () {},
                           ),
                         ),
@@ -86,7 +91,7 @@ class HomeContent extends StatelessWidget {
                     width: tileWidth,
                     height: tileHeight * 2 + context.height12,
                     child: HomeCard(
-                      image: AppHomeImage.styleReference,
+                      image: AppAsset.homeStyleReference,
                       onTap: () {},
                     ),
                   ),

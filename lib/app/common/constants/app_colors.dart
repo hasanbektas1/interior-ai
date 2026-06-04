@@ -23,4 +23,9 @@ final class AppColors {
   static const Color coralRed = Color(0xffFF453A);
   static const Color azure = Color(0xff007AFF);
   static const Color spanishGray = Color(0xff9E9E9E);
+  static const Color softPurple = Color(0xff9881FF);
+  static const Color softPurpleFaint = Color(0x339881FF);
+  static const Color cloudGray = Color(0xffF3F2F6);
+  static const Color disabledGray = Color(0xffE3E1E8);
+  static const Color disabledText = Color(0xffAFADB8);
 }

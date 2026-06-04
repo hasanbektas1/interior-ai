@@ -1,5 +1,5 @@
 import 'package:interior_ai/app/common/constants/app_strings.dart';
-import 'package:interior_ai/app/common/enums/app_onboarding_assets.dart';
+import 'package:interior_ai/app/common/enums/app_assets.dart';
 
 enum OnboardingSpace {
   bedroom,
@@ -22,22 +22,22 @@ enum OnboardingStyle {
 extension OnboardingSpaceX on OnboardingSpace {
   String get label => AppStrings.spaceTypes[index];
 
-  AppOnboardingSelectImage get _selectImage => switch (this) {
-        OnboardingSpace.bedroom => AppOnboardingSelectImage.bedroom,
-        OnboardingSpace.diningRoom => AppOnboardingSelectImage.diningRoom,
-        OnboardingSpace.livingRoom => AppOnboardingSelectImage.livingRoom,
-        OnboardingSpace.workspace => AppOnboardingSelectImage.workspace,
-        OnboardingSpace.greySofa => AppOnboardingSelectImage.greySofa,
-        OnboardingSpace.armchair => AppOnboardingSelectImage.armchair,
+  AppAsset get _selectImage => switch (this) {
+        OnboardingSpace.bedroom => AppAsset.onboardingSelectBedroom,
+        OnboardingSpace.diningRoom => AppAsset.onboardingSelectDiningRoom,
+        OnboardingSpace.livingRoom => AppAsset.onboardingSelectLivingRoom,
+        OnboardingSpace.workspace => AppAsset.onboardingSelectWorkspace,
+        OnboardingSpace.greySofa => AppAsset.onboardingSelectGreySofa,
+        OnboardingSpace.armchair => AppAsset.onboardingSelectArmchair,
       };
 
-  AppOnboardingMiniImage get _miniImage => switch (this) {
-        OnboardingSpace.bedroom => AppOnboardingMiniImage.bedroom,
-        OnboardingSpace.diningRoom => AppOnboardingMiniImage.diningRoom,
-        OnboardingSpace.livingRoom => AppOnboardingMiniImage.livingRoom,
-        OnboardingSpace.workspace => AppOnboardingMiniImage.workspace,
-        OnboardingSpace.greySofa => AppOnboardingMiniImage.greySofa,
-        OnboardingSpace.armchair => AppOnboardingMiniImage.armchair,
+  AppAsset get _miniImage => switch (this) {
+        OnboardingSpace.bedroom => AppAsset.onboardingMiniBedroom,
+        OnboardingSpace.diningRoom => AppAsset.onboardingMiniDiningRoom,
+        OnboardingSpace.livingRoom => AppAsset.onboardingMiniLivingRoom,
+        OnboardingSpace.workspace => AppAsset.onboardingMiniWorkspace,
+        OnboardingSpace.greySofa => AppAsset.onboardingMiniGreySofa,
+        OnboardingSpace.armchair => AppAsset.onboardingMiniArmchair,
       };
 
   String get selectAsset => _selectImage.path;
@@ -48,13 +48,13 @@ extension OnboardingSpaceX on OnboardingSpace {
 extension OnboardingStyleX on OnboardingStyle {
   String get label => AppStrings.styleTypes[index];
 
-  AppOnboardingSelectImage get _selectImage => switch (this) {
-        OnboardingStyle.modern => AppOnboardingSelectImage.modern,
-        OnboardingStyle.baroque => AppOnboardingSelectImage.baroque,
-        OnboardingStyle.bohemian => AppOnboardingSelectImage.bohemian,
-        OnboardingStyle.rustic => AppOnboardingSelectImage.rustic,
-        OnboardingStyle.vintage => AppOnboardingSelectImage.vintage,
-        OnboardingStyle.luxury => AppOnboardingSelectImage.luxury,
+  AppAsset get _selectImage => switch (this) {
+        OnboardingStyle.modern => AppAsset.onboardingSelectModern,
+        OnboardingStyle.baroque => AppAsset.onboardingSelectBaroque,
+        OnboardingStyle.bohemian => AppAsset.onboardingSelectBohemian,
+        OnboardingStyle.rustic => AppAsset.onboardingSelectRustic,
+        OnboardingStyle.vintage => AppAsset.onboardingSelectVintage,
+        OnboardingStyle.luxury => AppAsset.onboardingSelectLuxury,
       };
 
   String get selectAsset => _selectImage.path;

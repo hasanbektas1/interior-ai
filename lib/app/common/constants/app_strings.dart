@@ -52,4 +52,88 @@ final class AppStrings {
   // BOTTOM NAV
   static const String navHome = "Home";
   static const String navCollection = "Collection";
+
+  // PAYWALL
+  static const String paywallTitle = "Unlock Your\nDream Space";
+  static const String paywallFeatureUnlimited = "Unlimited Design";
+  static const String paywallFeatureFaster = "Faster Rendering";
+  static const String paywallFeatureAdFree = "Ad-free Experience";
+  static const String paywallWeeklyTitle = "Weekly Plan";
+  static const String paywallWeeklyPrice = "\$14.99";
+  static const String paywallAnnualTitle = "Annual Plan";
+  static const String paywallAnnualPrice = "\$119.99";
+  static const String paywallAnnualPerWeek = "Only 2.31 \$ per week";
+  static const String paywallAutoRenewable = "Auto renewable. Cancel Anytime.";
+  static const String paywallBestPrice = "Best Price";
+  static const String paywallFreeTrial = "Enable 3-Day Free Trial";
+  static const String paywallTermsOfUse = "Terms of Use";
+  static const String paywallPrivacyPolicy = "Privacy Policy";
+  static const String paywallRestorePurchase = "Restore Purchase";
+
+  // SPECIAL OFFER
+  static const String specialOfferTitle = "One Time Offer";
+  static const String specialOfferDiscount = "80% OFF";
+
+  // SETTINGS
+  static const String settingsTitle = "Settings";
+  static const String settingsSupport = "Support";
+  static const String settingsGeneral = "General";
+  static const String settingsRateUs = "Rate Us";
+  static const String settingsShareApp = "Share App";
+  static const String settingsGiveFeedback = "Give Feedback";
+  static const String settingsPrivacyPolicy = "Privacy Policy";
+  static const String settingsTermsOfUse = "Terms of Use";
+  static const String settingsRestorePurchases = "Restore Purchases";
+  static const String settingsUserId = "User ID";
+  static const String settingsCopiedToClipboard = "Copied to\nClipboard";
+  static const String settingsPurchaseRestored = "Purchase\nRestored";
+  static const String settingsRateUsTitle = "Rate Us";
+  static const String settingsRateUsSubtitle =
+      "Tap to star to rate it on the App Store";
+  static const String settingsNotNow = "Not Now";
+  static const String settingsShareMessage =
+      "Reimagine your space with Interior AI!";
+  static const String sampleUserId = "b7a2f730-91cb-4f85-9f...";
+
+  // INTERIOR DESIGN
+  static const String interiorDesign = "Interior Design";
+  static const String interiorAddYourPhoto = "Add Your Photo";
+  static const String interiorUseExamplePhoto = "Use an Example Photo";
+  static const String interiorContinue = "Continue";
+  static const String interiorAddPhotoTitle = "Add a Photo";
+  static const String interiorAddPhotoSubtitle =
+      "Take a photo or choose from library to create.";
+  static const String interiorTakePhoto = "Take a photo";
+  static const String interiorChooseFromLibrary = "Choose from library";
+  static const String interiorCancel = "Cancel";
+  static const String interiorRemovePhotoTitle = "Do you want to remove the photo?";
+  static const String interiorRemove = "Remove";
+  static const String interiorChooseRoomTypeTitle = "Choose Your Room Type";
+  static const String interiorChooseRoomTypeSubtitle =
+      "Choose a room type and let AI transform your space";
+  static const String interiorEnterStyleName = "Enter a Style Name";
+  static const String interiorSelectStyleTitle = "Select a Style";
+  static const String interiorSelectStyleSubtitle =
+      "Select a style for AI to design your space";
+  static const String interiorCustomStyleTitle = "Custom Style";
+  static const String interiorPromptHint = "Enter your prompt here";
+  static const String interiorPromptLibrary = "Promt Library";
+  static const String interiorSave = "Save";
+  static const String interiorChoosePaletteTitle = "Choose a Color Palette";
+  static const String interiorProcessing = "Processing...";
+  static const String interiorProcessingSubtitle =
+      "Your generated image will be automatically added to Collection.";
+  static const String interiorBackToHome = "Back to Home";
+  static const String interiorErrorTitle = "Error";
+  static const String interiorErrorSubtitle =
+      "Can not process the image right now. Please try again.";
+  static const String interiorTryAgain = "Try Again";
+
+  static const List<String> interiorPromptLibraryItems = [
+    "Modern Scandinavian living room with natural light, light wood furniture, and cozy textures",
+    "Luxury master bedroom with dark tones, velvet accents, and gold lighting fixtures",
+    "Japandi bathroom design with clean lines, wooden textures, and calming zen vibe",
+    "Bohemian-style reading nook with layered rugs, indoor plants, and warm lighting",
+    "Industrial loft kitchen with exposed brick walls, metal shelves, and matte black details",
+  ];
 }

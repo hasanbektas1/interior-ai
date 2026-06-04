@@ -1,0 +1,1 @@
+enum PaywallPlan { weekly, annual }
