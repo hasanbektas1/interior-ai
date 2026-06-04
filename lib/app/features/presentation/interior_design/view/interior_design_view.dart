@@ -71,7 +71,7 @@ class _InteriorDesignBody extends StatelessWidget {
                       transitionBuilder: (child, animation) {
                         return FadeTransition(opacity: animation, child: child);
                       },
-                      child: KeyedSubtree(
+                      child: SizedBox.expand(
                         key: ValueKey(state.step),
                         child: _StepContent(state: state),
                       ),

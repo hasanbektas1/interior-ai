@@ -31,42 +31,42 @@ class AddPhotoStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<InteriorDesignCubit>();
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
-      padding: EdgeInsets.only(top: context.height20, bottom: context.height16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            AppStrings.interiorAddYourPhoto,
-            style: TextStyle(
-              color: AppColors.smokyBlack,
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: context.height24),
+        const Text(
+          AppStrings.interiorAddYourPhoto,
+          style: TextStyle(
+            color: AppColors.smokyBlack,
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
           ),
-          SizedBox(height: context.height12),
-          PhotoPickerBox(
+        ),
+        SizedBox(height: context.height12),
+        Expanded(
+          child: PhotoPickerBox(
             photoPath: state.selectedPhotoPath,
             onAdd: () => _onAddPressed(context),
             onRemove: () => _onRemovePressed(context),
           ),
-          SizedBox(height: context.height24),
-          const Text(
-            AppStrings.interiorUseExamplePhoto,
-            style: TextStyle(
-              color: AppColors.smokyBlack,
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-            ),
+        ),
+        SizedBox(height: context.height20),
+        const Text(
+          AppStrings.interiorUseExamplePhoto,
+          style: TextStyle(
+            color: AppColors.smokyBlack,
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
           ),
-          SizedBox(height: context.height12),
-          ExamplePhotoList(
-            selectedIndex: state.exampleIndex,
-            onSelect: cubit.selectExample,
-          ),
-        ],
-      ),
+        ),
+        SizedBox(height: context.height12),
+        ExamplePhotoList(
+          selectedIndex: state.exampleIndex,
+          onSelect: cubit.selectExample,
+        ),
+        SizedBox(height: context.height8),
+      ],
     );
   }
 }

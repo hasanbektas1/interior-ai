@@ -23,7 +23,7 @@ class PhotoPickerBox extends StatelessWidget {
         onTap: onAdd,
         child: Container(
           width: double.infinity,
-          height: context.height280,
+          height: double.infinity,
           decoration: BoxDecoration(
             color: AppColors.platinum,
             borderRadius: BorderRadius.circular(context.width16),
@@ -53,7 +53,7 @@ class PhotoPickerBox extends StatelessWidget {
 
     return SizedBox(
       width: double.infinity,
-      height: context.height280,
+      height: double.infinity,
       child: Stack(
         children: [
           Positioned.fill(
