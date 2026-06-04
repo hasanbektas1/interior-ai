@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
-import 'package:interior_ai/app/common/get_it/get_it.dart';
 import 'package:interior_ai/app/common/widgets/buttons/app_button.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/cubit/interior_design_cubit.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/cubit/interior_design_state.dart';
@@ -19,22 +18,11 @@ import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 import 'package:interior_ai/core/extensions/widgets/padding_extensions.dart';
 
 class InteriorDesignView extends StatelessWidget {
-  const InteriorDesignView({super.key, this.cubit});
-
-  final InteriorDesignCubit? cubit;
+  const InteriorDesignView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    if (cubit != null) {
-      return BlocProvider<InteriorDesignCubit>.value(
-        value: cubit!,
-        child: const _InteriorDesignBody(),
-      );
-    }
-    return BlocProvider<InteriorDesignCubit>(
-      create: (_) => getIt<InteriorDesignCubit>(),
-      child: const _InteriorDesignBody(),
-    );
+    return const _InteriorDesignBody();
   }
 }
 

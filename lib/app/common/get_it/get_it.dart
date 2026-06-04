@@ -51,7 +51,7 @@ final class ServiceLocator {
     getIt
       ..registerLazySingleton<OnboardingCubit>(() => OnboardingCubit())
       ..registerLazySingleton<SettingsCubit>(() => SettingsCubit())
-      ..registerFactory<InteriorDesignCubit>(() => InteriorDesignCubit())
+      ..registerLazySingleton<InteriorDesignCubit>(() => InteriorDesignCubit())
       ..registerLazySingleton<HomeCubit>(
         () => HomeCubit(testRepository: getIt<TestRepository>()),
       )
