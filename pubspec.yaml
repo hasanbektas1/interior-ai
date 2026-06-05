@@ -35,6 +35,7 @@ flutter:
     - assets/png/interrior_design/
     - assets/png/garden_design/
     - assets/png/exterior_design/
+    - assets/floor_restyle/
     - assets/png/paywall/
     - assets/png/settings/
     - assets/svg/home/

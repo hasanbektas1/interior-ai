@@ -202,6 +202,21 @@ final class AppStrings {
     "Make it look like a rustic cabin with wooden panels.",
   ];
 
+  // FLOOR RESTYLE
+  static const String floorRestyle = "Floor Restyle";
+  static const String floorSelectMaterialTitle = "Select a Material";
+  static const String floorSelectMaterialSubtitle =
+      "Select a material for AI to design your space";
+  static const String floorMaterial = "Material";
+  static const String floorBrushSize = "Brush Size";
+  static const List<String> floorPromptLibraryItems = [
+    "Change the floor to light oak wood.",
+    "Add marble tiles with a glossy finish.",
+    "Replace the tiles with dark concrete flooring.",
+    "Make it a patterned ceramic floor.",
+    "Add herringbone parquet for a modern look.",
+  ];
+
   static const List<String> interiorPromptLibraryItems = [
     "Modern Scandinavian living room with natural light, light wood furniture, and cozy textures",
     "Luxury master bedroom with dark tones, velvet accents, and gold lighting fixtures",

@@ -9,16 +9,16 @@ import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 import 'package:interior_ai/core/extensions/widgets/padding_extensions.dart';
 import 'package:share_plus/share_plus.dart';
 
-class GardenResultView extends StatelessWidget {
-  const GardenResultView({
+class FloorResultView extends StatelessWidget {
+  const FloorResultView({
     super.key,
-    required this.styleLabel,
+    required this.materialLabel,
     required this.customPrompt,
     required this.onClose,
     required this.onRegenerate,
   });
 
-  final String styleLabel;
+  final String materialLabel;
   final String? customPrompt;
   final VoidCallback onClose;
   final VoidCallback onRegenerate;
@@ -70,7 +70,7 @@ class GardenResultView extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(context.width16),
                 child: Image.asset(
-                  AppAsset.gardenStyleCity.path,
+                  AppAsset.floorResult.path,
                   width: double.infinity,
                   height: double.infinity,
                   fit: BoxFit.cover,
@@ -113,8 +113,8 @@ class GardenResultView extends StatelessWidget {
               SizedBox(height: context.height16),
             ],
             ResultSegmentChip(
-              label: AppStrings.interiorStyle,
-              value: styleLabel,
+              label: AppStrings.floorMaterial,
+              value: materialLabel,
             ),
             SizedBox(height: context.height20),
             Row(
