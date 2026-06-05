@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
-import 'package:interior_ai/app/common/constants/app_strings.dart';
 import 'package:interior_ai/app/common/widgets/step_progress_bar.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 
-class StyleReferenceHeader extends StatelessWidget {
-  const StyleReferenceHeader({
+class GemHeader extends StatelessWidget {
+  const GemHeader({
     super.key,
-    required this.filledCount,
+    required this.title,
     required this.onClose,
+    this.progressFilledCount,
+    this.progressCount = 2,
   });
 
-  final int filledCount;
+  final String title;
   final VoidCallback onClose;
+  final int? progressFilledCount;
+  final int progressCount;
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +26,9 @@ class StyleReferenceHeader extends StatelessWidget {
           child: Stack(
             alignment: Alignment.center,
             children: [
-              const Text(
-                AppStrings.styleReference,
-                style: TextStyle(
+              Text(
+                title,
+                style: const TextStyle(
                   color: AppColors.smokyBlack,
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
@@ -64,8 +67,13 @@ class StyleReferenceHeader extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(height: context.height16),
-        StepProgressBar(filledCount: filledCount, count: 2),
+        if (progressFilledCount != null) ...[
+          SizedBox(height: context.height16),
+          StepProgressBar(
+            filledCount: progressFilledCount!,
+            count: progressCount,
+          ),
+        ],
       ],
     );
   }

@@ -171,6 +171,13 @@ final class AppStrings {
   static const String styleReference = "Style Reference";
   static const String styleAddReferencePhoto = "Add a Reference Photo";
 
+  // REPLACE OBJECTS
+  static const String replaceObjects = "Replace Objects";
+  static const String replaceGenerateObject = "Generate Object";
+  static const String replaceExamplePhotosTitle = "Example Photos";
+  static const String replaceAddPhotoSubtitle =
+      "Take a photo, choose from library or use an example photo to create.";
+
   static const List<String> interiorPromptLibraryItems = [
     "Modern Scandinavian living room with natural light, light wood furniture, and cozy textures",
     "Luxury master bedroom with dark tones, velvet accents, and gold lighting fixtures",

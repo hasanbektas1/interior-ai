@@ -4,13 +4,13 @@ import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
 import 'package:interior_ai/app/common/widgets/buttons/app_button.dart';
 import 'package:interior_ai/app/common/widgets/generated_error_view.dart';
+import 'package:interior_ai/app/common/widgets/gem_header.dart';
 import 'package:interior_ai/app/common/widgets/generated_processing_view.dart';
 import 'package:interior_ai/app/features/presentation/style_reference/cubit/style_reference_cubit.dart';
 import 'package:interior_ai/app/features/presentation/style_reference/cubit/style_reference_state.dart';
 import 'package:interior_ai/app/features/presentation/style_reference/enums/style_reference_step.dart';
 import 'package:interior_ai/app/features/presentation/style_reference/view/steps/style_reference_photo_step.dart';
 import 'package:interior_ai/app/features/presentation/style_reference/view/style_reference_result_view.dart';
-import 'package:interior_ai/app/features/presentation/style_reference/widgets/style_reference_header.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 import 'package:interior_ai/core/extensions/widgets/padding_extensions.dart';
 
@@ -58,8 +58,9 @@ class _StyleReferenceBody extends StatelessWidget {
           body: SafeArea(
             child: Column(
               children: [
-                StyleReferenceHeader(
-                  filledCount: state.step.progressIndex + 1,
+                GemHeader(
+                  title: AppStrings.styleReference,
+                  progressFilledCount: state.step.progressIndex + 1,
                   onClose: () => _exit(context),
                 ),
                 Expanded(

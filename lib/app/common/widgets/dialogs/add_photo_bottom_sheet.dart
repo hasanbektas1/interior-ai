@@ -4,16 +4,21 @@ import 'package:interior_ai/app/common/constants/app_strings.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 import 'package:interior_ai/core/extensions/widgets/padding_extensions.dart';
 
-enum PhotoSource { camera, library }
+enum PhotoSource { camera, library, example }
 
 class AddPhotoBottomSheet extends StatelessWidget {
-  const AddPhotoBottomSheet({super.key});
+  const AddPhotoBottomSheet({super.key, this.showExampleOption = false});
 
-  static Future<PhotoSource?> show(BuildContext context) {
+  final bool showExampleOption;
+
+  static Future<PhotoSource?> show(
+    BuildContext context, {
+    bool showExampleOption = false,
+  }) {
     return showModalBottomSheet<PhotoSource>(
       context: context,
       backgroundColor: Colors.transparent,
-      builder: (_) => const AddPhotoBottomSheet(),
+      builder: (_) => AddPhotoBottomSheet(showExampleOption: showExampleOption),
     );
   }
 
@@ -46,10 +51,12 @@ class AddPhotoBottomSheet extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: context.height4),
-                      const Text(
-                        AppStrings.interiorAddPhotoSubtitle,
+                      Text(
+                        showExampleOption
+                            ? AppStrings.replaceAddPhotoSubtitle
+                            : AppStrings.interiorAddPhotoSubtitle,
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: AppColors.nickel,
                           fontSize: 13,
                           fontWeight: FontWeight.w400,
@@ -70,6 +77,14 @@ class AddPhotoBottomSheet extends StatelessWidget {
                   color: AppColors.softPurple,
                   onTap: () => Navigator.of(context).pop(PhotoSource.library),
                 ),
+                if (showExampleOption) ...[
+                  const Divider(height: 1, color: AppColors.platinum),
+                  _SheetAction(
+                    label: AppStrings.interiorUseExamplePhoto,
+                    color: AppColors.softPurple,
+                    onTap: () => Navigator.of(context).pop(PhotoSource.example),
+                  ),
+                ],
               ],
             ),
           ),
