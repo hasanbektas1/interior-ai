@@ -1,46 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:interior_ai/app/common/enums/app_assets.dart';
+import 'package:interior_ai/app/common/constants/app_strings.dart';
 import 'package:interior_ai/app/common/widgets/dialogs/add_photo_bottom_sheet.dart';
 import 'package:interior_ai/app/common/widgets/dialogs/remove_photo_dialog.dart';
 import 'package:interior_ai/app/common/widgets/photo_input_step.dart';
-import 'package:interior_ai/app/features/presentation/style_reference/cubit/style_reference_cubit.dart';
+import 'package:interior_ai/app/features/presentation/garden_design/cubit/garden_design_cubit.dart';
+import 'package:interior_ai/app/features/presentation/garden_design/cubit/garden_design_state.dart';
 
-class StyleReferencePhotoStep extends StatelessWidget {
-  const StyleReferencePhotoStep({
-    super.key,
-    required this.label,
-    required this.photoPath,
-    required this.exampleIndex,
-    required this.photos,
-  });
+class GardenAddPhotoStep extends StatelessWidget {
+  const GardenAddPhotoStep({super.key, required this.state});
 
-  final String label;
-  final String? photoPath;
-  final int? exampleIndex;
-  final List<AppAsset> photos;
+  final GardenDesignState state;
 
   Future<void> _onAddPressed(BuildContext context) async {
-    final cubit = context.read<StyleReferenceCubit>();
+    final cubit = context.read<GardenDesignCubit>();
     final source = await AddPhotoBottomSheet.show(context);
     if (source == null) return;
     cubit.addSamplePhoto();
   }
 
   Future<void> _onRemovePressed(BuildContext context) async {
-    final cubit = context.read<StyleReferenceCubit>();
+    final cubit = context.read<GardenDesignCubit>();
     final shouldRemove = await RemovePhotoDialog.show(context);
     if (shouldRemove ?? false) cubit.removePhoto();
   }
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<StyleReferenceCubit>();
+    final cubit = context.read<GardenDesignCubit>();
     return PhotoInputStep(
-      label: label,
-      photoPath: photoPath,
-      exampleIndex: exampleIndex,
-      photos: photos,
+      label: AppStrings.interiorAddYourPhoto,
+      photoPath: state.selectedPhotoPath,
+      exampleIndex: state.exampleIndex,
+      photos: kGardenExamplePhotos,
       onAdd: () => _onAddPressed(context),
       onRemove: () => _onRemovePressed(context),
       onSelectExample: cubit.selectExample,

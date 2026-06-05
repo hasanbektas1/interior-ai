@@ -2,6 +2,7 @@ import 'package:interior_ai/app/features/data/datasources/local/test_local_datas
 import 'package:interior_ai/app/features/data/datasources/remote/test_remote_datasource.dart';
 import 'package:interior_ai/app/features/data/repositories/test_repository.dart';
 import 'package:interior_ai/app/features/presentation/collection/cubit/collection_cubit.dart';
+import 'package:interior_ai/app/features/presentation/garden_design/cubit/garden_design_cubit.dart';
 import 'package:interior_ai/app/features/presentation/home/cubit/home_cubit.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/cubit/interior_design_cubit.dart';
 import 'package:interior_ai/app/features/presentation/onboarding/cubit/onboarding_cubit.dart';
@@ -58,6 +59,7 @@ final class ServiceLocator {
       ..registerLazySingleton<CollectionCubit>(() => CollectionCubit())
       ..registerLazySingleton<StyleReferenceCubit>(() => StyleReferenceCubit())
       ..registerLazySingleton<ReplaceObjectsCubit>(() => ReplaceObjectsCubit())
+      ..registerLazySingleton<GardenDesignCubit>(() => GardenDesignCubit())
       ..registerLazySingleton<HomeCubit>(
         () => HomeCubit(testRepository: getIt<TestRepository>()),
       )

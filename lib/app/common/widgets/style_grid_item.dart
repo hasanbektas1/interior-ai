@@ -1,21 +1,29 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
-import 'package:interior_ai/app/features/presentation/interior_design/enums/design_style.dart';
+import 'package:interior_ai/app/common/enums/app_assets.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 
 class StyleGridItem extends StatelessWidget {
   const StyleGridItem({
     super.key,
-    required this.style,
+    required this.label,
+    required this.isCustom,
     required this.isSelected,
     required this.isDimmed,
     required this.onTap,
+    this.imageAsset,
+    this.customImage,
   });
 
-  final DesignStyle style;
+  final String label;
+  final bool isCustom;
   final bool isSelected;
   final bool isDimmed;
   final VoidCallback onTap;
+  final AppAsset? imageAsset;
+  final AppAsset? customImage;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +45,7 @@ class StyleGridItem extends StatelessWidget {
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(context.width12),
-            child: style.isCustom ? _buildCustom(context) : _buildImage(context),
+            child: isCustom ? _buildCustom(context) : _buildImage(context),
           ),
         ),
       ),
@@ -48,20 +56,37 @@ class StyleGridItem extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(
-          Icons.weekend_rounded,
-          size: context.width48,
-          color: AppColors.softPurple,
-        ),
+        if (customImage != null)
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(context.width12),
+              child: Image.asset(
+                customImage!.path,
+                fit: BoxFit.contain,
+                errorBuilder: (_, __, ___) => Icon(
+                  Icons.weekend_rounded,
+                  size: context.width48,
+                  color: AppColors.softPurple,
+                ),
+              ),
+            ),
+          )
+        else
+          Icon(
+            Icons.weekend_rounded,
+            size: context.width48,
+            color: AppColors.softPurple,
+          ),
         SizedBox(height: context.height8),
         Text(
-          style.label,
+          label,
           style: const TextStyle(
             color: AppColors.smokyBlack,
             fontSize: 15,
             fontWeight: FontWeight.w700,
           ),
         ),
+        SizedBox(height: context.height12),
       ],
     );
   }
@@ -71,7 +96,7 @@ class StyleGridItem extends StatelessWidget {
       fit: StackFit.expand,
       children: [
         Image.asset(
-          style.previewImage.path,
+          imageAsset!.path,
           fit: BoxFit.cover,
           errorBuilder: (_, __, ___) =>
               const ColoredBox(color: AppColors.magnolia),
@@ -80,27 +105,23 @@ class StyleGridItem extends StatelessWidget {
           left: 0,
           right: 0,
           bottom: 0,
-          child: Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: context.width12,
-              vertical: context.height8,
-            ),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Colors.transparent,
-                  AppColors.smokyBlack.withValues(alpha: 0.55),
-                ],
-              ),
-            ),
-            child: Text(
-              style.label,
-              style: const TextStyle(
-                color: AppColors.white,
-                fontSize: 15,
-                fontWeight: FontWeight.w700,
+          child: ClipRect(
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: context.width12,
+                  vertical: context.height12,
+                ),
+                color: AppColors.styleScrim,
+                child: Text(
+                  label,
+                  style: const TextStyle(
+                    color: AppColors.white,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
               ),
             ),
           ),

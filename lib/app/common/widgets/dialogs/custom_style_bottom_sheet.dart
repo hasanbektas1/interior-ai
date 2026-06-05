@@ -5,11 +5,20 @@ import 'package:interior_ai/app/common/widgets/buttons/app_button.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 
 class CustomStyleBottomSheet extends StatefulWidget {
-  const CustomStyleBottomSheet({super.key, this.initialPrompt});
+  const CustomStyleBottomSheet({
+    super.key,
+    required this.promptLibrary,
+    this.initialPrompt,
+  });
 
+  final List<String> promptLibrary;
   final String? initialPrompt;
 
-  static Future<String?> show(BuildContext context, {String? initialPrompt}) {
+  static Future<String?> show(
+    BuildContext context, {
+    required List<String> promptLibrary,
+    String? initialPrompt,
+  }) {
     return showModalBottomSheet<String>(
       context: context,
       isScrollControlled: true,
@@ -17,7 +26,10 @@ class CustomStyleBottomSheet extends StatefulWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
-      builder: (_) => CustomStyleBottomSheet(initialPrompt: initialPrompt),
+      builder: (_) => CustomStyleBottomSheet(
+        promptLibrary: promptLibrary,
+        initialPrompt: initialPrompt,
+      ),
     );
   }
 
@@ -85,7 +97,7 @@ class _CustomStyleBottomSheetState extends State<CustomStyleBottomSheet> {
                       ),
                     ),
                     SizedBox(height: context.height12),
-                    for (final prompt in AppStrings.interiorPromptLibraryItems)
+                    for (final prompt in widget.promptLibrary)
                       Padding(
                         padding: EdgeInsets.only(bottom: context.height10),
                         child: _PromptLibraryItem(

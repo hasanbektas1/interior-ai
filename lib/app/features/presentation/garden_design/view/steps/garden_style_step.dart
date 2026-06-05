@@ -2,25 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
-import 'package:interior_ai/app/features/presentation/interior_design/cubit/interior_design_cubit.dart';
-import 'package:interior_ai/app/features/presentation/interior_design/cubit/interior_design_state.dart';
 import 'package:interior_ai/app/common/widgets/dialogs/custom_style_bottom_sheet.dart';
 import 'package:interior_ai/app/common/widgets/style_grid_item.dart';
-import 'package:interior_ai/app/features/presentation/interior_design/enums/design_style.dart';
+import 'package:interior_ai/app/features/presentation/garden_design/cubit/garden_design_cubit.dart';
+import 'package:interior_ai/app/features/presentation/garden_design/cubit/garden_design_state.dart';
+import 'package:interior_ai/app/features/presentation/garden_design/enums/garden_style.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 
-class StyleStep extends StatelessWidget {
-  const StyleStep({super.key, required this.state});
+class GardenStyleStep extends StatelessWidget {
+  const GardenStyleStep({super.key, required this.state});
 
-  final InteriorDesignState state;
+  final GardenDesignState state;
 
-  Future<void> _onSelect(BuildContext context, DesignStyle style) async {
-    final cubit = context.read<InteriorDesignCubit>();
+  Future<void> _onSelect(BuildContext context, GardenStyle style) async {
+    final cubit = context.read<GardenDesignCubit>();
     cubit.selectStyle(style);
     if (!style.isCustom) return;
     final prompt = await CustomStyleBottomSheet.show(
       context,
-      promptLibrary: AppStrings.interiorPromptLibraryItems,
+      promptLibrary: AppStrings.gardenPromptLibraryItems,
       initialPrompt: state.customPrompt,
     );
     if (prompt != null) cubit.setCustomPrompt(prompt);
@@ -55,7 +55,7 @@ class StyleStep extends StatelessWidget {
           GridView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: DesignStyle.values.length,
+            itemCount: GardenStyle.values.length,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               crossAxisSpacing: context.width12,
@@ -63,11 +63,12 @@ class StyleStep extends StatelessWidget {
               childAspectRatio: 0.92,
             ),
             itemBuilder: (context, index) {
-              final style = DesignStyle.values[index];
+              final style = GardenStyle.values[index];
               return StyleGridItem(
                 label: style.label,
                 isCustom: style.isCustom,
                 imageAsset: style.isCustom ? null : style.previewImage,
+                customImage: style.isCustom ? style.previewImage : null,
                 isSelected: state.style == style,
                 isDimmed: state.style != null && state.style != style,
                 onTap: () => _onSelect(context, style),

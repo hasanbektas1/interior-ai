@@ -178,6 +178,16 @@ final class AppStrings {
   static const String replaceAddPhotoSubtitle =
       "Take a photo, choose from library or use an example photo to create.";
 
+  // GARDEN DESIGN
+  static const String gardenDesign = "Garden Design";
+  static const List<String> gardenPromptLibraryItems = [
+    "Add colorful flowers along the path and a small pergola.",
+    "Replace the grass with stone tiles and add a modern water fountain.",
+    "Make it look like a Japanese zen garden with sand and rocks.",
+    "Add garden lights and a wooden seating area in the corner.",
+    "Turn it into a tropical garden with palm trees and bright plants.",
+  ];
+
   static const List<String> interiorPromptLibraryItems = [
     "Modern Scandinavian living room with natural light, light wood furniture, and cozy textures",
     "Luxury master bedroom with dark tones, velvet accents, and gold lighting fixtures",

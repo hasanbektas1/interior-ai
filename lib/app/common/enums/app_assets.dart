@@ -56,7 +56,33 @@ enum AppAsset {
   roomOther('assets/svg/interior_design/other_svg.svg'),
 
   // INTERIOR DESIGN RESULT
-  interiorResult('assets/png/interrior_design/interrior_ai_result_png.png');
+  interiorResult('assets/png/interrior_design/interrior_ai_result_png.png'),
+
+  // GARDEN DESIGN
+  gardenCustomIllustration('assets/png/garden_design/garden_design_custom.png'),
+  gardenExample1('assets/png/garden_design/garden_design_1.png'),
+  gardenExample2('assets/png/garden_design/garden_design_2.png'),
+  gardenExample3('assets/png/garden_design/garden_design_3.png'),
+  gardenStyleCity('assets/png/garden_design/garden_design_city.png'),
+  gardenStyleModern('assets/png/garden_design/garden_design_modern.png'),
+  gardenStyleContemporary(
+    'assets/png/garden_design/garden_design_contemporary.png',
+  ),
+  gardenStyleSmall('assets/png/garden_design/garden_design_small.png'),
+  gardenStyleApartment('assets/png/garden_design/garden_design_apartment.png'),
+  gardenStyleLuxury('assets/png/garden_design/garden_design_luxury.png'),
+  gardenStyleVegetable('assets/png/garden_design/garden_design_vegetable.png'),
+  gardenStyleMediterranean(
+    'assets/png/garden_design/garden_design_mediterranean.png',
+  ),
+  gardenStyleBeach('assets/png/garden_design/garden_design_beach.png'),
+  gardenStyleLowBudget('assets/png/garden_design/garden_design_lowbudget.png'),
+  gardenStyleWedding('assets/png/garden_design/garden_design_wedding.png'),
+  gardenStyleRural('assets/png/garden_design/garden_design_rural.png'),
+  gardenStyleRestaurant('assets/png/garden_design/garden_design_restaurant.png'),
+  gardenStyleInformal('assets/png/garden_design/garden_design_informal.png'),
+  gardenStyleAmerican('assets/png/garden_design/garden_design_american.png'),
+  gardenStyleEnglish('assets/png/garden_design/garden_design_english.png');
 
   final String path;
   const AppAsset(this.path);

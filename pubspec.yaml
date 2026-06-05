@@ -33,6 +33,7 @@ flutter:
     - assets/png/onboarding_mini/
     - assets/png/onboarding_result/
     - assets/png/interrior_design/
+    - assets/png/garden_design/
     - assets/png/paywall/
     - assets/png/settings/
     - assets/svg/home/

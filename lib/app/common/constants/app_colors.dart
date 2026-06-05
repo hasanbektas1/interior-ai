@@ -33,4 +33,5 @@ final class AppColors {
   static const Color paletteScrim = Color(0x995E5E5E);
   static const Color progressArcStart = Color(0xff71C6F6);
   static const Color progressArcEnd = Color(0xffA05DF5);
+  static const Color styleScrim = Color(0x99323232);
 }

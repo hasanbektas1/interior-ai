@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
+import 'package:interior_ai/app/common/widgets/dialogs/add_photo_bottom_sheet.dart';
+import 'package:interior_ai/app/common/widgets/dialogs/remove_photo_dialog.dart';
+import 'package:interior_ai/app/common/widgets/photo_input_step.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/cubit/interior_design_cubit.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/cubit/interior_design_state.dart';
-import 'package:interior_ai/app/common/widgets/dialogs/add_photo_bottom_sheet.dart';
-import 'package:interior_ai/app/common/widgets/example_photo_list.dart';
-import 'package:interior_ai/app/common/widgets/photo_picker_box.dart';
-import 'package:interior_ai/app/common/widgets/dialogs/remove_photo_dialog.dart';
-import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 
 class AddPhotoStep extends StatelessWidget {
   const AddPhotoStep({super.key, required this.state});
@@ -31,43 +28,14 @@ class AddPhotoStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<InteriorDesignCubit>();
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(height: context.height24),
-        const Text(
-          AppStrings.interiorAddYourPhoto,
-          style: TextStyle(
-            color: AppColors.smokyBlack,
-            fontSize: 16,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        SizedBox(height: context.height12),
-        Expanded(
-          child: PhotoPickerBox(
-            photoPath: state.selectedPhotoPath,
-            onAdd: () => _onAddPressed(context),
-            onRemove: () => _onRemovePressed(context),
-          ),
-        ),
-        SizedBox(height: context.height20),
-        const Text(
-          AppStrings.interiorUseExamplePhoto,
-          style: TextStyle(
-            color: AppColors.smokyBlack,
-            fontSize: 16,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        SizedBox(height: context.height12),
-        ExamplePhotoList(
-          photos: kExamplePhotos,
-          selectedIndex: state.exampleIndex,
-          onSelect: cubit.selectExample,
-        ),
-        SizedBox(height: context.height8),
-      ],
+    return PhotoInputStep(
+      label: AppStrings.interiorAddYourPhoto,
+      photoPath: state.selectedPhotoPath,
+      exampleIndex: state.exampleIndex,
+      photos: kExamplePhotos,
+      onAdd: () => _onAddPressed(context),
+      onRemove: () => _onRemovePressed(context),
+      onSelectExample: cubit.selectExample,
     );
   }
 }

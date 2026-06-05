@@ -3,6 +3,7 @@ import 'package:interior_ai/app/common/constants/app_theme_data.dart';
 import 'package:interior_ai/app/common/functions/app_functions.dart';
 import 'package:interior_ai/app/common/get_it/get_it.dart';
 import 'package:interior_ai/app/features/presentation/collection/cubit/collection_cubit.dart';
+import 'package:interior_ai/app/features/presentation/garden_design/cubit/garden_design_cubit.dart';
 import 'package:interior_ai/app/features/presentation/home/cubit/home_cubit.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/cubit/interior_design_cubit.dart';
 import 'package:interior_ai/app/features/presentation/onboarding/cubit/onboarding_cubit.dart';
@@ -33,6 +34,7 @@ class MainApp extends StatelessWidget {
         BlocProvider(create: (context) => getIt.get<CollectionCubit>()),
         BlocProvider(create: (context) => getIt.get<StyleReferenceCubit>()),
         BlocProvider(create: (context) => getIt.get<ReplaceObjectsCubit>()),
+        BlocProvider(create: (context) => getIt.get<GardenDesignCubit>()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

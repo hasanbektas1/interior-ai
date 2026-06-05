@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:interior_ai/app/common/enums/app_assets.dart';
+import 'package:interior_ai/app/features/presentation/garden_design/cubit/garden_design_cubit.dart';
+import 'package:interior_ai/app/features/presentation/garden_design/view/garden_design_view.dart';
 import 'package:interior_ai/app/features/presentation/home/widgets/home_card.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/cubit/interior_design_cubit.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/view/interior_design_view.dart';
@@ -96,7 +98,14 @@ class HomeContent extends StatelessWidget {
                           height: tileHeight,
                           child: HomeCard(
                             image: AppAsset.homeGardenDesign,
-                            onTap: () {},
+                            onTap: () {
+                              context.read<GardenDesignCubit>().reset();
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (_) => const GardenDesignView(),
+                                ),
+                              );
+                            },
                           ),
                         ),
                       ],
