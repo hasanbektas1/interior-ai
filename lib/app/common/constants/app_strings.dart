@@ -188,6 +188,20 @@ final class AppStrings {
     "Turn it into a tropical garden with palm trees and bright plants.",
   ];
 
+  // EXTERIOR DESIGN
+  static const String exteriorDesign = "Exterior Design";
+  static const String exteriorBuildingTypeTitle = "Choose Building Type";
+  static const String exteriorBuildingType = "Building Type";
+  static const String exteriorBuildingTypeSubtitle =
+      "Choose a building type and let AI transform your space";
+  static const List<String> exteriorPromptLibraryItems = [
+    "Change the exterior to a modern white and wood style.",
+    "Add stone cladding and larger windows.",
+    "Turn it into a minimalist black facade with glass doors.",
+    "Add a balcony and green plants on the walls.",
+    "Make it look like a rustic cabin with wooden panels.",
+  ];
+
   static const List<String> interiorPromptLibraryItems = [
     "Modern Scandinavian living room with natural light, light wood furniture, and cozy textures",
     "Luxury master bedroom with dark tones, velvet accents, and gold lighting fixtures",

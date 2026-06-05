@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
-import 'package:interior_ai/app/features/presentation/interior_design/cubit/interior_design_cubit.dart';
-import 'package:interior_ai/app/features/presentation/interior_design/cubit/interior_design_state.dart';
 import 'package:interior_ai/app/common/widgets/color_palette_tile.dart';
-import 'package:interior_ai/app/features/presentation/interior_design/enums/color_palette.dart';
+import 'package:interior_ai/app/features/presentation/exterior_design/cubit/exterior_design_cubit.dart';
+import 'package:interior_ai/app/features/presentation/exterior_design/cubit/exterior_design_state.dart';
+import 'package:interior_ai/app/features/presentation/exterior_design/enums/exterior_color_palette.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 
-class ColorPaletteStep extends StatelessWidget {
-  const ColorPaletteStep({super.key, required this.state});
+class ExteriorPaletteStep extends StatelessWidget {
+  const ExteriorPaletteStep({super.key, required this.state});
 
-  final InteriorDesignState state;
+  final ExteriorDesignState state;
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<InteriorDesignCubit>();
+    final cubit = context.read<ExteriorDesignCubit>();
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       padding: EdgeInsets.only(top: context.height16, bottom: context.height16),
@@ -31,7 +31,7 @@ class ColorPaletteStep extends StatelessWidget {
             ),
           ),
           SizedBox(height: context.height16),
-          for (final palette in ColorPalette.values)
+          for (final palette in ExteriorColorPalette.values)
             Padding(
               padding: EdgeInsets.only(bottom: context.height12),
               child: ColorPaletteTile(

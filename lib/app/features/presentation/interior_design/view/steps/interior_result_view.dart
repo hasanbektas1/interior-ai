@@ -80,52 +80,42 @@ class InteriorResultView extends StatelessWidget {
         child: Column(
           children: [
             _Header(onShare: _onShare, onClose: onClose),
+            SizedBox(height: context.height8),
             Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: context.height16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: context.height8),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(context.width16),
-                      child: SizedBox(
-                        width: double.infinity,
-                        height: context.height340,
-                        child: Image.asset(
-                          AppAsset.interiorResult.path,
-                          fit: BoxFit.cover,
-                          errorBuilder: (_, __, ___) =>
-                              const ColoredBox(color: AppColors.magnolia),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: context.height20),
-                    if (_isCustom && (state.customPrompt?.isNotEmpty ?? false))
-                      _PromptSection(prompt: state.customPrompt!),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: ResultInfoChip(
-                            label: AppStrings.interiorRoomType,
-                            value: _roomValue,
-                            icon: state.roomType?.icon,
-                          ),
-                        ),
-                        SizedBox(width: context.width12),
-                        Expanded(
-                          child: ResultInfoChip(
-                            label: AppStrings.interiorStyle,
-                            value: state.style?.label ?? '',
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(context.width16),
+                child: Image.asset(
+                  AppAsset.interiorResult.path,
+                  width: double.infinity,
+                  height: double.infinity,
+                  fit: BoxFit.cover,
+                  errorBuilder: (_, __, ___) =>
+                      const ColoredBox(color: AppColors.magnolia),
                 ),
               ),
             ),
+            SizedBox(height: context.height20),
+            if (_isCustom && (state.customPrompt?.isNotEmpty ?? false))
+              _PromptSection(prompt: state.customPrompt!),
+            Row(
+              children: [
+                Expanded(
+                  child: ResultInfoChip(
+                    label: AppStrings.interiorRoomType,
+                    value: _roomValue,
+                    icon: state.roomType?.icon,
+                  ),
+                ),
+                SizedBox(width: context.width12),
+                Expanded(
+                  child: ResultInfoChip(
+                    label: AppStrings.interiorStyle,
+                    value: state.style?.label ?? '',
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: context.height20),
             _BottomBar(
               onDelete: () => _onDelete(context),
               onRegenerate: () => _onRegenerate(context),

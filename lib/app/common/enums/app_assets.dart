@@ -82,7 +82,65 @@ enum AppAsset {
   gardenStyleRestaurant('assets/png/garden_design/garden_design_restaurant.png'),
   gardenStyleInformal('assets/png/garden_design/garden_design_informal.png'),
   gardenStyleAmerican('assets/png/garden_design/garden_design_american.png'),
-  gardenStyleEnglish('assets/png/garden_design/garden_design_english.png');
+  gardenStyleEnglish('assets/png/garden_design/garden_design_english.png'),
+
+  // EXTERIOR DESIGN
+  exteriorCustomIllustration(
+    'assets/png/exterior_design/exterior_design_custom.png',
+  ),
+  exteriorExample1('assets/png/exterior_design/exterior_design_1.png'),
+  exteriorExample2('assets/png/exterior_design/exterior_design_2.png'),
+  exteriorExample3('assets/png/exterior_design/exterior_design_3.png'),
+  exteriorExample4('assets/png/exterior_design/exterior_design_4.png'),
+  exteriorBuildingApartment(
+    'assets/png/exterior_design/exterior_design_apartment.png',
+  ),
+  exteriorBuildingHouse('assets/png/exterior_design/exterior_design_house.png'),
+  exteriorBuildingOffice(
+    'assets/png/exterior_design/exterior_design_offisebuilding.png',
+  ),
+  exteriorBuildingResidental(
+    'assets/png/exterior_design/exterior_design_residental.png',
+  ),
+  exteriorBuildingRetail(
+    'assets/png/exterior_design/exterior_design_retail.png',
+  ),
+  exteriorBuildingVilla('assets/png/exterior_design/exterior_design_villa.png'),
+  exteriorStyleArtDeco('assets/png/exterior_design/exterior_design_artdeco.png'),
+  exteriorStyleBrutalist(
+    'assets/png/exterior_design/exterior_design_brutalist.png',
+  ),
+  exteriorStyleChinese('assets/png/exterior_design/exterior_design_chinese.png'),
+  exteriorStyleCottage('assets/png/exterior_design/exterior_design_contage.png'),
+  exteriorStyleFarmHouse(
+    'assets/png/exterior_design/exterior_design_farmhouse.png',
+  ),
+  exteriorStyleFrench('assets/png/exterior_design/exterior_design_french.png'),
+  exteriorStyleGothic('assets/png/exterior_design/exterior_design_gothic.png'),
+  exteriorStyleItaliante(
+    'assets/png/exterior_design/exterior_design_italiante.png',
+  ),
+  exteriorStyleJapanese(
+    'assets/png/exterior_design/exterior_design_japanese.png',
+  ),
+  exteriorStyleMediterranean(
+    'assets/png/exterior_design/exterior_design_mediterranean.png',
+  ),
+  exteriorStyleMidCentury(
+    'assets/png/exterior_design/exterior_design_midcentury.png',
+  ),
+  exteriorStyleMiddleEastern(
+    'assets/png/exterior_design/exterior_design_middleeastern.png',
+  ),
+  exteriorStyleMinimalistic(
+    'assets/png/exterior_design/exterior_design_minimalistic.png',
+  ),
+  exteriorStyleModern('assets/png/exterior_design/exterior_design_modern.png'),
+  exteriorStyleMorocco('assets/png/exterior_design/exterior_design_morocco.png'),
+  exteriorStyleSpanish('assets/png/exterior_design/exterior_design_spanish.png'),
+  exteriorStyleSkiChalet(
+    'assets/png/exterior_design/exterior_design_skichalet.png',
+  );
 
   final String path;
   const AppAsset(this.path);

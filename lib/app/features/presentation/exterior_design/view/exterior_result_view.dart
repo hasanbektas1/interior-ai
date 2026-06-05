@@ -4,19 +4,22 @@ import 'package:interior_ai/app/common/constants/app_strings.dart';
 import 'package:interior_ai/app/common/enums/app_assets.dart';
 import 'package:interior_ai/app/common/widgets/buttons/gradient_button.dart';
 import 'package:interior_ai/app/common/widgets/dialogs/result_action_dialog.dart';
+import 'package:interior_ai/app/common/widgets/result_info_chip.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 import 'package:interior_ai/core/extensions/widgets/padding_extensions.dart';
 import 'package:share_plus/share_plus.dart';
 
-class GardenResultView extends StatelessWidget {
-  const GardenResultView({
+class ExteriorResultView extends StatelessWidget {
+  const ExteriorResultView({
     super.key,
+    required this.buildingTypeLabel,
     required this.styleLabel,
     required this.customPrompt,
     required this.onClose,
     required this.onRegenerate,
   });
 
+  final String buildingTypeLabel;
   final String styleLabel;
   final String? customPrompt;
   final VoidCallback onClose;
@@ -69,7 +72,7 @@ class GardenResultView extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(context.width16),
                 child: Image.asset(
-                  AppAsset.gardenStyleCity.path,
+                  AppAsset.exteriorStyleModern.path,
                   width: double.infinity,
                   height: double.infinity,
                   fit: BoxFit.cover,
@@ -111,7 +114,23 @@ class GardenResultView extends StatelessWidget {
               ),
               SizedBox(height: context.height16),
             ],
-            _StyleSegment(value: styleLabel),
+            Row(
+              children: [
+                Expanded(
+                  child: ResultInfoChip(
+                    label: AppStrings.exteriorBuildingType,
+                    value: buildingTypeLabel,
+                  ),
+                ),
+                SizedBox(width: context.width12),
+                Expanded(
+                  child: ResultInfoChip(
+                    label: AppStrings.interiorStyle,
+                    value: styleLabel,
+                  ),
+                ),
+              ],
+            ),
             SizedBox(height: context.height20),
             Row(
               children: [
@@ -136,54 +155,6 @@ class GardenResultView extends StatelessWidget {
             SizedBox(height: context.height16),
           ],
         ).symmetricPadding(horizontal: context.width24),
-      ),
-    );
-  }
-}
-
-class _StyleSegment extends StatelessWidget {
-  const _StyleSegment({required this.value});
-
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: context.height52,
-      decoration: BoxDecoration(
-        color: AppColors.cloudGray,
-        borderRadius: BorderRadius.circular(14),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const Expanded(
-            child: Center(
-              child: Text(
-                AppStrings.interiorStyle,
-                style: TextStyle(
-                  color: AppColors.smokyBlack,
-                  fontSize: 15,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
-          ),
-          Container(width: 1, color: AppColors.platinum),
-          Expanded(
-            child: Center(
-              child: Text(
-                value,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  color: AppColors.smokyBlack,
-                  fontSize: 15,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }

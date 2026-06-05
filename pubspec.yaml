@@ -34,6 +34,7 @@ flutter:
     - assets/png/onboarding_result/
     - assets/png/interrior_design/
     - assets/png/garden_design/
+    - assets/png/exterior_design/
     - assets/png/paywall/
     - assets/png/settings/
     - assets/svg/home/

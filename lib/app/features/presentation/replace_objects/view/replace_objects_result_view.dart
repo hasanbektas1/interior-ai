@@ -61,60 +61,53 @@ class ReplaceObjectsResultView extends StatelessWidget {
         child: Column(
           children: [
             _Header(onShare: _onShare, onClose: onClose),
+            SizedBox(height: context.height8),
             Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: context.height16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: context.height8),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(context.width16),
-                      child: SizedBox(
-                        width: double.infinity,
-                        height: context.height300,
-                        child: Image.asset(
-                          AppAsset.interiorResult.path,
-                          fit: BoxFit.cover,
-                          errorBuilder: (_, __, ___) =>
-                              const ColoredBox(color: AppColors.magnolia),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: context.height16),
-                    const Text(
-                      AppStrings.interiorPrompt,
-                      style: TextStyle(
-                        color: AppColors.smokyBlack,
-                        fontSize: 17,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    SizedBox(height: context.height10),
-                    Container(
-                      width: double.infinity,
-                      padding: EdgeInsets.all(context.width16),
-                      decoration: BoxDecoration(
-                        color: AppColors.cloudGray,
-                        borderRadius: BorderRadius.circular(14),
-                      ),
-                      child: Text(
-                        prompt,
-                        style: const TextStyle(
-                          color: AppColors.smokyBlack,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          height: 1.3,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: context.height16),
-                    const _VariantStrip(),
-                  ],
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(context.width16),
+                child: Image.asset(
+                  AppAsset.interiorResult.path,
+                  width: double.infinity,
+                  height: double.infinity,
+                  fit: BoxFit.cover,
+                  errorBuilder: (_, __, ___) =>
+                      const ColoredBox(color: AppColors.magnolia),
                 ),
               ),
             ),
+            SizedBox(height: context.height16),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: const Text(
+                AppStrings.interiorPrompt,
+                style: TextStyle(
+                  color: AppColors.smokyBlack,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+            SizedBox(height: context.height10),
+            Container(
+              width: double.infinity,
+              padding: EdgeInsets.all(context.width16),
+              decoration: BoxDecoration(
+                color: AppColors.cloudGray,
+                borderRadius: BorderRadius.circular(14),
+              ),
+              child: Text(
+                prompt,
+                style: const TextStyle(
+                  color: AppColors.smokyBlack,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  height: 1.3,
+                ),
+              ),
+            ),
+            SizedBox(height: context.height16),
+            const _VariantStrip(),
+            SizedBox(height: context.height20),
             Row(
               children: [
                 _CircleIconButton(

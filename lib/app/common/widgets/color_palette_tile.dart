@@ -2,19 +2,20 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
-import 'package:interior_ai/app/features/presentation/interior_design/enums/color_palette.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 
 class ColorPaletteTile extends StatelessWidget {
   const ColorPaletteTile({
     super.key,
-    required this.palette,
+    required this.label,
+    required this.colors,
     required this.isSelected,
     required this.isDimmed,
     required this.onTap,
   });
 
-  final ColorPalette palette;
+  final String label;
+  final List<Color> colors;
   final bool isSelected;
   final bool isDimmed;
   final VoidCallback onTap;
@@ -46,7 +47,7 @@ class ColorPaletteTile extends StatelessWidget {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      for (final color in palette.colors)
+                      for (final color in colors)
                         Expanded(child: ColoredBox(color: color)),
                     ],
                   ),
@@ -63,7 +64,7 @@ class ColorPaletteTile extends StatelessWidget {
                       padding: EdgeInsets.symmetric(horizontal: context.width16),
                       color: AppColors.paletteScrim,
                       child: Text(
-                        palette.label,
+                        label,
                         style: const TextStyle(
                           color: AppColors.white,
                           fontSize: 16,
