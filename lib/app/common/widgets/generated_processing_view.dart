@@ -2,12 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
 import 'package:interior_ai/app/common/widgets/buttons/app_button.dart';
+import 'package:interior_ai/app/common/widgets/gradient_progress_ring.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 
-class InteriorProcessingView extends StatelessWidget {
-  const InteriorProcessingView({super.key, required this.onBackToHome});
+class GeneratedProcessingView extends StatelessWidget {
+  const GeneratedProcessingView({
+    super.key,
+    required this.onBackToHome,
+    this.onBack,
+  });
 
   final VoidCallback onBackToHome;
+  final VoidCallback? onBack;
 
   @override
   Widget build(BuildContext context) {
@@ -18,15 +24,21 @@ class InteriorProcessingView extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: context.width24),
           child: Column(
             children: [
-              const Spacer(),
-              SizedBox(
-                width: context.width80,
-                height: context.width80,
-                child: const CircularProgressIndicator(
-                  color: AppColors.softPurple,
-                  strokeWidth: 4,
+              if (onBack != null)
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: onBack,
+                    child: Icon(
+                      Icons.chevron_left_rounded,
+                      size: context.width32,
+                      color: AppColors.smokyBlack,
+                    ),
+                  ),
                 ),
-              ),
+              const Spacer(),
+              GradientProgressRing(size: context.width160, strokeWidth: 10),
               SizedBox(height: context.height24),
               const Text(
                 AppStrings.interiorProcessing,

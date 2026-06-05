@@ -31,4 +31,6 @@ final class AppColors {
   static const Color gradientBlue = Color(0xff539CF6);
   static const Color gradientPurple = Color(0xffA66CEC);
   static const Color paletteScrim = Color(0x995E5E5E);
+  static const Color progressArcStart = Color(0xff71C6F6);
+  static const Color progressArcEnd = Color(0xffA05DF5);
 }

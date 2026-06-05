@@ -4,17 +4,15 @@ import 'package:interior_ai/app/common/constants/app_strings.dart';
 import 'package:interior_ai/app/common/widgets/step_progress_bar.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 
-class InteriorHeader extends StatelessWidget {
-  const InteriorHeader({
+class StyleReferenceHeader extends StatelessWidget {
+  const StyleReferenceHeader({
     super.key,
     required this.filledCount,
     required this.onClose,
-    this.onBack,
   });
 
   final int filledCount;
   final VoidCallback onClose;
-  final VoidCallback? onBack;
 
   @override
   Widget build(BuildContext context) {
@@ -26,26 +24,31 @@ class InteriorHeader extends StatelessWidget {
             alignment: Alignment.center,
             children: [
               const Text(
-                AppStrings.interiorDesign,
+                AppStrings.styleReference,
                 style: TextStyle(
                   color: AppColors.smokyBlack,
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              if (onBack != null)
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onTap: onBack,
-                    child: Icon(
-                      Icons.chevron_left_rounded,
-                      size: context.width32,
-                      color: AppColors.smokyBlack,
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Container(
+                  width: context.width36,
+                  height: context.width36,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(context.width10),
+                    gradient: const LinearGradient(
+                      colors: [AppColors.gradientBlue, AppColors.gradientPurple],
                     ),
                   ),
+                  child: Icon(
+                    Icons.diamond_outlined,
+                    size: context.width20,
+                    color: AppColors.white,
+                  ),
                 ),
+              ),
               Align(
                 alignment: Alignment.centerRight,
                 child: GestureDetector(
@@ -62,7 +65,7 @@ class InteriorHeader extends StatelessWidget {
           ),
         ),
         SizedBox(height: context.height16),
-        StepProgressBar(filledCount: filledCount),
+        StepProgressBar(filledCount: filledCount, count: 2),
       ],
     );
   }

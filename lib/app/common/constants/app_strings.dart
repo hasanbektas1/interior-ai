@@ -167,6 +167,10 @@ final class AppStrings {
   static const String collectionDesignDeletedSubtitle =
       "Design successfully removed from your collection.";
 
+  // STYLE REFERENCE
+  static const String styleReference = "Style Reference";
+  static const String styleAddReferencePhoto = "Add a Reference Photo";
+
   static const List<String> interiorPromptLibraryItems = [
     "Modern Scandinavian living room with natural light, light wood furniture, and cozy textures",
     "Luxury master bedroom with dark tones, velvet accents, and gold lighting fixtures",

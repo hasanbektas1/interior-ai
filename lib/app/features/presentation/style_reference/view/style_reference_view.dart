@@ -3,51 +3,50 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
 import 'package:interior_ai/app/common/widgets/buttons/app_button.dart';
-import 'package:interior_ai/app/features/presentation/interior_design/cubit/interior_design_cubit.dart';
-import 'package:interior_ai/app/features/presentation/interior_design/cubit/interior_design_state.dart';
-import 'package:interior_ai/app/features/presentation/interior_design/enums/interior_step.dart';
-import 'package:interior_ai/app/features/presentation/interior_design/view/steps/add_photo_step.dart';
-import 'package:interior_ai/app/features/presentation/interior_design/view/steps/color_palette_step.dart';
 import 'package:interior_ai/app/common/widgets/generated_error_view.dart';
 import 'package:interior_ai/app/common/widgets/generated_processing_view.dart';
-import 'package:interior_ai/app/features/presentation/interior_design/view/steps/interior_result_view.dart';
-import 'package:interior_ai/app/features/presentation/interior_design/view/steps/room_type_step.dart';
-import 'package:interior_ai/app/features/presentation/interior_design/view/steps/style_step.dart';
-import 'package:interior_ai/app/features/presentation/interior_design/widgets/interior_header.dart';
+import 'package:interior_ai/app/features/presentation/style_reference/cubit/style_reference_cubit.dart';
+import 'package:interior_ai/app/features/presentation/style_reference/cubit/style_reference_state.dart';
+import 'package:interior_ai/app/features/presentation/style_reference/enums/style_reference_step.dart';
+import 'package:interior_ai/app/features/presentation/style_reference/view/steps/style_reference_photo_step.dart';
+import 'package:interior_ai/app/features/presentation/style_reference/view/style_reference_result_view.dart';
+import 'package:interior_ai/app/features/presentation/style_reference/widgets/style_reference_header.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 import 'package:interior_ai/core/extensions/widgets/padding_extensions.dart';
 
-class InteriorDesignView extends StatelessWidget {
-  const InteriorDesignView({super.key});
+class StyleReferenceView extends StatelessWidget {
+  const StyleReferenceView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const _InteriorDesignBody();
+    return const _StyleReferenceBody();
   }
 }
 
-class _InteriorDesignBody extends StatelessWidget {
-  const _InteriorDesignBody();
+class _StyleReferenceBody extends StatelessWidget {
+  const _StyleReferenceBody();
 
   void _exit(BuildContext context) => Navigator.of(context).maybePop();
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<InteriorDesignCubit, InteriorDesignState>(
+    return BlocBuilder<StyleReferenceCubit, StyleReferenceState>(
       builder: (context, state) {
-        final cubit = context.read<InteriorDesignCubit>();
+        final cubit = context.read<StyleReferenceCubit>();
 
-        if (state.step == InteriorStep.processing) {
-          return GeneratedProcessingView(onBackToHome: () => _exit(context));
+        if (state.step == StyleReferenceStep.processing) {
+          return GeneratedProcessingView(
+            onBackToHome: () => _exit(context),
+            onBack: () => _exit(context),
+          );
         }
-        if (state.step == InteriorStep.result) {
-          return InteriorResultView(
-            state: state,
+        if (state.step == StyleReferenceStep.result) {
+          return StyleReferenceResultView(
             onClose: () => _exit(context),
             onRegenerate: cubit.retry,
           );
         }
-        if (state.step == InteriorStep.error) {
+        if (state.step == StyleReferenceStep.error) {
           return GeneratedErrorView(
             onTryAgain: cubit.retry,
             onBackToHome: () => _exit(context),
@@ -59,10 +58,9 @@ class _InteriorDesignBody extends StatelessWidget {
           body: SafeArea(
             child: Column(
               children: [
-                InteriorHeader(
+                StyleReferenceHeader(
                   filledCount: state.step.progressIndex + 1,
                   onClose: () => _exit(context),
-                  onBack: state.step == InteriorStep.addPhoto ? null : cubit.back,
                 ),
                 Expanded(
                   child: ClipRect(
@@ -100,18 +98,26 @@ class _InteriorDesignBody extends StatelessWidget {
 class _StepContent extends StatelessWidget {
   const _StepContent({required this.state});
 
-  final InteriorDesignState state;
+  final StyleReferenceState state;
 
   @override
   Widget build(BuildContext context) {
     return switch (state.step) {
-      InteriorStep.addPhoto => AddPhotoStep(state: state),
-      InteriorStep.roomType => RoomTypeStep(state: state),
-      InteriorStep.style => StyleStep(state: state),
-      InteriorStep.colorPalette => ColorPaletteStep(state: state),
-      InteriorStep.processing => const SizedBox.shrink(),
-      InteriorStep.result => const SizedBox.shrink(),
-      InteriorStep.error => const SizedBox.shrink(),
+      StyleReferenceStep.yourPhoto => StyleReferencePhotoStep(
+          label: AppStrings.interiorAddYourPhoto,
+          photoPath: state.photoSelectedPath,
+          exampleIndex: state.photoIndex,
+          photos: kStylePhotos,
+        ),
+      StyleReferenceStep.referencePhoto => StyleReferencePhotoStep(
+          label: AppStrings.styleAddReferencePhoto,
+          photoPath: state.refSelectedPath,
+          exampleIndex: state.refIndex,
+          photos: kReferencePhotos,
+        ),
+      StyleReferenceStep.processing => const SizedBox.shrink(),
+      StyleReferenceStep.result => const SizedBox.shrink(),
+      StyleReferenceStep.error => const SizedBox.shrink(),
     };
   }
 }

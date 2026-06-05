@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
+import 'package:interior_ai/app/common/widgets/gradient_progress_ring.dart';
+import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 
 class ProcessingView extends StatelessWidget {
   const ProcessingView({super.key});
@@ -14,8 +16,8 @@ class ProcessingView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Text(
+          children: [
+            const Text(
               AppStrings.onboardingProcessingTitle,
               style: TextStyle(
                 color: AppColors.smokyBlack,
@@ -24,27 +26,23 @@ class ProcessingView extends StatelessWidget {
                 height: 1.2,
               ),
             ),
-            SizedBox(height: 10),
-            Text(
+            const SizedBox(height: 10),
+            const Text(
               AppStrings.onboardingProcessingSubtitle,
               style: TextStyle(
                 color: AppColors.nickel,
                 fontSize: 15,
               ),
             ),
-            SizedBox(height: 64),
+            const SizedBox(height: 64),
             Center(
-              child: SizedBox(
-                width: 80,
-                height: 80,
-                child: CircularProgressIndicator(
-                  color: AppColors.hanPurple,
-                  strokeWidth: 3,
-                ),
+              child: GradientProgressRing(
+                size: context.width140,
+                strokeWidth: 10,
               ),
             ),
-            SizedBox(height: 24),
-            Center(
+            const SizedBox(height: 24),
+            const Center(
               child: Text(
                 "Processing...",
                 style: TextStyle(

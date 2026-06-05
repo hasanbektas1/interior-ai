@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 
-class InteriorProgressBar extends StatelessWidget {
-  const InteriorProgressBar({
+class StepProgressBar extends StatelessWidget {
+  const StepProgressBar({
     super.key,
     required this.filledCount,
     this.count = 4,

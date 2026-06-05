@@ -4,6 +4,8 @@ import 'package:interior_ai/app/common/enums/app_assets.dart';
 import 'package:interior_ai/app/features/presentation/home/widgets/home_card.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/cubit/interior_design_cubit.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/view/interior_design_view.dart';
+import 'package:interior_ai/app/features/presentation/style_reference/cubit/style_reference_cubit.dart';
+import 'package:interior_ai/app/features/presentation/style_reference/view/style_reference_view.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 
 class HomeContent extends StatelessWidget {
@@ -97,7 +99,14 @@ class HomeContent extends StatelessWidget {
                     height: tileHeight * 2 + context.height12,
                     child: HomeCard(
                       image: AppAsset.homeStyleReference,
-                      onTap: () {},
+                      onTap: () {
+                        context.read<StyleReferenceCubit>().reset();
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => const StyleReferenceView(),
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ],

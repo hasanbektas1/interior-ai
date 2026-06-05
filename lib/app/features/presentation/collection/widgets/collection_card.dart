@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
+import 'package:interior_ai/app/common/widgets/gradient_progress_ring.dart';
 import 'package:interior_ai/app/features/presentation/collection/models/collection_item.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 
@@ -66,14 +67,7 @@ class _GeneratingOverlay extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(
-              width: context.width44,
-              height: context.width44,
-              child: const CircularProgressIndicator(
-                color: AppColors.gradientPurple,
-                strokeWidth: 3,
-              ),
-            ),
+            GradientProgressRing(size: context.width44, strokeWidth: 4),
             SizedBox(height: context.height12),
             const Text(
               AppStrings.collectionGenerating,

@@ -7,6 +7,7 @@ import 'package:interior_ai/app/features/presentation/home/cubit/home_cubit.dart
 import 'package:interior_ai/app/features/presentation/interior_design/cubit/interior_design_cubit.dart';
 import 'package:interior_ai/app/features/presentation/onboarding/cubit/onboarding_cubit.dart';
 import 'package:interior_ai/app/features/presentation/settings/cubit/settings_cubit.dart';
+import 'package:interior_ai/app/features/presentation/style_reference/cubit/style_reference_cubit.dart';
 import 'package:interior_ai/app/features/presentation/splash/view/splash_view.dart';
 import 'package:interior_ai/core/helpers/navigation_helper/navigation_helper.dart';
 import 'package:interior_ai/core/keys/keys.dart';
@@ -29,6 +30,7 @@ class MainApp extends StatelessWidget {
         BlocProvider(create: (context) => getIt.get<SettingsCubit>()),
         BlocProvider(create: (context) => getIt.get<InteriorDesignCubit>()),
         BlocProvider(create: (context) => getIt.get<CollectionCubit>()),
+        BlocProvider(create: (context) => getIt.get<StyleReferenceCubit>()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

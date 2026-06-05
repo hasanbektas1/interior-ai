@@ -6,6 +6,7 @@ import 'package:interior_ai/app/features/presentation/home/cubit/home_cubit.dart
 import 'package:interior_ai/app/features/presentation/interior_design/cubit/interior_design_cubit.dart';
 import 'package:interior_ai/app/features/presentation/onboarding/cubit/onboarding_cubit.dart';
 import 'package:interior_ai/app/features/presentation/settings/cubit/settings_cubit.dart';
+import 'package:interior_ai/app/features/presentation/style_reference/cubit/style_reference_cubit.dart';
 import 'package:interior_ai/app/features/presentation/test/cubit/test_cubit.dart';
 import 'package:get_it/get_it.dart';
 
@@ -54,6 +55,7 @@ final class ServiceLocator {
       ..registerLazySingleton<SettingsCubit>(() => SettingsCubit())
       ..registerLazySingleton<InteriorDesignCubit>(() => InteriorDesignCubit())
       ..registerLazySingleton<CollectionCubit>(() => CollectionCubit())
+      ..registerLazySingleton<StyleReferenceCubit>(() => StyleReferenceCubit())
       ..registerLazySingleton<HomeCubit>(
         () => HomeCubit(testRepository: getIt<TestRepository>()),
       )

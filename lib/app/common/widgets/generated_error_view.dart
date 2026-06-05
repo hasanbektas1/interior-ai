@@ -3,8 +3,8 @@ import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 
-class InteriorErrorView extends StatelessWidget {
-  const InteriorErrorView({
+class GeneratedErrorView extends StatelessWidget {
+  const GeneratedErrorView({
     super.key,
     required this.onTryAgain,
     required this.onBackToHome,

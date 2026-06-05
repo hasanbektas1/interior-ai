@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
-import 'package:interior_ai/app/features/presentation/interior_design/cubit/interior_design_state.dart';
+import 'package:interior_ai/app/common/enums/app_assets.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 
 class ExamplePhotoList extends StatelessWidget {
   const ExamplePhotoList({
     super.key,
+    required this.photos,
     required this.selectedIndex,
     required this.onSelect,
   });
 
+  final List<AppAsset> photos;
   final int? selectedIndex;
   final ValueChanged<int> onSelect;
 
@@ -20,7 +22,7 @@ class ExamplePhotoList extends StatelessWidget {
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(),
-        itemCount: kExamplePhotos.length,
+        itemCount: photos.length,
         separatorBuilder: (_, __) => SizedBox(width: context.width12),
         itemBuilder: (context, index) {
           final bool isSelected = selectedIndex == index;
@@ -45,7 +47,7 @@ class ExamplePhotoList extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(context.width10),
                   child: Image.asset(
-                    kExamplePhotos[index].path,
+                    photos[index].path,
                     fit: BoxFit.cover,
                     errorBuilder: (_, __, ___) =>
                         const ColoredBox(color: AppColors.magnolia),
