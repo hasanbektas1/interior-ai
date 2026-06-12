@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:interior_ai/app/common/constants/app_strings.dart';
 import 'package:interior_ai/app/common/enums/app_assets.dart';
 import 'package:interior_ai/app/features/presentation/exterior_design/cubit/exterior_design_cubit.dart';
 import 'package:interior_ai/app/features/presentation/exterior_design/view/exterior_design_view.dart';
@@ -42,6 +43,8 @@ class HomeContent extends StatelessWidget {
                 height: context.height240,
                 child: HomeCard(
                   image: AppAsset.homeInteriorDesign,
+                  title: AppStrings.homeInteriorTitle,
+                  subtitle: AppStrings.homeInteriorSubtitle,
                   onTap: () {
                     context.read<InteriorDesignCubit>().reset();
                     Navigator.of(context).push(
@@ -61,6 +64,8 @@ class HomeContent extends StatelessWidget {
                     height: tileHeight,
                     child: HomeCard(
                       image: AppAsset.homeExteriorDesign,
+                      title: AppStrings.homeExteriorTitle,
+                      subtitle: AppStrings.homeExteriorSubtitle,
                       onTap: () {
                         context.read<ExteriorDesignCubit>().reset();
                         Navigator.of(context).push(
@@ -77,6 +82,8 @@ class HomeContent extends StatelessWidget {
                     height: tileHeight,
                     child: HomeCard(
                       image: AppAsset.homeReplaceObjects,
+                      title: AppStrings.homeReplaceObjectsTitle,
+                      subtitle: AppStrings.homeReplaceObjectsSubtitle,
                       onTap: () {
                         context.read<ReplaceObjectsCubit>().reset();
                         Navigator.of(context).push(
@@ -101,6 +108,8 @@ class HomeContent extends StatelessWidget {
                           height: tileHeight,
                           child: HomeCard(
                             image: AppAsset.homeFloorRestyle,
+                            title: AppStrings.homeFloorRestyleTitle,
+                            subtitle: AppStrings.homeFloorRestyleSubtitle,
                             onTap: () {
                               context.read<FloorRestyleCubit>().reset();
                               Navigator.of(context).push(
@@ -116,6 +125,8 @@ class HomeContent extends StatelessWidget {
                           height: tileHeight,
                           child: HomeCard(
                             image: AppAsset.homeGardenDesign,
+                            title: AppStrings.homeGardenTitle,
+                            subtitle: AppStrings.homeGardenSubtitle,
                             onTap: () {
                               context.read<GardenDesignCubit>().reset();
                               Navigator.of(context).push(
@@ -135,6 +146,8 @@ class HomeContent extends StatelessWidget {
                     height: tileHeight * 2 + context.height12,
                     child: HomeCard(
                       image: AppAsset.homeStyleReference,
+                      title: AppStrings.homeStyleReferenceTitle,
+                      subtitle: AppStrings.homeStyleReferenceSubtitle,
                       onTap: () {
                         context.read<StyleReferenceCubit>().reset();
                         Navigator.of(context).push(

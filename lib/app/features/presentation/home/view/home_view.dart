@@ -76,17 +76,20 @@ class HomeView extends StatelessWidget {
             MaterialPageRoute(builder: (_) => const PaywallView()),
           ),
           child: Container(
-            width: context.width40,
             height: context.height36,
+            padding: EdgeInsets.symmetric(horizontal: context.width16),
             decoration: BoxDecoration(
               color: AppColors.hanPurple,
-              borderRadius: BorderRadius.circular(context.width10),
+              borderRadius: BorderRadius.circular(context.width32),
             ),
             alignment: Alignment.center,
-            child: SvgPicture.asset(
-              AppAsset.homePremiumIcon.path,
-              width: context.width20,
-              height: context.height20,
+            child: const Text(
+              AppStrings.homePro,
+              style: TextStyle(
+                color: AppColors.white,
+                fontSize: 13,
+                fontWeight: FontWeight.w700,
+              ),
             ),
           ),
         ),

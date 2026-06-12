@@ -51,6 +51,22 @@ final class AppStrings {
     "Mediterranean",
   ];
 
+  // HOME
+  static const String homePro = "PRO";
+  static const String homeInteriorTitle = "Interior Design";
+  static const String homeInteriorSubtitle =
+      "Choose a style and let AI design your space";
+  static const String homeExteriorTitle = "Exterior Design";
+  static const String homeExteriorSubtitle = "Let AI craft the facade";
+  static const String homeReplaceObjectsTitle = "Replace Objects";
+  static const String homeReplaceObjectsSubtitle = "Transform objects with AI";
+  static const String homeFloorRestyleTitle = "Floor Restyle";
+  static const String homeFloorRestyleSubtitle = "Edit floor plans";
+  static const String homeGardenTitle = "Garden Design";
+  static const String homeGardenSubtitle = "New vibe for your garden";
+  static const String homeStyleReferenceTitle = "Style Reference";
+  static const String homeStyleReferenceSubtitle = "Style input for AI design";
+
   // BOTTOM NAV
   static const String navHome = "Home";
   static const String navCollection = "Collection";

@@ -1,11 +1,11 @@
 enum AppAsset {
   // HOME
-  homeInteriorDesign('assets/png/home/home_interior_design_png.png'),
-  homeExteriorDesign('assets/png/home/home_exterior_design_png.png'),
-  homeReplaceObjects('assets/png/home/home_replace_objects_png.png'),
-  homeFloorRestyle('assets/png/home/home_floor_restyle_png.png'),
-  homeGardenDesign('assets/png/home/home_garden_design_png.png'),
-  homeStyleReference('assets/png/home/home_style_reference_png.png'),
+  homeInteriorDesign('assets/png/home/interior_design_home.png'),
+  homeExteriorDesign('assets/png/home/exterior_design_home.png'),
+  homeReplaceObjects('assets/png/home/replace_objects_home.png'),
+  homeFloorRestyle('assets/png/home/floor_restyle_home.png'),
+  homeGardenDesign('assets/png/home/garden_design_home.png'),
+  homeStyleReference('assets/png/home/style_reference_home.png'),
   homePremiumIcon('assets/svg/home/home_premium_icon_svg.svg'),
   homeSettingsIcon('assets/svg/home/home_settings_svg.svg'),
 
