@@ -8,6 +8,10 @@ enum AppAsset {
   homeStyleReference('assets/png/home/style_reference_home.png'),
   homePremiumIcon('assets/svg/home/home_premium_icon_svg.svg'),
   homeSettingsIcon('assets/svg/home/home_settings_svg.svg'),
+  navHomeActive('assets/svg/home/home_active_icon.svg'),
+  navHomeInactive('assets/svg/home/home_inactive_icon.svg'),
+  navCollectionActive('assets/svg/home/collection_active_icon.svg'),
+  navCollectionInactive('assets/svg/home/collection_inactive_icon.svg'),
 
   // ONBOARDING SELECT
   onboardingSelectBedroom('assets/png/onboarding/select_bedroom_png.png'),

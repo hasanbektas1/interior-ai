@@ -38,4 +38,5 @@ final class AppColors {
   static const Color gainsboro = Color(0xffD9D9D9);
   static const Color sonicSilver = Color(0xff757575);
   static const Color whiteSmoke = Color(0xffF5F5F5);
+  static const Color homeNavBarText = Color(0xff9881FF);
 }
