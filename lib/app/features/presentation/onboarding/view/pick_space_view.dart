@@ -28,9 +28,9 @@ class PickSpaceView extends StatelessWidget {
               Text(
                 AppStrings.onboardingPickSpaceTitle,
                 style: TextStyle(
-                  color: AppColors.smokyBlack,
-                  fontSize: 26,
-                  fontWeight: FontWeight.w800,
+                  color: AppColors.richBlack,
+                  fontSize: 32,
+                  fontWeight: FontWeight.w600,
                   height: 1.2,
                 ),
               ),
@@ -38,8 +38,9 @@ class PickSpaceView extends StatelessWidget {
               Text(
                 AppStrings.onboardingPickSpaceSubtitle,
                 style: TextStyle(
-                  color: AppColors.nickel,
-                  fontSize: 14,
+                  color: AppColors.richBlack,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
                 ),
               ),
             ],
@@ -65,6 +66,7 @@ class PickSpaceView extends StatelessWidget {
                   imagePath: space.selectAsset,
                   isSelected: selectedSpace == space,
                   onTap: () => onSelect(space),
+                  showLabel: false,
                 );
               },
             ),

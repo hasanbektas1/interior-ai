@@ -34,4 +34,7 @@ final class AppColors {
   static const Color progressArcStart = Color(0xff71C6F6);
   static const Color progressArcEnd = Color(0xffA05DF5);
   static const Color styleScrim = Color(0x99323232);
+  static const Color richBlack = Color(0xff170B1F);
+  static const Color gainsboro = Color(0xffD9D9D9);
+  static const Color sonicSilver = Color(0xff757575);
 }

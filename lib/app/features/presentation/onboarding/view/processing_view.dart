@@ -15,14 +15,14 @@ class ProcessingView extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const SizedBox(height: 16),
             const Text(
               AppStrings.onboardingProcessingTitle,
               style: TextStyle(
-                color: AppColors.smokyBlack,
-                fontSize: 26,
-                fontWeight: FontWeight.w800,
+                color: AppColors.richBlack,
+                fontSize: 32,
+                fontWeight: FontWeight.w600,
                 height: 1.2,
               ),
             ),
@@ -30,25 +30,30 @@ class ProcessingView extends StatelessWidget {
             const Text(
               AppStrings.onboardingProcessingSubtitle,
               style: TextStyle(
-                color: AppColors.nickel,
-                fontSize: 15,
+                color: AppColors.richBlack,
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
               ),
             ),
-            const SizedBox(height: 64),
-            Center(
-              child: GradientProgressRing(
-                size: context.width140,
-                strokeWidth: 10,
-              ),
-            ),
-            const SizedBox(height: 24),
-            const Center(
-              child: Text(
-                "Processing...",
-                style: TextStyle(
-                  color: AppColors.nickel,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
+            Expanded(
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    GradientProgressRing(
+                      size: context.width140,
+                      strokeWidth: 10,
+                    ),
+                    const SizedBox(height: 24),
+                    const Text(
+                      AppStrings.onboardingProcessingLabel,
+                      style: TextStyle(
+                        color: AppColors.nickel,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

@@ -10,35 +10,28 @@ enum OnboardingSpace {
   armchair,
 }
 
-enum OnboardingStyle {
-  modern,
-  baroque,
-  bohemian,
-  rustic,
-  vintage,
-  luxury,
-}
+enum OnboardingStyle { modern, baroque, bohemian, rustic, vintage, luxury }
 
 extension OnboardingSpaceX on OnboardingSpace {
   String get label => AppStrings.spaceTypes[index];
 
   AppAsset get _selectImage => switch (this) {
-        OnboardingSpace.bedroom => AppAsset.onboardingSelectBedroom,
-        OnboardingSpace.diningRoom => AppAsset.onboardingSelectDiningRoom,
-        OnboardingSpace.livingRoom => AppAsset.onboardingSelectLivingRoom,
-        OnboardingSpace.workspace => AppAsset.onboardingSelectWorkspace,
-        OnboardingSpace.greySofa => AppAsset.onboardingSelectGreySofa,
-        OnboardingSpace.armchair => AppAsset.onboardingSelectArmchair,
-      };
+    OnboardingSpace.bedroom => AppAsset.onboardingSelectBedroom,
+    OnboardingSpace.diningRoom => AppAsset.onboardingSelectDiningRoom,
+    OnboardingSpace.livingRoom => AppAsset.onboardingSelectLivingRoom,
+    OnboardingSpace.workspace => AppAsset.onboardingSelectWorkspace,
+    OnboardingSpace.greySofa => AppAsset.onboardingSelectGreySofa,
+    OnboardingSpace.armchair => AppAsset.onboardingSelectArmchair,
+  };
 
   AppAsset get _miniImage => switch (this) {
-        OnboardingSpace.bedroom => AppAsset.onboardingMiniBedroom,
-        OnboardingSpace.diningRoom => AppAsset.onboardingMiniDiningRoom,
-        OnboardingSpace.livingRoom => AppAsset.onboardingMiniLivingRoom,
-        OnboardingSpace.workspace => AppAsset.onboardingMiniWorkspace,
-        OnboardingSpace.greySofa => AppAsset.onboardingMiniGreySofa,
-        OnboardingSpace.armchair => AppAsset.onboardingMiniArmchair,
-      };
+    OnboardingSpace.bedroom => AppAsset.onboardingMiniBedroom,
+    OnboardingSpace.diningRoom => AppAsset.onboardingMiniDiningRoom,
+    OnboardingSpace.livingRoom => AppAsset.onboardingMiniLivingRoom,
+    OnboardingSpace.workspace => AppAsset.onboardingMiniWorkspace,
+    OnboardingSpace.greySofa => AppAsset.onboardingMiniGreySofa,
+    OnboardingSpace.armchair => AppAsset.onboardingMiniArmchair,
+  };
 
   String get selectAsset => _selectImage.path;
 
@@ -49,13 +42,13 @@ extension OnboardingStyleX on OnboardingStyle {
   String get label => AppStrings.styleTypes[index];
 
   AppAsset get _selectImage => switch (this) {
-        OnboardingStyle.modern => AppAsset.onboardingSelectModern,
-        OnboardingStyle.baroque => AppAsset.onboardingSelectBaroque,
-        OnboardingStyle.bohemian => AppAsset.onboardingSelectBohemian,
-        OnboardingStyle.rustic => AppAsset.onboardingSelectRustic,
-        OnboardingStyle.vintage => AppAsset.onboardingSelectVintage,
-        OnboardingStyle.luxury => AppAsset.onboardingSelectLuxury,
-      };
+    OnboardingStyle.modern => AppAsset.onboardingSelectModern,
+    OnboardingStyle.baroque => AppAsset.onboardingSelectBaroque,
+    OnboardingStyle.bohemian => AppAsset.onboardingSelectBohemian,
+    OnboardingStyle.rustic => AppAsset.onboardingSelectRustic,
+    OnboardingStyle.vintage => AppAsset.onboardingSelectVintage,
+    OnboardingStyle.luxury => AppAsset.onboardingSelectLuxury,
+  };
 
   String get selectAsset => _selectImage.path;
 }
@@ -94,4 +87,3 @@ extension OnboardingResultAssets on OnboardingSpace {
     return spaceImage.variantPath(variantIndex);
   }
 }
-

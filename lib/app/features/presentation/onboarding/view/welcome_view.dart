@@ -30,9 +30,9 @@ class WelcomeView extends StatelessWidget {
                     TextSpan(
                       text: AppStrings.onboardingWelcomeTo,
                       style: TextStyle(
-                        color: AppColors.smokyBlack,
-                        fontSize: 30,
-                        fontWeight: FontWeight.w800,
+                        color: AppColors.richBlack,
+                        fontSize: 32,
+                        fontWeight: FontWeight.w600,
                         height: 1.2,
                       ),
                     ),
@@ -41,8 +41,8 @@ class WelcomeView extends StatelessWidget {
                       text: AppStrings.appName,
                       style: TextStyle(
                         color: AppColors.hanPurple,
-                        fontSize: 30,
-                        fontWeight: FontWeight.w800,
+                        fontSize: 32,
+                        fontWeight: FontWeight.w600,
                         height: 1.2,
                       ),
                     ),
@@ -53,8 +53,8 @@ class WelcomeView extends StatelessWidget {
               const Text(
                 AppStrings.onboardingSubtitle,
                 style: TextStyle(
-                  color: AppColors.nickel,
-                  fontSize: 15,
+                  color: AppColors.richBlack,
+                  fontSize: 16,
                   fontWeight: FontWeight.w400,
                 ),
               ),

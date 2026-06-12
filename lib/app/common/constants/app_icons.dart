@@ -1,6 +1,4 @@
-enum AppIcons {
-  contact,
-}
+enum AppIcons { contact }
 
 extension AppIconsExtension on AppIcons {
   String get fileName {

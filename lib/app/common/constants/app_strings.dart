@@ -25,6 +25,7 @@ final class AppStrings {
   static const String onboardingProcessingTitle =
       "Your design is\nalmost ready.";
   static const String onboardingProcessingSubtitle = "Be patient.";
+  static const String onboardingProcessingLabel = "Processing...";
   static const String onboardingDreamSpaceTitle = "Your dream space\nawaits.";
   static const String onboardingDreamSpaceSubtitle =
       "You can find your design in your collection and save it to your gallery.";
@@ -107,7 +108,8 @@ final class AppStrings {
   static const String interiorTakePhoto = "Take a photo";
   static const String interiorChooseFromLibrary = "Choose from library";
   static const String interiorCancel = "Cancel";
-  static const String interiorRemovePhotoTitle = "Do you want to remove the photo?";
+  static const String interiorRemovePhotoTitle =
+      "Do you want to remove the photo?";
   static const String interiorRemove = "Remove";
   static const String interiorChooseRoomTypeTitle = "Choose Your Room Type";
   static const String interiorChooseRoomTypeSubtitle =
@@ -143,7 +145,8 @@ final class AppStrings {
   static const String interiorSaveErrorTitle = "Error";
   static const String interiorSaveErrorSubtitle =
       "Can not save the image right now. Please try again.";
-  static const String interiorDeleteTitle = "Do you want to delete this design?";
+  static const String interiorDeleteTitle =
+      "Do you want to delete this design?";
   static const String interiorDeleteSubtitle =
       "If you delete this design, it cannot be recovered.";
   static const String interiorDeleteDesign = "Delete Design";

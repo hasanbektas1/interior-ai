@@ -71,8 +71,10 @@ final class AppButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        minimumSize:
-            Size(shrinkWrap ? width ?? 0 : width ?? double.infinity, height),
+        minimumSize: Size(
+          shrinkWrap ? width ?? 0 : width ?? double.infinity,
+          height,
+        ),
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         backgroundColor: backgroundColor,
         shape: RoundedRectangleBorder(
@@ -83,11 +85,8 @@ final class AppButton extends StatelessWidget {
         side: onPressed == null
             ? null
             : hasBorder
-                ? BorderSide(
-                    color: textColor,
-                    width: 1,
-                  )
-                : null,
+            ? BorderSide(color: textColor, width: 1)
+            : null,
         elevation: 0,
         shadowColor: Colors.transparent,
         disabledBackgroundColor: disabledBackgroundColor,
@@ -95,7 +94,8 @@ final class AppButton extends StatelessWidget {
       child: icon == null
           ? Text(
               text,
-              style: textStyle ??
+              style:
+                  textStyle ??
                   TextStyle(
                     color: onPressed == null
                         ? (disabledTextColor ?? AppColors.white)
@@ -110,7 +110,8 @@ final class AppButton extends StatelessWidget {
               children: [
                 Text(
                   text,
-                  style: textStyle ??
+                  style:
+                      textStyle ??
                       TextStyle(
                         color: textColor,
                         fontWeight: FontWeight.w500,

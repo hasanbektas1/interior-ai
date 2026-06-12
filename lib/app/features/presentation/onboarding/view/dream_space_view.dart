@@ -22,16 +22,20 @@ class DreamSpaceView extends StatelessWidget {
               Text(
                 AppStrings.onboardingDreamSpaceTitle,
                 style: TextStyle(
-                  color: AppColors.smokyBlack,
-                  fontSize: 26,
-                  fontWeight: FontWeight.w800,
+                  color: AppColors.richBlack,
+                  fontSize: 32,
+                  fontWeight: FontWeight.w600,
                   height: 1.2,
                 ),
               ),
               SizedBox(height: 10),
               Text(
                 AppStrings.onboardingDreamSpaceSubtitle,
-                style: TextStyle(color: AppColors.nickel, fontSize: 14),
+                style: TextStyle(
+                  color: AppColors.richBlack,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
             ],
           ),

@@ -29,7 +29,7 @@ class RoomTypeGridItem extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           color: isSelected ? AppColors.softPurpleFaint : AppColors.cloudGray,
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(
             color: isSelected ? AppColors.softPurple : Colors.transparent,
             width: 2,

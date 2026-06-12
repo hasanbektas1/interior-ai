@@ -20,9 +20,9 @@ class HelpUsGrowView extends StatelessWidget {
               Text(
                 AppStrings.onboardingHelpUsGrowTitle,
                 style: TextStyle(
-                  color: AppColors.smokyBlack,
-                  fontSize: 26,
-                  fontWeight: FontWeight.w800,
+                  color: AppColors.richBlack,
+                  fontSize: 32,
+                  fontWeight: FontWeight.w600,
                   height: 1.2,
                 ),
               ),
@@ -30,8 +30,9 @@ class HelpUsGrowView extends StatelessWidget {
               Text(
                 AppStrings.onboardingHelpUsGrowSubtitle,
                 style: TextStyle(
-                  color: AppColors.nickel,
-                  fontSize: 14,
+                  color: AppColors.richBlack,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
                 ),
               ),
             ],

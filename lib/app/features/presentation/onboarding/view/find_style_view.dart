@@ -28,9 +28,9 @@ class FindStyleView extends StatelessWidget {
               Text(
                 AppStrings.onboardingFindStyleTitle,
                 style: TextStyle(
-                  color: AppColors.smokyBlack,
-                  fontSize: 26,
-                  fontWeight: FontWeight.w800,
+                  color: AppColors.richBlack,
+                  fontSize: 32,
+                  fontWeight: FontWeight.w600,
                   height: 1.2,
                 ),
               ),
@@ -38,8 +38,9 @@ class FindStyleView extends StatelessWidget {
               Text(
                 AppStrings.onboardingFindStyleSubtitle,
                 style: TextStyle(
-                  color: AppColors.nickel,
-                  fontSize: 14,
+                  color: AppColors.richBlack,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
                 ),
               ),
             ],
@@ -65,7 +66,8 @@ class FindStyleView extends StatelessWidget {
                   imagePath: style.selectAsset,
                   isSelected: selectedStyle == style,
                   onTap: () => onSelect(style),
-                  showLabel: true,
+                  showLabel: false,
+                  isDimmed: selectedStyle != null && selectedStyle != style,
                 );
               },
             ),
