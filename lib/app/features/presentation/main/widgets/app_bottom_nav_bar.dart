@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
-import 'package:interior_ai/app/features/presentation/home/cubit/home_state.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 
 class AppBottomNavBar extends StatelessWidget {
   const AppBottomNavBar({
     super.key,
-    required this.selectedTab,
+    required this.currentIndex,
     required this.onTabSelected,
   });
 
-  final HomeTab selectedTab;
-  final ValueChanged<HomeTab> onTabSelected;
+  final int currentIndex;
+  final ValueChanged<int> onTabSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -44,16 +43,16 @@ class AppBottomNavBar extends StatelessWidget {
                 child: _NavItem(
                   label: AppStrings.navHome,
                   icon: Icons.pentagon_rounded,
-                  isSelected: selectedTab == HomeTab.home,
-                  onTap: () => onTabSelected(HomeTab.home),
+                  isSelected: currentIndex == 0,
+                  onTap: () => onTabSelected(0),
                 ),
               ),
               Expanded(
                 child: _NavItem(
                   label: AppStrings.navCollection,
                   icon: Icons.inventory_2_rounded,
-                  isSelected: selectedTab == HomeTab.collection,
-                  onTap: () => onTabSelected(HomeTab.collection),
+                  isSelected: currentIndex == 1,
+                  onTap: () => onTabSelected(1),
                 ),
               ),
             ],

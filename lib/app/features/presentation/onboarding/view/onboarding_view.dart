@@ -12,7 +12,7 @@ import 'package:interior_ai/app/features/presentation/onboarding/view/pick_space
 import 'package:interior_ai/app/features/presentation/onboarding/view/processing_view.dart';
 import 'package:interior_ai/app/features/presentation/onboarding/view/welcome_view.dart';
 import 'package:interior_ai/app/features/presentation/onboarding/widgets/onboarding_page_indicator.dart';
-import 'package:interior_ai/app/features/presentation/home/view/home_view.dart';
+import 'package:interior_ai/app/features/presentation/main/view/main_view.dart';
 
 class OnboardingView extends StatelessWidget {
   const OnboardingView({super.key});
@@ -98,7 +98,7 @@ class OnboardingView extends StatelessWidget {
                                       if (!context.mounted) return;
                                       Navigator.of(context).pushAndRemoveUntil(
                                         MaterialPageRoute(
-                                          builder: (_) => const HomeView(),
+                                          builder: (_) => const MainView(),
                                         ),
                                         (_) => false,
                                       );

@@ -11,11 +11,6 @@ final class HomeCubit extends Cubit<HomeState> {
 
   final TestRepository _testRepository;
 
-  void selectTab(HomeTab tab) {
-    if (state.selectedTab == tab) return;
-    emit(state.copyWith(selectedTab: tab));
-  }
-
   Future<void> getAllTests() async {
     emit(state.copyWith(isLoading: true, testList: []));
     await Future.delayed(Durations.extralong4 * 4);

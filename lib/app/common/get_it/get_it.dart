@@ -7,6 +7,7 @@ import 'package:interior_ai/app/features/presentation/floor_restyle/cubit/floor_
 import 'package:interior_ai/app/features/presentation/garden_design/cubit/garden_design_cubit.dart';
 import 'package:interior_ai/app/features/presentation/home/cubit/home_cubit.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/cubit/interior_design_cubit.dart';
+import 'package:interior_ai/app/features/presentation/main/cubit/main_cubit.dart';
 import 'package:interior_ai/app/features/presentation/onboarding/cubit/onboarding_cubit.dart';
 import 'package:interior_ai/app/features/presentation/settings/cubit/settings_cubit.dart';
 import 'package:interior_ai/app/features/presentation/replace_objects/cubit/replace_objects_cubit.dart';
@@ -55,6 +56,7 @@ final class ServiceLocator {
   /// **BLoC, Cubit and ViewModel Dependency**
   void _setupCubit() {
     getIt
+      ..registerLazySingleton<MainCubit>(() => MainCubit())
       ..registerLazySingleton<OnboardingCubit>(() => OnboardingCubit())
       ..registerLazySingleton<SettingsCubit>(() => SettingsCubit())
       ..registerLazySingleton<InteriorDesignCubit>(() => InteriorDesignCubit())
