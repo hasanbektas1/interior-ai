@@ -39,7 +39,7 @@ class RemovePhotoDialog extends StatelessWidget {
             AppButton.fill(
               text: AppStrings.interiorRemove,
               onPressed: () => Navigator.of(context).pop(true),
-              backgroundColor: AppColors.softPurple,
+              backgroundColor: AppColors.hanPurple,
               borderRadius: 14,
               height: 52,
             ),
@@ -48,7 +48,7 @@ class RemovePhotoDialog extends StatelessWidget {
               text: AppStrings.interiorCancel,
               onPressed: () => Navigator.of(context).pop(false),
               backgroundColor: AppColors.white,
-              textColor: AppColors.softPurple,
+              textColor: AppColors.hanPurple,
               hasBorder: true,
               borderRadius: 14,
               height: 52,

@@ -62,7 +62,7 @@ class GeneratedProcessingView extends StatelessWidget {
               AppButton.fill(
                 text: AppStrings.interiorBackToHome,
                 onPressed: onBackToHome,
-                backgroundColor: AppColors.softPurple,
+                backgroundColor: AppColors.hanPurple,
                 borderRadius: 14,
                 height: 54,
               ),

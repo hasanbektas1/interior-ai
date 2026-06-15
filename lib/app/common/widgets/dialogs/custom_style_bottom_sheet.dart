@@ -120,7 +120,7 @@ class _CustomStyleBottomSheetState extends State<CustomStyleBottomSheet> {
               child: AppButton.fill(
                 text: AppStrings.interiorSave,
                 onPressed: _canSave ? _save : null,
-                backgroundColor: AppColors.softPurple,
+                backgroundColor: AppColors.hanPurple,
                 disabledBackgroundColor: AppColors.disabledGray,
                 disabledTextColor: AppColors.disabledText,
                 borderRadius: 14,

@@ -25,7 +25,7 @@ class CollectionCard extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       onTap: item.isGenerating ? null : onTap,
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(context.width16),
+        borderRadius: BorderRadius.circular(context.width8),
         child: SizedBox(
           width: double.infinity,
           height: context.height200,

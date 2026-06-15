@@ -62,7 +62,7 @@ class _Chip extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: context.width16),
         decoration: BoxDecoration(
           color: isSelected ? AppColors.softPurpleFaint : AppColors.cloudGray,
-          borderRadius: BorderRadius.circular(context.width20),
+          borderRadius: BorderRadius.circular(context.width8),
           border: Border.all(
             color: isSelected ? AppColors.softPurple : Colors.transparent,
             width: 1.5,

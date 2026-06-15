@@ -136,7 +136,7 @@ class _Content extends StatelessWidget {
           onPressed: onContinue,
           borderRadius: 14,
           height: 54,
-          backgroundColor: AppColors.softPurple,
+          backgroundColor: AppColors.hanPurple,
         ),
         SizedBox(height: context.height16),
         const PaywallFooter(),

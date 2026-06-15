@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
-import 'package:interior_ai/app/common/widgets/buttons/gradient_button.dart';
+import 'package:interior_ai/app/common/widgets/buttons/app_button.dart';
 import 'package:interior_ai/app/common/widgets/dialogs/result_action_dialog.dart';
 import 'package:interior_ai/app/common/widgets/result_info_chip.dart';
 import 'package:interior_ai/app/features/presentation/collection/models/collection_item.dart';
@@ -67,7 +67,7 @@ class CollectionResultView extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: context.height8),
+                    SizedBox(height: context.height24),
                     ClipRRect(
                       borderRadius: BorderRadius.circular(context.width16),
                       child: SizedBox(
@@ -108,26 +108,25 @@ class CollectionResultView extends StatelessWidget {
             ),
             Row(
               children: [
-                GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTap: () => _onDelete(context),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: context.width8),
-                    child: const Text(
-                      AppStrings.collectionDelete,
-                      style: TextStyle(
-                        color: AppColors.nickel,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
+                Expanded(
+                  child: AppButton(
+                    text: AppStrings.collectionDelete,
+                    onPressed: () => _onDelete(context),
+                    backgroundColor: AppColors.white,
+                    textColor: AppColors.hanPurple,
+                    hasBorder: true,
+                    borderRadius: 14,
+                    height: 54,
                   ),
                 ),
                 SizedBox(width: context.width12),
                 Expanded(
-                  child: GradientButton(
+                  child: AppButton.fill(
                     text: AppStrings.interiorSaveButton,
                     onPressed: () => _onSave(context),
+                    backgroundColor: AppColors.hanPurple,
+                    borderRadius: 14,
+                    height: 54,
                   ),
                 ),
               ],

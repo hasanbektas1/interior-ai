@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
-import 'package:interior_ai/app/common/widgets/buttons/gradient_button.dart';
+import 'package:interior_ai/app/common/widgets/buttons/app_button.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 
 class ResultActionDialog extends StatelessWidget {
@@ -70,9 +70,12 @@ class ResultActionDialog extends StatelessWidget {
               ),
             ),
             SizedBox(height: context.height20),
-            GradientButton(
+            AppButton.fill(
               text: primaryLabel,
               onPressed: () => Navigator.of(context).pop(true),
+              backgroundColor: AppColors.hanPurple,
+              borderRadius: 14,
+              height: 52,
             ),
             if (showCancel) ...[
               SizedBox(height: context.height8),

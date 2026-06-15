@@ -80,7 +80,7 @@ class _StyleReferenceBody extends StatelessWidget {
                 AppButton.fill(
                   text: AppStrings.interiorContinue,
                   onPressed: state.canContinue ? cubit.next : null,
-                  backgroundColor: AppColors.softPurple,
+                  backgroundColor: AppColors.hanPurple,
                   disabledBackgroundColor: AppColors.disabledGray,
                   disabledTextColor: AppColors.disabledText,
                   borderRadius: 14,

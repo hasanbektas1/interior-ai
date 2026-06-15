@@ -105,7 +105,7 @@ class _SpecialOfferViewState extends State<SpecialOfferView> {
                       onPressed: () => Navigator.of(context).maybePop(),
                       borderRadius: 14,
                       height: 54,
-                      backgroundColor: AppColors.softPurple,
+                      backgroundColor: AppColors.hanPurple,
                     ),
                     SizedBox(height: context.height16),
                     const PaywallFooter(),
