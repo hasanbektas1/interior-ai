@@ -103,7 +103,7 @@ final class AppStrings {
   static const String settingsTermsOfUse = "Terms of Use";
   static const String settingsRestorePurchases = "Restore Purchases";
   static const String settingsUserId = "User ID";
-  static const String settingsCopiedToClipboard = "Copied to\nClipboard";
+  static const String settingsCopiedToClipboard = "Copied to Clipboard";
   static const String settingsPurchaseRestored = "Purchase\nRestored";
   static const String settingsRateUsTitle = "Rate Us";
   static const String settingsRateUsSubtitle =

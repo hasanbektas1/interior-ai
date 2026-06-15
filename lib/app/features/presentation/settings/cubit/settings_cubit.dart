@@ -11,4 +11,10 @@ final class SettingsCubit extends Cubit<SettingsState> {
   void togglePremium() {
     emit(state.copyWith(isPremium: !state.isPremium));
   }
+
+  Future<void> markUserIdCopied() async {
+    emit(state.copyWith(isUserIdCopied: true));
+    await Future.delayed(const Duration(seconds: 2));
+    if (!isClosed) emit(state.copyWith(isUserIdCopied: false));
+  }
 }

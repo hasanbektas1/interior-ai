@@ -41,6 +41,15 @@ enum AppAsset {
 
   // SETTINGS
   settingsPremiumBanner('assets/png/settings/settings_content.png'),
+  settingsIconRateUs('assets/svg/settings/solar_star-bold.svg'),
+  settingsIconShareApp('assets/svg/settings/mingcute_send-fill.svg'),
+  settingsIconFeedback('assets/svg/settings/material-symbols_mail-rounded.svg'),
+  settingsIconPrivacy('assets/svg/settings/basil_eye-solid.svg'),
+  settingsIconTerms('assets/svg/settings/solar_document-bold.svg'),
+  settingsIconRestore(
+    'assets/svg/settings/ic_round-settings-backup-restore.svg',
+  ),
+  settingsIconUserId('assets/svg/settings/fluent_person-20-filled.svg'),
 
   // INTERIOR DESIGN ROOM ICONS
   roomLivingRoom('assets/svg/interior_design/living_room_svg.svg'),

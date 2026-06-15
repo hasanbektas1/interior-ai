@@ -3,11 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
+import 'package:interior_ai/app/common/enums/app_assets.dart';
 import 'package:interior_ai/app/features/presentation/paywall/view/paywall_view.dart';
 import 'package:interior_ai/app/features/presentation/settings/cubit/settings_cubit.dart';
 import 'package:interior_ai/app/features/presentation/settings/cubit/settings_state.dart';
 import 'package:interior_ai/app/common/widgets/dialogs/rate_us_dialog.dart';
 import 'package:interior_ai/app/features/presentation/settings/widgets/settings_confirmation_dialog.dart';
+import 'package:interior_ai/app/features/presentation/settings/widgets/settings_copied_snackbar.dart';
 import 'package:interior_ai/app/features/presentation/settings/widgets/settings_premium_banner.dart';
 import 'package:interior_ai/app/features/presentation/settings/widgets/settings_section_label.dart';
 import 'package:interior_ai/app/features/presentation/settings/widgets/settings_tile.dart';
@@ -29,7 +31,8 @@ class _SettingsViewBody extends StatelessWidget {
 
   void _onCopyUserId(BuildContext context) {
     Clipboard.setData(const ClipboardData(text: AppStrings.sampleUserId));
-    SettingsConfirmationDialog.show(context, AppStrings.settingsCopiedToClipboard);
+    context.read<SettingsCubit>().markUserIdCopied();
+    SettingsCopiedSnackBar.show(context);
   }
 
   void _onRestorePurchases(BuildContext context) {
@@ -98,19 +101,19 @@ class _SettingsViewBody extends StatelessWidget {
                 const SettingsSectionLabel(label: AppStrings.settingsSupport),
                 SizedBox(height: context.height12),
                 SettingsTile(
-                  icon: Icons.star_rounded,
+                  icon: AppAsset.settingsIconRateUs,
                   label: AppStrings.settingsRateUs,
                   onTap: () => _onRateUs(context),
                 ),
                 SizedBox(height: context.height12),
                 SettingsTile(
-                  icon: Icons.send_rounded,
+                  icon: AppAsset.settingsIconShareApp,
                   label: AppStrings.settingsShareApp,
                   onTap: _onShareApp,
                 ),
                 SizedBox(height: context.height12),
                 SettingsTile(
-                  icon: Icons.mail_rounded,
+                  icon: AppAsset.settingsIconFeedback,
                   label: AppStrings.settingsGiveFeedback,
                   onTap: () {},
                 ),
@@ -118,19 +121,19 @@ class _SettingsViewBody extends StatelessWidget {
                 const SettingsSectionLabel(label: AppStrings.settingsGeneral),
                 SizedBox(height: context.height12),
                 SettingsTile(
-                  icon: Icons.remove_red_eye_rounded,
+                  icon: AppAsset.settingsIconPrivacy,
                   label: AppStrings.settingsPrivacyPolicy,
                   onTap: () {},
                 ),
                 SizedBox(height: context.height12),
                 SettingsTile(
-                  icon: Icons.description_rounded,
+                  icon: AppAsset.settingsIconTerms,
                   label: AppStrings.settingsTermsOfUse,
                   onTap: () {},
                 ),
                 SizedBox(height: context.height12),
                 SettingsTile(
-                  icon: Icons.restore_rounded,
+                  icon: AppAsset.settingsIconRestore,
                   label: AppStrings.settingsRestorePurchases,
                   showChevron: false,
                   onTap: () => _onRestorePurchases(context),
@@ -138,6 +141,7 @@ class _SettingsViewBody extends StatelessWidget {
                 SizedBox(height: context.height20),
                 SettingsUserIdTile(
                   userId: AppStrings.sampleUserId,
+                  isCopied: state.isUserIdCopied,
                   onCopy: () => _onCopyUserId(context),
                 ),
               ],

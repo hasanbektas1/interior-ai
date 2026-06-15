@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
+import 'package:interior_ai/app/common/enums/app_assets.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 
 class SettingsTile extends StatelessWidget {
@@ -11,7 +13,7 @@ class SettingsTile extends StatelessWidget {
     this.showChevron = true,
   });
 
-  final IconData icon;
+  final AppAsset icon;
   final String label;
   final VoidCallback onTap;
   final bool showChevron;
@@ -32,7 +34,15 @@ class SettingsTile extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Icon(icon, size: context.width24, color: AppColors.smokyBlack),
+            SvgPicture.asset(
+              icon.path,
+              width: context.width24,
+              height: context.width24,
+              colorFilter: const ColorFilter.mode(
+                AppColors.smokyBlack,
+                BlendMode.srcIn,
+              ),
+            ),
             SizedBox(width: context.width12),
             Expanded(
               child: Text(
