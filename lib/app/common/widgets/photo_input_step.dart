@@ -35,12 +35,12 @@ class PhotoInputStep extends StatelessWidget {
         Text(
           label,
           style: const TextStyle(
-            color: AppColors.smokyBlack,
+            color: AppColors.richBlack,
             fontSize: 16,
-            fontWeight: FontWeight.w700,
+            fontWeight: FontWeight.w600,
           ),
         ),
-        SizedBox(height: context.height12),
+        SizedBox(height: context.height16),
         Expanded(
           child: PhotoPickerBox(
             photoPath: photoPath,
@@ -52,9 +52,9 @@ class PhotoInputStep extends StatelessWidget {
         const Text(
           AppStrings.interiorUseExamplePhoto,
           style: TextStyle(
-            color: AppColors.smokyBlack,
+            color: AppColors.richBlack,
             fontSize: 16,
-            fontWeight: FontWeight.w700,
+            fontWeight: FontWeight.w600,
           ),
         ),
         SizedBox(height: context.height12),
@@ -63,7 +63,7 @@ class PhotoInputStep extends StatelessWidget {
           selectedIndex: exampleIndex,
           onSelect: onSelectExample,
         ),
-        SizedBox(height: context.height8),
+        SizedBox(height: context.height20),
       ],
     );
   }

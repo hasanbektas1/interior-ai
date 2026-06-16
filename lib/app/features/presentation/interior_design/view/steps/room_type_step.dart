@@ -37,16 +37,16 @@ class RoomTypeStep extends StatelessWidget {
           const Text(
             AppStrings.interiorChooseRoomTypeTitle,
             style: TextStyle(
-              color: AppColors.smokyBlack,
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
+              color: AppColors.richBlack,
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
             ),
           ),
           SizedBox(height: context.height4),
           const Text(
             AppStrings.interiorChooseRoomTypeSubtitle,
             style: TextStyle(
-              color: AppColors.nickel,
+              color: AppColors.richBlack,
               fontSize: 14,
               fontWeight: FontWeight.w400,
             ),

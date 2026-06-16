@@ -22,35 +22,26 @@ class InteriorDesignView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const _InteriorDesignBody();
-  }
-}
-
-class _InteriorDesignBody extends StatelessWidget {
-  const _InteriorDesignBody();
-
-  void _exit(BuildContext context) => Navigator.of(context).maybePop();
-
-  @override
-  Widget build(BuildContext context) {
     return BlocBuilder<InteriorDesignCubit, InteriorDesignState>(
       builder: (context, state) {
         final cubit = context.read<InteriorDesignCubit>();
 
         if (state.step == InteriorStep.processing) {
-          return GeneratedProcessingView(onBackToHome: () => _exit(context));
+          return GeneratedProcessingView(
+            onBackToHome: () => Navigator.of(context).maybePop(),
+          );
         }
         if (state.step == InteriorStep.result) {
           return InteriorResultView(
             state: state,
-            onClose: () => _exit(context),
+            onClose: () => Navigator.of(context).maybePop(),
             onRegenerate: cubit.retry,
           );
         }
         if (state.step == InteriorStep.error) {
           return GeneratedErrorView(
             onTryAgain: cubit.retry,
-            onBackToHome: () => _exit(context),
+            onBackToHome: () => Navigator.of(context).maybePop(),
           );
         }
 
@@ -61,8 +52,10 @@ class _InteriorDesignBody extends StatelessWidget {
               children: [
                 InteriorHeader(
                   filledCount: state.step.progressIndex + 1,
-                  onClose: () => _exit(context),
-                  onBack: state.step == InteriorStep.addPhoto ? null : cubit.back,
+                  onClose: () => Navigator.of(context).maybePop(),
+                  onBack: state.step == InteriorStep.addPhoto
+                      ? null
+                      : cubit.back,
                 ),
                 Expanded(
                   child: ClipRect(

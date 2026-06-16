@@ -25,9 +25,9 @@ class ColorPaletteStep extends StatelessWidget {
           const Text(
             AppStrings.interiorChoosePaletteTitle,
             style: TextStyle(
-              color: AppColors.smokyBlack,
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
+              color: AppColors.richBlack,
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
             ),
           ),
           SizedBox(height: context.height16),
@@ -36,7 +36,7 @@ class ColorPaletteStep extends StatelessWidget {
               padding: EdgeInsets.only(bottom: context.height12),
               child: ColorPaletteTile(
                 label: palette.label,
-                colors: palette.colors,
+                imagePath: palette.image.path,
                 isSelected: state.colorPalette == palette,
                 isDimmed:
                     state.colorPalette != null && state.colorPalette != palette,

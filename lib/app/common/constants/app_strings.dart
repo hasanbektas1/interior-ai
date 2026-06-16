@@ -237,10 +237,10 @@ final class AppStrings {
   ];
 
   static const List<String> interiorPromptLibraryItems = [
-    "Modern Scandinavian living room with natural light, light wood furniture, and cozy textures",
-    "Luxury master bedroom with dark tones, velvet accents, and gold lighting fixtures",
-    "Japandi bathroom design with clean lines, wooden textures, and calming zen vibe",
-    "Bohemian-style reading nook with layered rugs, indoor plants, and warm lighting",
-    "Industrial loft kitchen with exposed brick walls, metal shelves, and matte black details",
+    "Cozy coastal living room with soft linen sofas, rattan accents, and ocean-breeze tones",
+    "Elegant art deco bedroom with emerald hues, brass details, and mirrored surfaces",
+    "Minimalist Japanese tea room with tatami floors, paper screens, and warm soft light",
+    "Rustic farmhouse kitchen with reclaimed wood, open shelving, and vintage copper pots",
+    "Mid-century modern home office with walnut desk, leather chair, and warm ambient lighting",
   ];
 }

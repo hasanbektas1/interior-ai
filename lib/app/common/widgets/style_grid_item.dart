@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/enums/app_assets.dart';
@@ -32,7 +31,7 @@ class StyleGridItem extends StatelessWidget {
       onTap: onTap,
       child: AnimatedOpacity(
         duration: const Duration(milliseconds: 200),
-        opacity: isDimmed ? 0.4 : 1,
+        opacity: isDimmed ? 0.5 : 1,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           decoration: BoxDecoration(
@@ -110,10 +109,10 @@ class StyleGridItem extends StatelessWidget {
               filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
               child: Container(
                 padding: EdgeInsets.symmetric(
-                  horizontal: context.width12,
+                  horizontal: context.width16,
                   vertical: context.height12,
                 ),
-                color: AppColors.styleScrim,
+                color: AppColors.paletteScrim,
                 child: Text(
                   label,
                   style: const TextStyle(

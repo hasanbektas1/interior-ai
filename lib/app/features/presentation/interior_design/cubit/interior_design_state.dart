@@ -66,6 +66,21 @@ final class InteriorDesignState extends Equatable {
 
   bool get hasPhoto => addedPhotoPath != null || exampleIndex != null;
 
+  bool get isCustomStyle => style == DesignStyle.custom;
+
+  String get styleLabel => style?.label ?? '';
+
+  String get roomDisplayValue {
+    final type = roomType;
+    if (type == null) return '';
+    if (type == RoomType.other) {
+      return (customRoomName?.trim().isNotEmpty ?? false)
+          ? customRoomName!
+          : type.label;
+    }
+    return type.label;
+  }
+
   String? get selectedPhotoPath {
     if (addedPhotoPath != null) return addedPhotoPath;
     if (exampleIndex != null) return kExamplePhotos[exampleIndex!].path;

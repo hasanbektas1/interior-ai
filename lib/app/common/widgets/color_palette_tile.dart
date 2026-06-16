@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
@@ -8,14 +6,16 @@ class ColorPaletteTile extends StatelessWidget {
   const ColorPaletteTile({
     super.key,
     required this.label,
-    required this.colors,
     required this.isSelected,
     required this.isDimmed,
     required this.onTap,
-  });
+    this.imagePath,
+    this.colors,
+  }) : assert(imagePath != null || colors != null);
 
   final String label;
-  final List<Color> colors;
+  final String? imagePath;
+  final List<Color>? colors;
   final bool isSelected;
   final bool isDimmed;
   final VoidCallback onTap;
@@ -27,7 +27,7 @@ class ColorPaletteTile extends StatelessWidget {
       onTap: onTap,
       child: AnimatedOpacity(
         duration: const Duration(milliseconds: 200),
-        opacity: isDimmed ? 0.4 : 1,
+        opacity: isDimmed ? 0.5 : 1,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           width: double.infinity,
@@ -44,32 +44,36 @@ class ColorPaletteTile extends StatelessWidget {
             child: Stack(
               children: [
                 Positioned.fill(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      for (final color in colors)
-                        Expanded(child: ColoredBox(color: color)),
-                    ],
-                  ),
+                  child: imagePath != null
+                      ? Image.asset(
+                          imagePath!,
+                          fit: BoxFit.cover,
+                          errorBuilder: (_, __, ___) =>
+                              const ColoredBox(color: AppColors.magnolia),
+                        )
+                      : Row(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            for (final color in colors!)
+                              Expanded(child: ColoredBox(color: color)),
+                          ],
+                        ),
                 ),
                 Positioned(
                   left: 0,
                   right: 0,
                   bottom: 0,
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
-                    child: Container(
-                      height: context.height44,
-                      alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.symmetric(horizontal: context.width16),
-                      color: AppColors.paletteScrim,
-                      child: Text(
-                        label,
-                        style: const TextStyle(
-                          color: AppColors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                        ),
+                  child: Container(
+                    height: context.height44,
+                    alignment: Alignment.centerLeft,
+                    padding: EdgeInsets.symmetric(horizontal: context.width16),
+                    color: AppColors.paletteScrim,
+                    child: Text(
+                      label,
+                      style: const TextStyle(
+                        color: AppColors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                   ),

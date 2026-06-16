@@ -70,6 +70,23 @@ enum AppAsset {
 
   // INTERIOR DESIGN RESULT
   interiorResult('assets/png/interrior_design/interrior_ai_result_png.png'),
+  interiorIconDelete('assets/svg/interior_design/ic_round_delete.svg'),
+  interiorIconLoop('assets/svg/interior_design/ic_round_loop.svg'),
+
+  // INTERIOR COLOR PALETTE
+  paletteRandom('assets/png/interrior_design/random_color.png'),
+  paletteSolarHorizon('assets/png/interrior_design/solor_horizon_color.png'),
+  paletteBlushTwilight('assets/png/interrior_design/blush_twilight_color.png'),
+  paletteTerracottaGrove(
+    'assets/png/interrior_design/terracotta_grove_color.png',
+  ),
+  paletteMidnightSage('assets/png/interrior_design/midnight_sage_color.png'),
+  paletteGoldenHour('assets/png/interrior_design/golden_hour_color.png'),
+  paletteIvoryWhisper('assets/png/interrior_design/ivory_whisper_color.png'),
+  paletteWarmClay('assets/png/interrior_design/warm_clay_color.png'),
+  paletteArcticAlloy('assets/png/interrior_design/arctic_alloy_color.png'),
+  paletteElectricPulse('assets/png/interrior_design/electric_pulse_color.png'),
+  paletteCrimsonNoir('assets/png/interrior_design/crimson_noir_color.png'),
 
   // GARDEN DESIGN
   gardenCustomIllustration('assets/png/garden_design/garden_design_custom.png'),

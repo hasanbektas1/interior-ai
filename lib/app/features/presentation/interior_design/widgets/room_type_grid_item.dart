@@ -48,8 +48,8 @@ class RoomTypeGridItem extends StatelessWidget {
                 roomType.label,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
-                  color: AppColors.smokyBlack,
-                  fontSize: 15,
+                  color: AppColors.richBlack,
+                  fontSize: 14,
                   fontWeight: FontWeight.w500,
                 ),
               ),

@@ -1,0 +1,59 @@
+import 'package:flutter/material.dart';
+import 'package:interior_ai/app/common/constants/app_colors.dart';
+import 'package:interior_ai/app/common/constants/app_strings.dart';
+import 'package:interior_ai/core/extensions/build_context_extensions.dart';
+
+class InteriorResultHeader extends StatelessWidget {
+  const InteriorResultHeader({
+    super.key,
+    required this.onShare,
+    required this.onClose,
+  });
+
+  final VoidCallback onShare;
+  final VoidCallback onClose;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: context.height44,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          const Text(
+            AppStrings.interiorResultHeader,
+            style: TextStyle(
+              color: AppColors.smokyBlack,
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: onShare,
+              child: Icon(
+                Icons.ios_share_rounded,
+                size: context.width24,
+                color: AppColors.smokyBlack,
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.centerRight,
+            child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: onClose,
+              child: Icon(
+                Icons.close_rounded,
+                size: context.width24,
+                color: AppColors.smokyBlack,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
