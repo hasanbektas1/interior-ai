@@ -5,8 +5,8 @@ import 'package:interior_ai/app/common/enums/app_assets.dart';
 import 'package:interior_ai/app/common/widgets/dialogs/result_action_dialog.dart';
 import 'package:interior_ai/app/common/widgets/result_info_chip.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/cubit/interior_design_state.dart';
+import 'package:interior_ai/app/common/widgets/result_action_bar.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/widgets/interior_prompt_section.dart';
-import 'package:interior_ai/app/features/presentation/interior_design/widgets/interior_result_bottom_bar.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/widgets/interior_result_header.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 import 'package:interior_ai/core/extensions/widgets/padding_extensions.dart';
@@ -104,7 +104,7 @@ class InteriorResultView extends StatelessWidget {
               ],
             ),
             const Spacer(),
-            InteriorResultBottomBar(
+            ResultActionBar(
               onDelete: () => _onDelete(context),
               onRegenerate: () => _onRegenerate(context),
               onSave: () => _onSave(context),

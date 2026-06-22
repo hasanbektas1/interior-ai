@@ -6,8 +6,8 @@ import 'package:interior_ai/app/common/enums/app_assets.dart';
 import 'package:interior_ai/app/common/widgets/buttons/app_button.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 
-class InteriorResultBottomBar extends StatelessWidget {
-  const InteriorResultBottomBar({
+class ResultActionBar extends StatelessWidget {
+  const ResultActionBar({
     super.key,
     required this.onDelete,
     required this.onRegenerate,

@@ -13,7 +13,7 @@ import 'package:interior_ai/app/common/widgets/generated_processing_view.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/view/steps/interior_result_view.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/view/steps/room_type_step.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/view/steps/style_step.dart';
-import 'package:interior_ai/app/features/presentation/interior_design/widgets/interior_header.dart';
+import 'package:interior_ai/app/common/widgets/step_flow_header.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 import 'package:interior_ai/core/extensions/widgets/padding_extensions.dart';
 
@@ -50,7 +50,8 @@ class InteriorDesignView extends StatelessWidget {
           body: SafeArea(
             child: Column(
               children: [
-                InteriorHeader(
+                StepFlowHeader(
+                  title: AppStrings.interiorDesign,
                   filledCount: state.step.progressIndex + 1,
                   onClose: () => Navigator.of(context).maybePop(),
                   onBack: state.step == InteriorStep.addPhoto

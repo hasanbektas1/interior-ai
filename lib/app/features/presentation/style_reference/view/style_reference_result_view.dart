@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
 import 'package:interior_ai/app/common/enums/app_assets.dart';
-import 'package:interior_ai/app/common/widgets/buttons/gradient_button.dart';
 import 'package:interior_ai/app/common/widgets/dialogs/result_action_dialog.dart';
+import 'package:interior_ai/app/common/widgets/result_action_bar.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 import 'package:interior_ai/core/extensions/widgets/padding_extensions.dart';
 import 'package:share_plus/share_plus.dart';
@@ -55,6 +55,7 @@ class StyleReferenceResultView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final imageHeight = MediaQuery.sizeOf(context).height * 0.6;
     return Scaffold(
       backgroundColor: AppColors.ghostWhite,
       body: SafeArea(
@@ -101,68 +102,28 @@ class StyleReferenceResultView extends StatelessWidget {
               ),
             ),
             SizedBox(height: context.height8),
-            Expanded(
+            SizedBox(
+              height: imageHeight,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(context.width16),
-                child: SizedBox(
+                child: Image.asset(
+                  AppAsset.interiorResult.path,
                   width: double.infinity,
-                  child: Image.asset(
-                    AppAsset.interiorResult.path,
-                    fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) =>
-                        const ColoredBox(color: AppColors.magnolia),
-                  ),
+                  fit: BoxFit.cover,
+                  errorBuilder: (_, __, ___) =>
+                      const ColoredBox(color: AppColors.magnolia),
                 ),
               ),
             ),
-            SizedBox(height: context.height20),
-            Row(
-              children: [
-                _CircleIconButton(
-                  icon: Icons.delete_outline_rounded,
-                  onTap: () => _onDelete(context),
-                ),
-                SizedBox(width: context.width12),
-                _CircleIconButton(
-                  icon: Icons.refresh_rounded,
-                  onTap: () => _onRegeneratePressed(context),
-                ),
-                SizedBox(width: context.width12),
-                Expanded(
-                  child: GradientButton(
-                    text: AppStrings.interiorSaveButton,
-                    onPressed: () => _onSave(context),
-                  ),
-                ),
-              ],
+            const Spacer(),
+            ResultActionBar(
+              onDelete: () => _onDelete(context),
+              onRegenerate: () => _onRegeneratePressed(context),
+              onSave: () => _onSave(context),
             ),
             SizedBox(height: context.height16),
           ],
         ).symmetricPadding(horizontal: context.width24),
-      ),
-    );
-  }
-}
-
-class _CircleIconButton extends StatelessWidget {
-  const _CircleIconButton({required this.icon, required this.onTap});
-
-  final IconData icon;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: onTap,
-      child: Container(
-        width: context.width52,
-        height: context.width52,
-        decoration: const BoxDecoration(
-          color: AppColors.cloudGray,
-          shape: BoxShape.circle,
-        ),
-        child: Icon(icon, size: context.width24, color: AppColors.smokyBlack),
       ),
     );
   }

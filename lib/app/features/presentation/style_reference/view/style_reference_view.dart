@@ -4,7 +4,7 @@ import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
 import 'package:interior_ai/app/common/widgets/buttons/app_button.dart';
 import 'package:interior_ai/app/common/widgets/generated_error_view.dart';
-import 'package:interior_ai/app/common/widgets/gem_header.dart';
+import 'package:interior_ai/app/common/widgets/step_flow_header.dart';
 import 'package:interior_ai/app/common/widgets/generated_processing_view.dart';
 import 'package:interior_ai/app/features/presentation/style_reference/cubit/style_reference_cubit.dart';
 import 'package:interior_ai/app/features/presentation/style_reference/cubit/style_reference_state.dart';
@@ -58,9 +58,10 @@ class _StyleReferenceBody extends StatelessWidget {
           body: SafeArea(
             child: Column(
               children: [
-                GemHeader(
+                StepFlowHeader(
                   title: AppStrings.styleReference,
-                  progressFilledCount: state.step.progressIndex + 1,
+                  filledCount: state.step.progressIndex + 1,
+                  count: 2,
                   onClose: () => _exit(context),
                 ),
                 Expanded(
