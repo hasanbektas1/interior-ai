@@ -11,32 +11,46 @@ const List<AppAsset> kReplaceExamplePhotos = [
   AppAsset.onboardingSelectArmchair,
 ];
 
+const List<AppAsset> kReplaceResultVariants = [
+  AppAsset.onboardingSelectLivingRoom,
+  AppAsset.onboardingSelectDiningRoom,
+  AppAsset.onboardingSelectArmchair,
+  AppAsset.onboardingSelectGreySofa,
+  AppAsset.onboardingSelectBedroom,
+];
+
 final class ReplaceObjectsState extends Equatable {
   final ReplaceObjectsStep step;
   final String? photoPath;
   final String prompt;
+  final int selectedResultIndex;
 
   const ReplaceObjectsState({
     this.step = ReplaceObjectsStep.editor,
     this.photoPath,
     this.prompt = '',
+    this.selectedResultIndex = 0,
   });
 
   ReplaceObjectsState copyWith({
     ReplaceObjectsStep? step,
     String? photoPath,
     String? prompt,
+    int? selectedResultIndex,
     bool clearPhoto = false,
   }) {
     return ReplaceObjectsState(
       step: step ?? this.step,
       photoPath: clearPhoto ? null : (photoPath ?? this.photoPath),
       prompt: prompt ?? this.prompt,
+      selectedResultIndex: selectedResultIndex ?? this.selectedResultIndex,
     );
   }
 
   bool get canGenerate => photoPath != null && prompt.trim().isNotEmpty;
 
+  AppAsset get selectedResult => kReplaceResultVariants[selectedResultIndex];
+
   @override
-  List<Object?> get props => [step, photoPath, prompt];
+  List<Object?> get props => [step, photoPath, prompt, selectedResultIndex];
 }

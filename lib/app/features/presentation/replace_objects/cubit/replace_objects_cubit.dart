@@ -18,8 +18,14 @@ final class ReplaceObjectsCubit extends Cubit<ReplaceObjectsState> {
 
   void setPrompt(String prompt) => emit(state.copyWith(prompt: prompt));
 
+  void selectResult(int index) =>
+      emit(state.copyWith(selectedResultIndex: index));
+
   Future<void> generate() async {
-    emit(state.copyWith(step: ReplaceObjectsStep.processing));
+    emit(state.copyWith(
+      step: ReplaceObjectsStep.processing,
+      selectedResultIndex: 0,
+    ));
     await Future.delayed(const Duration(seconds: 3));
     if (!isClosed && state.step == ReplaceObjectsStep.processing) {
       emit(state.copyWith(step: ReplaceObjectsStep.result));

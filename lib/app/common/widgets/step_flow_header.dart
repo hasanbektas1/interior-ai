@@ -7,14 +7,14 @@ class StepFlowHeader extends StatelessWidget {
   const StepFlowHeader({
     super.key,
     required this.title,
-    required this.filledCount,
     required this.onClose,
+    this.filledCount,
     this.count = 4,
     this.onBack,
   });
 
   final String title;
-  final int filledCount;
+  final int? filledCount;
   final VoidCallback onClose;
   final int count;
   final VoidCallback? onBack;
@@ -48,8 +48,10 @@ class StepFlowHeader extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: context.height16),
-        StepProgressBar(filledCount: filledCount, count: count),
+        if (filledCount != null) ...[
+          SizedBox(height: context.height16),
+          StepProgressBar(filledCount: filledCount!, count: count),
+        ],
       ],
     );
   }

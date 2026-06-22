@@ -67,6 +67,10 @@ final class CollectionCubit extends Cubit<CollectionState> {
     emit(state.copyWith(filter: category));
   }
 
+  void addItem(CollectionItem item) {
+    emit(state.copyWith(items: [item, ...state.items]));
+  }
+
   void deleteItem(String id) {
     emit(
       state.copyWith(

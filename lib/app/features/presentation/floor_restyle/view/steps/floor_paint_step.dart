@@ -4,7 +4,7 @@ import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
 import 'package:interior_ai/app/features/presentation/floor_restyle/cubit/floor_restyle_cubit.dart';
 import 'package:interior_ai/app/features/presentation/floor_restyle/cubit/floor_restyle_state.dart';
-import 'package:interior_ai/app/features/presentation/floor_restyle/widgets/paint_mask_canvas.dart';
+import 'package:interior_ai/app/common/widgets/paint_mask_canvas.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 
 class FloorPaintStep extends StatefulWidget {

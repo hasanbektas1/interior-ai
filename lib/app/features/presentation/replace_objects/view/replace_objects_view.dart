@@ -3,13 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
 import 'package:interior_ai/app/common/widgets/buttons/app_button.dart';
-import 'package:interior_ai/app/common/widgets/buttons/gradient_button.dart';
 import 'package:interior_ai/app/common/widgets/dialogs/add_photo_bottom_sheet.dart';
 import 'package:interior_ai/app/common/widgets/dialogs/remove_photo_dialog.dart';
 import 'package:interior_ai/app/common/widgets/example_photos_sheet.dart';
-import 'package:interior_ai/app/common/widgets/gem_header.dart';
 import 'package:interior_ai/app/common/widgets/generated_error_view.dart';
 import 'package:interior_ai/app/common/widgets/generated_processing_view.dart';
+import 'package:interior_ai/app/common/widgets/paint_mask_canvas.dart';
+import 'package:interior_ai/app/common/widgets/step_flow_header.dart';
 import 'package:interior_ai/app/features/presentation/replace_objects/cubit/replace_objects_cubit.dart';
 import 'package:interior_ai/app/features/presentation/replace_objects/cubit/replace_objects_state.dart';
 import 'package:interior_ai/app/features/presentation/replace_objects/enums/replace_objects_step.dart';
@@ -46,7 +46,7 @@ class _ReplaceObjectsBody extends StatelessWidget {
             );
           case ReplaceObjectsStep.result:
             return ReplaceObjectsResultView(
-              prompt: state.prompt,
+              state: state,
               onClose: () => _exit(context),
               onRegenerate: cubit.retry,
             );
@@ -75,6 +75,8 @@ class _Editor extends StatefulWidget {
 class _EditorState extends State<_Editor> {
   late final TextEditingController _controller =
       TextEditingController(text: widget.state.prompt);
+  final GlobalKey<PaintMaskCanvasState> _canvasKey = GlobalKey();
+  double _brushSize = 0.3;
 
   @override
   void dispose() {
@@ -109,7 +111,7 @@ class _EditorState extends State<_Editor> {
       body: SafeArea(
         child: Column(
           children: [
-            GemHeader(
+            StepFlowHeader(
               title: AppStrings.replaceObjects,
               onClose: () => Navigator.of(context).maybePop(),
             ),
@@ -124,12 +126,21 @@ class _EditorState extends State<_Editor> {
                       height: context.height320,
                       child: ReplaceObjectsPhotoEditor(
                         photoPath: state.photoPath,
+                        brushSize: _brushSize,
+                        canvasKey: _canvasKey,
                         onAdd: () => _onAdd(context),
                         onRemove: () => _onRemove(context),
+                        onPaintedChanged: (_) {},
                       ),
                     ),
                     SizedBox(height: context.height16),
-                    BrushToolbar(enabled: state.photoPath != null),
+                    BrushToolbar(
+                      enabled: state.photoPath != null,
+                      brushSize: _brushSize,
+                      onBrushSizeChanged: (v) => setState(() => _brushSize = v),
+                      onUndo: () => _canvasKey.currentState?.undo(),
+                      onRedo: () => _canvasKey.currentState?.redo(),
+                    ),
                     SizedBox(height: context.height16),
                     _PromptField(
                       controller: _controller,
@@ -139,20 +150,15 @@ class _EditorState extends State<_Editor> {
                 ),
               ),
             ),
-            if (state.canGenerate)
-              GradientButton(
-                text: AppStrings.replaceGenerateObject,
-                onPressed: cubit.generate,
-              )
-            else
-              AppButton.fill(
-                text: AppStrings.replaceGenerateObject,
-                onPressed: null,
-                borderRadius: 27,
-                height: 54,
-                disabledBackgroundColor: AppColors.disabledGray,
-                disabledTextColor: AppColors.disabledText,
-              ),
+            AppButton.fill(
+              text: AppStrings.replaceGenerateObject,
+              onPressed: state.canGenerate ? cubit.generate : null,
+              backgroundColor: AppColors.hanPurple,
+              borderRadius: 14,
+              height: 54,
+              disabledBackgroundColor: AppColors.disabledGray,
+              disabledTextColor: AppColors.disabledText,
+            ),
             SizedBox(height: context.height16),
           ],
         ).symmetricPadding(horizontal: context.width24),

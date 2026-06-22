@@ -114,7 +114,8 @@ class _MaskPainter extends CustomPainter {
           ..style = PaintingStyle.fill;
         canvas.drawCircle(stroke.points.first, stroke.width / 2, dot);
       } else {
-        final path = Path()..moveTo(stroke.points.first.dx, stroke.points.first.dy);
+        final path = Path()
+          ..moveTo(stroke.points.first.dx, stroke.points.first.dy);
         for (final point in stroke.points.skip(1)) {
           path.lineTo(point.dx, point.dy);
         }

@@ -192,6 +192,7 @@ final class AppStrings {
 
   // REPLACE OBJECTS
   static const String replaceObjects = "Replace Objects";
+  static const String replaceObjectCollectionTitle = "Replace Object";
   static const String replaceGenerateObject = "Generate Object";
   static const String replaceExamplePhotosTitle = "Example Photos";
   static const String replaceAddPhotoSubtitle =
