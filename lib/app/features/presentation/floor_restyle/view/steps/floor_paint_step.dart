@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
+import 'package:interior_ai/app/common/enums/app_assets.dart';
+import 'package:interior_ai/app/common/widgets/paint_mask_canvas.dart';
 import 'package:interior_ai/app/features/presentation/floor_restyle/cubit/floor_restyle_cubit.dart';
 import 'package:interior_ai/app/features/presentation/floor_restyle/cubit/floor_restyle_state.dart';
-import 'package:interior_ai/app/common/widgets/paint_mask_canvas.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 
 class FloorPaintStep extends StatefulWidget {
@@ -40,34 +42,34 @@ class _FloorPaintStepState extends State<FloorPaintStep> {
         Row(
           children: [
             _ToolButton(
-              icon: Icons.brush_rounded,
+              asset: AppAsset.floorBrushIcon,
               isSelected: !_isEraser,
               onTap: () => setState(() => _isEraser = false),
             ),
             SizedBox(width: context.width12),
             _ToolButton(
-              icon: Icons.auto_fix_normal_rounded,
+              asset: AppAsset.floorEraserIcon,
               isSelected: _isEraser,
               onTap: () => setState(() => _isEraser = true),
             ),
             const Spacer(),
             _IconButton(
-              icon: Icons.undo_rounded,
+              asset: AppAsset.replaceObjectsUndo,
               onTap: () => _canvasKey.currentState?.undo(),
             ),
             SizedBox(width: context.width12),
             _IconButton(
-              icon: Icons.redo_rounded,
+              asset: AppAsset.replaceObjectsRedo,
               onTap: () => _canvasKey.currentState?.redo(),
             ),
           ],
         ),
         SizedBox(height: context.height16),
-        const Align(
+        Align(
           alignment: Alignment.centerLeft,
           child: Text(
-            AppStrings.floorBrushSize,
-            style: TextStyle(
+            _isEraser ? AppStrings.floorEraserSize : AppStrings.floorBrushSize,
+            style: const TextStyle(
               color: AppColors.smokyBlack,
               fontSize: 15,
               fontWeight: FontWeight.w600,
@@ -82,25 +84,50 @@ class _FloorPaintStepState extends State<FloorPaintStep> {
             thumbColor: AppColors.softPurple,
             overlayShape: SliderComponentShape.noOverlay,
             thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 7),
+            trackShape: const _EdgeToEdgeTrackShape(),
           ),
           child: Slider(
             value: _brushSize,
             onChanged: (v) => setState(() => _brushSize = v),
           ),
         ),
+        SizedBox(height: context.height16),
       ],
+    );
+  }
+}
+
+class _EdgeToEdgeTrackShape extends RoundedRectSliderTrackShape {
+  const _EdgeToEdgeTrackShape();
+
+  @override
+  Rect getPreferredRect({
+    required RenderBox parentBox,
+    Offset offset = Offset.zero,
+    required SliderThemeData sliderTheme,
+    bool isEnabled = false,
+    bool isDiscrete = false,
+  }) {
+    final double trackHeight = sliderTheme.trackHeight ?? 3;
+    final double trackTop =
+        offset.dy + (parentBox.size.height - trackHeight) / 2;
+    return Rect.fromLTWH(
+      offset.dx,
+      trackTop,
+      parentBox.size.width,
+      trackHeight,
     );
   }
 }
 
 class _ToolButton extends StatelessWidget {
   const _ToolButton({
-    required this.icon,
+    required this.asset,
     required this.isSelected,
     required this.onTap,
   });
 
-  final IconData icon;
+  final AppAsset asset;
   final bool isSelected;
   final VoidCallback onTap;
 
@@ -120,10 +147,16 @@ class _ToolButton extends StatelessWidget {
             width: 1.5,
           ),
         ),
-        child: Icon(
-          icon,
-          size: context.width24,
-          color: isSelected ? AppColors.softPurple : AppColors.smokyBlack,
+        child: Center(
+          child: SvgPicture.asset(
+            asset.path,
+            width: context.width24,
+            height: context.width24,
+            colorFilter: ColorFilter.mode(
+              isSelected ? AppColors.softPurple : AppColors.smokyBlack,
+              BlendMode.srcIn,
+            ),
+          ),
         ),
       ),
     );
@@ -131,9 +164,9 @@ class _ToolButton extends StatelessWidget {
 }
 
 class _IconButton extends StatelessWidget {
-  const _IconButton({required this.icon, required this.onTap});
+  const _IconButton({required this.asset, required this.onTap});
 
-  final IconData icon;
+  final AppAsset asset;
   final VoidCallback onTap;
 
   @override
@@ -148,7 +181,17 @@ class _IconButton extends StatelessWidget {
           color: AppColors.cloudGray,
           shape: BoxShape.circle,
         ),
-        child: Icon(icon, size: context.width24, color: AppColors.smokyBlack),
+        child: Center(
+          child: SvgPicture.asset(
+            asset.path,
+            width: context.width24,
+            height: context.width24,
+            colorFilter: const ColorFilter.mode(
+              AppColors.smokyBlack,
+              BlendMode.srcIn,
+            ),
+          ),
+        ),
       ),
     );
   }

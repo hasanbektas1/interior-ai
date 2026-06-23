@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
 import 'package:interior_ai/app/common/widgets/buttons/app_button.dart';
-import 'package:interior_ai/app/common/widgets/gem_header.dart';
+import 'package:interior_ai/app/common/widgets/step_flow_header.dart';
 import 'package:interior_ai/app/common/widgets/generated_error_view.dart';
 import 'package:interior_ai/app/common/widgets/generated_processing_view.dart';
 import 'package:interior_ai/app/features/presentation/exterior_design/cubit/exterior_design_cubit.dart';
@@ -64,10 +64,10 @@ class _ExteriorDesignBody extends StatelessWidget {
           body: SafeArea(
             child: Column(
               children: [
-                GemHeader(
+                StepFlowHeader(
                   title: AppStrings.exteriorDesign,
-                  progressFilledCount: state.step.progressIndex + 1,
-                  progressCount: 4,
+                  filledCount: state.step.progressIndex + 1,
+                  count: 4,
                   onClose: () => _exit(context),
                   onBack:
                       state.step == ExteriorStep.addPhoto ? null : cubit.back,

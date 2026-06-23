@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
 import 'package:interior_ai/app/common/widgets/buttons/app_button.dart';
-import 'package:interior_ai/app/common/widgets/gem_header.dart';
+import 'package:interior_ai/app/common/widgets/step_flow_header.dart';
 import 'package:interior_ai/app/common/widgets/generated_error_view.dart';
 import 'package:interior_ai/app/common/widgets/generated_processing_view.dart';
 import 'package:interior_ai/app/features/presentation/garden_design/cubit/garden_design_cubit.dart';
@@ -61,9 +61,10 @@ class _GardenDesignBody extends StatelessWidget {
           body: SafeArea(
             child: Column(
               children: [
-                GemHeader(
+                StepFlowHeader(
                   title: AppStrings.gardenDesign,
-                  progressFilledCount: state.step.progressIndex + 1,
+                  filledCount: state.step.progressIndex + 1,
+                  count: 2,
                   onClose: () => _exit(context),
                   onBack: state.step == GardenStep.style ? cubit.back : null,
                 ),

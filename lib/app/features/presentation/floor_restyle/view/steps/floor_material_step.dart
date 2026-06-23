@@ -60,7 +60,7 @@ class FloorMaterialStep extends StatelessWidget {
               crossAxisCount: 2,
               crossAxisSpacing: context.width12,
               mainAxisSpacing: context.height12,
-              childAspectRatio: 0.92,
+              childAspectRatio: 1,
             ),
             itemBuilder: (context, index) {
               final material = FloorMaterial.values[index];

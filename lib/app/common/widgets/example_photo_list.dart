@@ -35,7 +35,7 @@ class ExamplePhotoList extends StatelessWidget {
               opacity: isDimmed ? 0.5 : 1,
               child: Container(
                 width: context.width96,
-                decoration: BoxDecoration(
+                foregroundDecoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(context.width12),
                   border: Border.all(
                     color: isSelected
@@ -45,7 +45,7 @@ class ExamplePhotoList extends StatelessWidget {
                   ),
                 ),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(context.width10),
+                  borderRadius: BorderRadius.circular(context.width12),
                   child: Image.asset(
                     photos[index].path,
                     fit: BoxFit.cover,

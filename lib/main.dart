@@ -9,7 +9,6 @@ import 'package:interior_ai/app/features/presentation/garden_design/cubit/garden
 import 'package:interior_ai/app/features/presentation/home/cubit/home_cubit.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/cubit/interior_design_cubit.dart';
 import 'package:interior_ai/app/features/presentation/main/cubit/main_cubit.dart';
-import 'package:interior_ai/app/features/presentation/main/view/main_view.dart';
 import 'package:interior_ai/app/features/presentation/onboarding/cubit/onboarding_cubit.dart';
 import 'package:interior_ai/app/features/presentation/settings/cubit/settings_cubit.dart';
 import 'package:interior_ai/app/features/presentation/replace_objects/cubit/replace_objects_cubit.dart';
@@ -48,7 +47,7 @@ class MainApp extends StatelessWidget {
         navigatorKey: Navigation.navigationKey,
         scaffoldMessengerKey: AppKeys.scaffoldMessengerKey,
         theme: AppThemeData.themeData,
-        home: const MainView(),
+        home: const SplashView(),
       ),
     );
   }

@@ -74,6 +74,8 @@ enum AppAsset {
   interiorIconLoop('assets/svg/interior_design/ic_round_loop.svg'),
   replaceObjectsUndo('assets/svg/replace_objects/octicon_undo-16.svg'),
   replaceObjectsRedo('assets/svg/replace_objects/octicon_redo-16.svg'),
+  floorBrushIcon('assets/svg/floor_restyle/brush-settings.svg'),
+  floorEraserIcon('assets/svg/floor_restyle/ph_eraser.svg'),
 
   // INTERIOR COLOR PALETTE
   paletteRandom('assets/png/interrior_design/random_color.png'),

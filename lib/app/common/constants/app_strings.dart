@@ -229,12 +229,13 @@ final class AppStrings {
       "Select a material for AI to design your space";
   static const String floorMaterial = "Material";
   static const String floorBrushSize = "Brush Size";
+  static const String floorEraserSize = "Eraser Size";
   static const List<String> floorPromptLibraryItems = [
-    "Change the floor to light oak wood.",
-    "Add marble tiles with a glossy finish.",
-    "Replace the tiles with dark concrete flooring.",
-    "Make it a patterned ceramic floor.",
-    "Add herringbone parquet for a modern look.",
+    "Warm walnut planks laid in a wide herringbone pattern.",
+    "Polished white marble with subtle grey veining and a soft sheen.",
+    "Matte terracotta tiles for a cozy Mediterranean feel.",
+    "Light Scandinavian oak with a natural matte finish.",
+    "Dark slate stone tiles with a modern industrial look.",
   ];
 
   static const List<String> interiorPromptLibraryItems = [

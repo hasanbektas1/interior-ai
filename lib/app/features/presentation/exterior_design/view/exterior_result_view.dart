@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
 import 'package:interior_ai/app/common/enums/app_assets.dart';
-import 'package:interior_ai/app/common/widgets/buttons/gradient_button.dart';
 import 'package:interior_ai/app/common/widgets/dialogs/result_action_dialog.dart';
+import 'package:interior_ai/app/common/widgets/result_action_bar.dart';
 import 'package:interior_ai/app/common/widgets/result_info_chip.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 import 'package:interior_ai/core/extensions/widgets/padding_extensions.dart';
@@ -61,6 +61,7 @@ class ExteriorResultView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool isCustom = customPrompt?.isNotEmpty ?? false;
+    final imageHeight = MediaQuery.sizeOf(context).height * 0.55;
     return Scaffold(
       backgroundColor: AppColors.ghostWhite,
       body: SafeArea(
@@ -69,88 +70,82 @@ class ExteriorResultView extends StatelessWidget {
             _Header(onShare: _onShare, onClose: onClose),
             SizedBox(height: context.height8),
             Expanded(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(context.width16),
-                child: Image.asset(
-                  AppAsset.exteriorStyleModern.path,
-                  width: double.infinity,
-                  height: double.infinity,
-                  fit: BoxFit.cover,
-                  errorBuilder: (_, __, ___) =>
-                      const ColoredBox(color: AppColors.magnolia),
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: imageHeight,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(context.width16),
+                        child: Image.asset(
+                          AppAsset.exteriorStyleModern.path,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                          errorBuilder: (_, __, ___) =>
+                              const ColoredBox(color: AppColors.magnolia),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: context.height16),
+                    if (isCustom) ...[
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: const Text(
+                          AppStrings.interiorPrompt,
+                          style: TextStyle(
+                            color: AppColors.smokyBlack,
+                            fontSize: 17,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: context.height10),
+                      Container(
+                        width: double.infinity,
+                        padding: EdgeInsets.all(context.width16),
+                        decoration: BoxDecoration(
+                          color: AppColors.cloudGray,
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        child: Text(
+                          customPrompt!,
+                          style: const TextStyle(
+                            color: AppColors.smokyBlack,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            height: 1.3,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: context.height16),
+                    ],
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ResultInfoChip(
+                            label: AppStrings.exteriorBuildingType,
+                            value: buildingTypeLabel,
+                          ),
+                        ),
+                        SizedBox(width: context.width12),
+                        Expanded(
+                          child: ResultInfoChip(
+                            label: AppStrings.interiorStyle,
+                            value: styleLabel,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-            ),
-            SizedBox(height: context.height16),
-            if (isCustom) ...[
-              Align(
-                alignment: Alignment.centerLeft,
-                child: const Text(
-                  AppStrings.interiorPrompt,
-                  style: TextStyle(
-                    color: AppColors.smokyBlack,
-                    fontSize: 17,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-              SizedBox(height: context.height10),
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.all(context.width16),
-                decoration: BoxDecoration(
-                  color: AppColors.cloudGray,
-                  borderRadius: BorderRadius.circular(14),
-                ),
-                child: Text(
-                  customPrompt!,
-                  style: const TextStyle(
-                    color: AppColors.smokyBlack,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    height: 1.3,
-                  ),
-                ),
-              ),
-              SizedBox(height: context.height16),
-            ],
-            Row(
-              children: [
-                Expanded(
-                  child: ResultInfoChip(
-                    label: AppStrings.exteriorBuildingType,
-                    value: buildingTypeLabel,
-                  ),
-                ),
-                SizedBox(width: context.width12),
-                Expanded(
-                  child: ResultInfoChip(
-                    label: AppStrings.interiorStyle,
-                    value: styleLabel,
-                  ),
-                ),
-              ],
             ),
             SizedBox(height: context.height20),
-            Row(
-              children: [
-                _CircleIconButton(
-                  icon: Icons.delete_outline_rounded,
-                  onTap: () => _onDelete(context),
-                ),
-                SizedBox(width: context.width12),
-                _CircleIconButton(
-                  icon: Icons.refresh_rounded,
-                  onTap: () => _onRegeneratePressed(context),
-                ),
-                SizedBox(width: context.width12),
-                Expanded(
-                  child: GradientButton(
-                    text: AppStrings.interiorSaveButton,
-                    onPressed: () => _onSave(context),
-                  ),
-                ),
-              ],
+            ResultActionBar(
+              onDelete: () => _onDelete(context),
+              onRegenerate: () => _onRegeneratePressed(context),
+              onSave: () => _onSave(context),
             ),
             SizedBox(height: context.height16),
           ],
@@ -206,30 +201,6 @@ class _Header extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _CircleIconButton extends StatelessWidget {
-  const _CircleIconButton({required this.icon, required this.onTap});
-
-  final IconData icon;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: onTap,
-      child: Container(
-        width: context.width52,
-        height: context.width52,
-        decoration: const BoxDecoration(
-          color: AppColors.cloudGray,
-          shape: BoxShape.circle,
-        ),
-        child: Icon(icon, size: context.width24, color: AppColors.smokyBlack),
       ),
     );
   }

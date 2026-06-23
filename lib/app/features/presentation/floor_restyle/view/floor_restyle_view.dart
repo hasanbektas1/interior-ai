@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
 import 'package:interior_ai/app/common/widgets/buttons/app_button.dart';
-import 'package:interior_ai/app/common/widgets/gem_header.dart';
+import 'package:interior_ai/app/common/widgets/step_flow_header.dart';
 import 'package:interior_ai/app/common/widgets/generated_error_view.dart';
 import 'package:interior_ai/app/common/widgets/generated_processing_view.dart';
 import 'package:interior_ai/app/features/presentation/floor_restyle/cubit/floor_restyle_cubit.dart';
@@ -62,10 +62,10 @@ class _FloorRestyleBody extends StatelessWidget {
           body: SafeArea(
             child: Column(
               children: [
-                GemHeader(
+                StepFlowHeader(
                   title: AppStrings.floorRestyle,
-                  progressFilledCount: state.step.progressIndex + 1,
-                  progressCount: 3,
+                  filledCount: state.step.progressIndex + 1,
+                  count: 3,
                   onClose: () => _exit(context),
                   onBack: state.step == FloorStep.addPhoto ? null : cubit.back,
                 ),
