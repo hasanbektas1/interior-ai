@@ -190,6 +190,13 @@ final class AppStrings {
   static const String styleReference = "Style Reference";
   static const String styleAddReferencePhoto = "Add a Reference Photo";
 
+  // COLLECTION ITEM TITLES
+  static const String interiorCollectionTitle = "Interior Design";
+  static const String exteriorCollectionTitle = "Exterior Design";
+  static const String gardenCollectionTitle = "Garden Design";
+  static const String floorCollectionTitle = "Floor Restyle";
+  static const String styleReferenceCollectionTitle = "Style Reference";
+
   // REPLACE OBJECTS
   static const String replaceObjects = "Replace Objects";
   static const String replaceObjectCollectionTitle = "Replace Object";

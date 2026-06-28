@@ -1,4 +1,8 @@
 import 'package:bloc/bloc.dart';
+import 'package:interior_ai/app/common/constants/app_strings.dart';
+import 'package:interior_ai/app/common/enums/app_assets.dart';
+import 'package:interior_ai/app/features/presentation/collection/cubit/collection_cubit.dart';
+import 'package:interior_ai/app/features/presentation/collection/enums/collection_category.dart';
 import 'package:interior_ai/app/features/presentation/exterior_design/cubit/exterior_design_state.dart';
 import 'package:interior_ai/app/features/presentation/exterior_design/enums/building_type.dart';
 import 'package:interior_ai/app/features/presentation/exterior_design/enums/exterior_color_palette.dart';
@@ -7,11 +11,15 @@ import 'package:interior_ai/app/features/presentation/exterior_design/enums/exte
 import 'package:interior_ai/core/helpers/media_picker_service.dart';
 
 final class ExteriorDesignCubit extends Cubit<ExteriorDesignState> {
-  ExteriorDesignCubit({required MediaPickerService mediaPickerService})
-      : _mediaPickerService = mediaPickerService,
+  ExteriorDesignCubit({
+    required MediaPickerService mediaPickerService,
+    required CollectionCubit collectionCubit,
+  })  : _mediaPickerService = mediaPickerService,
+        _collectionCubit = collectionCubit,
         super(const ExteriorDesignState());
 
   final MediaPickerService _mediaPickerService;
+  final CollectionCubit _collectionCubit;
 
   void reset() => emit(const ExteriorDesignState());
 
@@ -90,8 +98,21 @@ final class ExteriorDesignCubit extends Cubit<ExteriorDesignState> {
 
   Future<void> startProcessing() async {
     emit(state.copyWith(step: ExteriorStep.processing));
+    final id = await _collectionCubit.startGenerating(
+      category: CollectionCategory.exteriorDesign,
+      title: AppStrings.exteriorCollectionTitle,
+      placeholderImagePath:
+          state.selectedPhotoPath ?? AppAsset.exteriorStyleModern.path,
+      styleLabel: state.style?.label ?? '',
+      prompt: state.style == ExteriorStyle.custom ? state.customPrompt : null,
+    );
     await Future.delayed(const Duration(seconds: 3));
-    if (!isClosed && state.step == ExteriorStep.processing) {
+    if (isClosed) return;
+    await _collectionCubit.completeGenerating(
+      id,
+      AppAsset.exteriorStyleModern.path,
+    );
+    if (state.step == ExteriorStep.processing) {
       emit(state.copyWith(step: ExteriorStep.result));
     }
   }

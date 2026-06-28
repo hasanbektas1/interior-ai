@@ -1,14 +1,22 @@
 import 'package:bloc/bloc.dart';
+import 'package:interior_ai/app/common/constants/app_strings.dart';
+import 'package:interior_ai/app/common/enums/app_assets.dart';
+import 'package:interior_ai/app/features/presentation/collection/cubit/collection_cubit.dart';
+import 'package:interior_ai/app/features/presentation/collection/enums/collection_category.dart';
 import 'package:interior_ai/app/features/presentation/style_reference/cubit/style_reference_state.dart';
 import 'package:interior_ai/app/features/presentation/style_reference/enums/style_reference_step.dart';
 import 'package:interior_ai/core/helpers/media_picker_service.dart';
 
 final class StyleReferenceCubit extends Cubit<StyleReferenceState> {
-  StyleReferenceCubit({required MediaPickerService mediaPickerService})
-      : _mediaPickerService = mediaPickerService,
+  StyleReferenceCubit({
+    required MediaPickerService mediaPickerService,
+    required CollectionCubit collectionCubit,
+  })  : _mediaPickerService = mediaPickerService,
+        _collectionCubit = collectionCubit,
         super(const StyleReferenceState());
 
   final MediaPickerService _mediaPickerService;
+  final CollectionCubit _collectionCubit;
 
   void reset() => emit(const StyleReferenceState());
 
@@ -69,8 +77,17 @@ final class StyleReferenceCubit extends Cubit<StyleReferenceState> {
 
   Future<void> startProcessing() async {
     emit(state.copyWith(step: StyleReferenceStep.processing));
+    final id = await _collectionCubit.startGenerating(
+      category: CollectionCategory.styleReference,
+      title: AppStrings.styleReferenceCollectionTitle,
+      placeholderImagePath:
+          state.photoSelectedPath ?? AppAsset.interiorResult.path,
+      styleLabel: CollectionCategory.styleReference.label,
+    );
     await Future.delayed(const Duration(seconds: 3));
-    if (!isClosed && state.step == StyleReferenceStep.processing) {
+    if (isClosed) return;
+    await _collectionCubit.completeGenerating(id, AppAsset.interiorResult.path);
+    if (state.step == StyleReferenceStep.processing) {
       emit(state.copyWith(step: StyleReferenceStep.result));
     }
   }

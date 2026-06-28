@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:interior_ai/app/common/enums/app_assets.dart';
+import 'package:interior_ai/app/features/presentation/collection/cubit/collection_cubit.dart';
 import 'package:interior_ai/app/common/widgets/dialogs/result_action_dialog.dart';
 import 'package:interior_ai/app/common/widgets/result_action_bar.dart';
 import 'package:interior_ai/app/common/widgets/result_info_chip.dart';
@@ -26,6 +28,10 @@ class ExteriorResultView extends StatelessWidget {
   final VoidCallback onRegenerate;
 
   Future<void> _onSave(BuildContext context) async {
+    await context.read<CollectionCubit>().saveToGallery(
+          AppAsset.exteriorStyleModern.path,
+        );
+    if (!context.mounted) return;
     await ResultActionDialog.show(
       context,
       title: AppStrings.interiorImageSavedTitle,

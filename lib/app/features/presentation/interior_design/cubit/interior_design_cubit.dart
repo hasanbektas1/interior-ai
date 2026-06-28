@@ -1,4 +1,8 @@
 import 'package:bloc/bloc.dart';
+import 'package:interior_ai/app/common/constants/app_strings.dart';
+import 'package:interior_ai/app/common/enums/app_assets.dart';
+import 'package:interior_ai/app/features/presentation/collection/cubit/collection_cubit.dart';
+import 'package:interior_ai/app/features/presentation/collection/enums/collection_category.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/cubit/interior_design_state.dart';
 import 'package:interior_ai/core/helpers/media_picker_service.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/enums/color_palette.dart';
@@ -7,11 +11,15 @@ import 'package:interior_ai/app/features/presentation/interior_design/enums/inte
 import 'package:interior_ai/app/features/presentation/interior_design/enums/room_type.dart';
 
 final class InteriorDesignCubit extends Cubit<InteriorDesignState> {
-  InteriorDesignCubit({required MediaPickerService mediaPickerService})
-      : _mediaPickerService = mediaPickerService,
+  InteriorDesignCubit({
+    required MediaPickerService mediaPickerService,
+    required CollectionCubit collectionCubit,
+  })  : _mediaPickerService = mediaPickerService,
+        _collectionCubit = collectionCubit,
         super(const InteriorDesignState());
 
   final MediaPickerService _mediaPickerService;
+  final CollectionCubit _collectionCubit;
 
   void reset() => emit(const InteriorDesignState());
 
@@ -98,8 +106,19 @@ final class InteriorDesignCubit extends Cubit<InteriorDesignState> {
 
   Future<void> startProcessing() async {
     emit(state.copyWith(step: InteriorStep.processing));
+    final id = await _collectionCubit.startGenerating(
+      category: CollectionCategory.interiorDesign,
+      title: AppStrings.interiorCollectionTitle,
+      placeholderImagePath:
+          state.selectedPhotoPath ?? AppAsset.interiorResult.path,
+      styleLabel: state.styleLabel,
+      roomType: state.roomType,
+      prompt: state.isCustomStyle ? state.customPrompt : null,
+    );
     await Future.delayed(const Duration(seconds: 3));
-    if (!isClosed && state.step == InteriorStep.processing) {
+    if (isClosed) return;
+    await _collectionCubit.completeGenerating(id, AppAsset.interiorResult.path);
+    if (state.step == InteriorStep.processing) {
       emit(state.copyWith(step: InteriorStep.result));
     }
   }

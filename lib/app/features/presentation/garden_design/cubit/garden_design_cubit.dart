@@ -1,15 +1,23 @@
 import 'package:bloc/bloc.dart';
+import 'package:interior_ai/app/common/constants/app_strings.dart';
+import 'package:interior_ai/app/common/enums/app_assets.dart';
+import 'package:interior_ai/app/features/presentation/collection/cubit/collection_cubit.dart';
+import 'package:interior_ai/app/features/presentation/collection/enums/collection_category.dart';
 import 'package:interior_ai/app/features/presentation/garden_design/cubit/garden_design_state.dart';
 import 'package:interior_ai/app/features/presentation/garden_design/enums/garden_step.dart';
 import 'package:interior_ai/app/features/presentation/garden_design/enums/garden_style.dart';
 import 'package:interior_ai/core/helpers/media_picker_service.dart';
 
 final class GardenDesignCubit extends Cubit<GardenDesignState> {
-  GardenDesignCubit({required MediaPickerService mediaPickerService})
-      : _mediaPickerService = mediaPickerService,
+  GardenDesignCubit({
+    required MediaPickerService mediaPickerService,
+    required CollectionCubit collectionCubit,
+  })  : _mediaPickerService = mediaPickerService,
+        _collectionCubit = collectionCubit,
         super(const GardenDesignState());
 
   final MediaPickerService _mediaPickerService;
+  final CollectionCubit _collectionCubit;
 
   void reset() => emit(const GardenDesignState());
 
@@ -66,8 +74,21 @@ final class GardenDesignCubit extends Cubit<GardenDesignState> {
 
   Future<void> startProcessing() async {
     emit(state.copyWith(step: GardenStep.processing));
+    final id = await _collectionCubit.startGenerating(
+      category: CollectionCategory.gardenDesign,
+      title: AppStrings.gardenCollectionTitle,
+      placeholderImagePath:
+          state.selectedPhotoPath ?? AppAsset.gardenStyleCity.path,
+      styleLabel: state.style?.label ?? '',
+      prompt: state.style == GardenStyle.custom ? state.customPrompt : null,
+    );
     await Future.delayed(const Duration(seconds: 3));
-    if (!isClosed && state.step == GardenStep.processing) {
+    if (isClosed) return;
+    await _collectionCubit.completeGenerating(
+      id,
+      AppAsset.gardenStyleCity.path,
+    );
+    if (state.step == GardenStep.processing) {
       emit(state.copyWith(step: GardenStep.result));
     }
   }

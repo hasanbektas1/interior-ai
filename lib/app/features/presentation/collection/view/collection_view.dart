@@ -43,6 +43,8 @@ class CollectionView extends StatelessWidget {
     if (action == null || !context.mounted) return;
     switch (action) {
       case CollectionMenuAction.download:
+        await cubit.saveToGallery(item.imagePath);
+        if (!context.mounted) return;
         await ResultActionDialog.show(
           context,
           title: AppStrings.interiorImageSavedTitle,

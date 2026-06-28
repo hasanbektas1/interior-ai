@@ -5,9 +5,6 @@ import 'package:interior_ai/app/common/constants/app_strings.dart';
 import 'package:interior_ai/app/common/widgets/dialogs/result_action_dialog.dart';
 import 'package:interior_ai/app/common/widgets/result_action_bar.dart';
 import 'package:interior_ai/app/features/presentation/collection/cubit/collection_cubit.dart';
-import 'package:interior_ai/app/features/presentation/collection/enums/collection_category.dart';
-import 'package:interior_ai/app/features/presentation/collection/models/collection_item.dart';
-import 'package:interior_ai/app/features/presentation/interior_design/enums/room_type.dart';
 import 'package:interior_ai/app/features/presentation/replace_objects/cubit/replace_objects_cubit.dart';
 import 'package:interior_ai/app/features/presentation/replace_objects/cubit/replace_objects_state.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
@@ -27,20 +24,9 @@ class ReplaceObjectsResultView extends StatelessWidget {
   final VoidCallback onRegenerate;
 
   Future<void> _onSave(BuildContext context) async {
-    final collection = context.read<CollectionCubit>();
-    final now = DateTime.now();
-    collection.addItem(
-      CollectionItem(
-        id: now.millisecondsSinceEpoch.toString(),
-        title: AppStrings.replaceObjectCollectionTitle,
-        category: CollectionCategory.replaceObject,
-        dateLabel: '${now.day}.${now.month}.${now.year}',
-        image: state.selectedResult,
-        roomType: RoomType.livingRoom,
-        styleLabel: CollectionCategory.replaceObject.label,
-        prompt: state.prompt.trim().isEmpty ? null : state.prompt,
-      ),
-    );
+    await context.read<CollectionCubit>().saveToGallery(
+          state.selectedResult.path,
+        );
     if (!context.mounted) return;
     await ResultActionDialog.show(
       context,

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
+import 'package:interior_ai/app/common/widgets/app_photo.dart';
 import 'package:interior_ai/app/common/widgets/buttons/app_button.dart';
 import 'package:interior_ai/app/common/widgets/dialogs/result_action_dialog.dart';
 import 'package:interior_ai/app/common/widgets/result_info_chip.dart';
+import 'package:interior_ai/app/features/presentation/collection/cubit/collection_cubit.dart';
 import 'package:interior_ai/app/features/presentation/collection/models/collection_item.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 import 'package:interior_ai/core/extensions/widgets/padding_extensions.dart';
@@ -22,6 +25,8 @@ class CollectionResultView extends StatelessWidget {
   final VoidCallback onDeleted;
 
   Future<void> _onSave(BuildContext context) async {
+    await context.read<CollectionCubit>().saveToGallery(item.imagePath);
+    if (!context.mounted) return;
     await ResultActionDialog.show(
       context,
       title: AppStrings.interiorImageSavedTitle,
@@ -73,12 +78,7 @@ class CollectionResultView extends StatelessWidget {
                       child: SizedBox(
                         width: double.infinity,
                         height: context.height340,
-                        child: Image.asset(
-                          item.image.path,
-                          fit: BoxFit.cover,
-                          errorBuilder: (_, __, ___) =>
-                              const ColoredBox(color: AppColors.magnolia),
-                        ),
+                        child: AppPhoto(path: item.imagePath),
                       ),
                     ),
                     SizedBox(height: context.height20),
@@ -86,14 +86,16 @@ class CollectionResultView extends StatelessWidget {
                       _PromptSection(prompt: item.prompt!),
                     Row(
                       children: [
-                        Expanded(
-                          child: ResultInfoChip(
-                            label: AppStrings.interiorRoomType,
-                            value: item.roomType.label,
-                            icon: item.roomType.icon,
+                        if (item.roomType != null) ...[
+                          Expanded(
+                            child: ResultInfoChip(
+                              label: AppStrings.interiorRoomType,
+                              value: item.roomType!.label,
+                              icon: item.roomType!.icon,
+                            ),
                           ),
-                        ),
-                        SizedBox(width: context.width12),
+                          SizedBox(width: context.width12),
+                        ],
                         Expanded(
                           child: ResultInfoChip(
                             label: AppStrings.interiorStyle,

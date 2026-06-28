@@ -1,63 +1,35 @@
 import 'package:bloc/bloc.dart';
-import 'package:interior_ai/app/common/enums/app_assets.dart';
 import 'package:interior_ai/app/features/presentation/collection/cubit/collection_state.dart';
 import 'package:interior_ai/app/features/presentation/collection/enums/collection_category.dart';
 import 'package:interior_ai/app/features/presentation/collection/models/collection_item.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/enums/room_type.dart';
+import 'package:interior_ai/core/helpers/gallery_saver_service.dart';
+import 'package:interior_ai/core/storage/collection_storage.dart';
 
 final class CollectionCubit extends Cubit<CollectionState> {
-  CollectionCubit() : super(CollectionState(items: _seed));
+  CollectionCubit({
+    required CollectionStorage storage,
+    required GallerySaverService gallerySaver,
+  })  : _storage = storage,
+        _gallerySaver = gallerySaver,
+        super(const CollectionState()) {
+    _load();
+  }
 
-  static const List<CollectionItem> _seed = [
-    CollectionItem(
-      id: '0',
-      title: 'Interior Design #2',
-      category: CollectionCategory.interiorDesign,
-      dateLabel: '',
-      image: AppAsset.onboardingSelectLivingRoom,
-      isGenerating: true,
-      roomType: RoomType.livingRoom,
-      styleLabel: 'Modern',
-    ),
-    CollectionItem(
-      id: '1',
-      title: 'Paint Project #1',
-      category: CollectionCategory.paint,
-      dateLabel: '25 April 2025, 2:18 AM',
-      image: AppAsset.onboardingSelectDiningRoom,
-      roomType: RoomType.diningRoom,
-      styleLabel: 'Bohemian',
-    ),
-    CollectionItem(
-      id: '2',
-      title: 'Style Reference #1',
-      category: CollectionCategory.styleReference,
-      dateLabel: '25 April 2025, 7:52 AM',
-      image: AppAsset.onboardingSelectWorkspace,
-      roomType: RoomType.studyRoom,
-      styleLabel: 'Minimalistic',
-    ),
-    CollectionItem(
-      id: '3',
-      title: 'Replace Object #1',
-      category: CollectionCategory.replaceObject,
-      dateLabel: '24 April 2025, 9:46 PM',
-      image: AppAsset.onboardingSelectArmchair,
-      roomType: RoomType.livingRoom,
-      styleLabel: 'Rustic',
-    ),
-    CollectionItem(
-      id: '4',
-      title: 'Interior Design #1',
-      category: CollectionCategory.interiorDesign,
-      dateLabel: '23 April 2025, 10:15 PM',
-      image: AppAsset.onboardingSelectBedroom,
-      roomType: RoomType.livingRoom,
-      styleLabel: 'Custom',
-      prompt:
-          'Modern Scandinavian living room with natural light, light wood furniture, and cozy textures',
-    ),
-  ];
+  final CollectionStorage _storage;
+  final GallerySaverService _gallerySaver;
+
+  void _load() {
+    // Drop items left "generating" by an interrupted session (the work was
+    // lost when the app closed), so the UI never shows a stuck card.
+    final stale = _storage.getAll().where((item) => item.isGenerating);
+    for (final item in stale) {
+      _storage.delete(item.id);
+    }
+    final items = _storage.getAll()
+      ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
+    emit(state.copyWith(items: items));
+  }
 
   void selectFilter(CollectionCategory? category) {
     if (category == null) {
@@ -67,15 +39,85 @@ final class CollectionCubit extends Cubit<CollectionState> {
     emit(state.copyWith(filter: category));
   }
 
-  void addItem(CollectionItem item) {
+  Future<void> addItem(CollectionItem item) async {
+    await _storage.put(item);
     emit(state.copyWith(items: [item, ...state.items]));
   }
 
-  void deleteItem(String id) {
+  Future<void> deleteItem(String id) async {
+    await _storage.delete(id);
     emit(
       state.copyWith(
         items: state.items.where((item) => item.id != id).toList(),
       ),
     );
+  }
+
+  /// Adds a placeholder item shown as "generating" and returns its id so the
+  /// caller can mark it complete once the result is ready.
+  Future<String> startGenerating({
+    required CollectionCategory category,
+    required String title,
+    required String placeholderImagePath,
+    required String styleLabel,
+    RoomType? roomType,
+    String? prompt,
+  }) async {
+    final now = DateTime.now();
+    final item = CollectionItem(
+      id: now.microsecondsSinceEpoch.toString(),
+      title: title,
+      category: category,
+      dateLabel: _formatDate(now),
+      createdAt: now.millisecondsSinceEpoch,
+      imagePath: placeholderImagePath,
+      isGenerating: true,
+      roomType: roomType,
+      styleLabel: styleLabel,
+      prompt: prompt,
+    );
+    await addItem(item);
+    return item.id;
+  }
+
+  /// Flips a generating item to its finished state with the produced image.
+  Future<void> completeGenerating(String id, String imagePath) async {
+    final index = state.items.indexWhere((item) => item.id == id);
+    if (index == -1) return;
+    final updated = state.items[index].copyWith(
+      isGenerating: false,
+      imagePath: imagePath,
+      dateLabel: _formatDate(DateTime.now()),
+    );
+    await _storage.put(updated);
+    final items = [...state.items];
+    items[index] = updated;
+    emit(state.copyWith(items: items));
+  }
+
+  Future<void> saveToGallery(String imagePath) =>
+      _gallerySaver.save(imagePath);
+
+  static const List<String> _months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+
+  String _formatDate(DateTime date) {
+    final hour12 = date.hour % 12 == 0 ? 12 : date.hour % 12;
+    final minute = date.minute.toString().padLeft(2, '0');
+    final period = date.hour < 12 ? 'AM' : 'PM';
+    return '${date.day} ${_months[date.month - 1]} ${date.year}, '
+        '$hour12:$minute $period';
   }
 }

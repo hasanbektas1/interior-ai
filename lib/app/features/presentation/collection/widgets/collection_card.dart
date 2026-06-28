@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
+import 'package:interior_ai/app/common/widgets/app_photo.dart';
 import 'package:interior_ai/app/common/widgets/gradient_progress_ring.dart';
 import 'package:interior_ai/app/features/presentation/collection/models/collection_item.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
@@ -32,12 +33,7 @@ class CollectionCard extends StatelessWidget {
           child: Stack(
             fit: StackFit.expand,
             children: [
-              Image.asset(
-                item.image.path,
-                fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) =>
-                    const ColoredBox(color: AppColors.magnolia),
-              ),
+              AppPhoto(path: item.imagePath),
               if (item.isGenerating)
                 _GeneratingOverlay()
               else ...[
