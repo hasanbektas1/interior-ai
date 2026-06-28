@@ -1,3 +1,7 @@
+# Local secrets (API tokens) — never commit
+env.json
+lib/app/common/config/app_secrets.dart
+
 # Miscellaneous
 *.class
 *.log
