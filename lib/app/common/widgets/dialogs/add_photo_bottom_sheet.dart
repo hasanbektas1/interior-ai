@@ -68,20 +68,20 @@ class AddPhotoBottomSheet extends StatelessWidget {
                 const Divider(height: 1, color: AppColors.platinum),
                 _SheetAction(
                   label: AppStrings.interiorTakePhoto,
-                  color: AppColors.smokyBlack,
+                  color: AppColors.azure,
                   onTap: () => Navigator.of(context).pop(PhotoSource.camera),
                 ),
                 const Divider(height: 1, color: AppColors.platinum),
                 _SheetAction(
                   label: AppStrings.interiorChooseFromLibrary,
-                  color: AppColors.softPurple,
+                  color: AppColors.azure,
                   onTap: () => Navigator.of(context).pop(PhotoSource.library),
                 ),
                 if (showExampleOption) ...[
                   const Divider(height: 1, color: AppColors.platinum),
                   _SheetAction(
                     label: AppStrings.interiorUseExamplePhoto,
-                    color: AppColors.softPurple,
+                    color: AppColors.azure,
                     onTap: () => Navigator.of(context).pop(PhotoSource.example),
                   ),
                 ],
