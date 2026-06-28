@@ -92,6 +92,58 @@ enum AppAsset {
   paletteElectricPulse('assets/png/interrior_design/electric_pulse_color.png'),
   paletteCrimsonNoir('assets/png/interrior_design/crimson_noir_color.png'),
 
+  // INTERIOR DESIGN STYLES
+  styleCustom('assets/png/interrior_design/select_style/interrior_custom.png'),
+  styleMinimalistic(
+    'assets/png/interrior_design/select_style/interrior_minimalistic.png',
+  ),
+  styleModern('assets/png/interrior_design/select_style/interrior_modern.png'),
+  styleRustic('assets/png/interrior_design/select_style/interrior_rustic.png'),
+  styleBohemian(
+    'assets/png/interrior_design/select_style/interrior_bohemian.png',
+  ),
+  styleVintage('assets/png/interrior_design/select_style/interrior_vintage.png'),
+  styleLuxury('assets/png/interrior_design/select_style/interrior_luxury.png'),
+  styleBaroque('assets/png/interrior_design/select_style/interrior_baroque.png'),
+  styleMediterranean(
+    'assets/png/interrior_design/select_style/interrior_mediterranean.png',
+  ),
+  styleCyberpunk(
+    'assets/png/interrior_design/select_style/interrior_cyberpunk.jpg',
+  ),
+  styleJapandi('assets/png/interrior_design/select_style/interrior_japandi.png'),
+  styleSoho('assets/png/interrior_design/select_style/interrior_soho.png'),
+  styleTropical(
+    'assets/png/interrior_design/select_style/interrior_tropical.png',
+  ),
+  styleGamer('assets/png/interrior_design/select_style/interrior_gamer.jpg'),
+  styleCozy('assets/png/interrior_design/select_style/interrior_cozy.png'),
+  styleCoastal('assets/png/interrior_design/select_style/interrior_coastal.png'),
+  styleAirbnb('assets/png/interrior_design/select_style/interrior_airbnb.png'),
+  styleDisco('assets/png/interrior_design/select_style/interrior_disco.png'),
+  styleAncient('assets/png/interrior_design/select_style/interrior_ancient.png'),
+  styleBiophilic(
+    'assets/png/interrior_design/select_style/interrior_biophilic.png',
+  ),
+  styleGothic('assets/png/interrior_design/select_style/interrior_gothic.png'),
+  styleCottagecore(
+    'assets/png/interrior_design/select_style/interrior_cottagecore.png',
+  ),
+  styleMedieval(
+    'assets/png/interrior_design/select_style/interrior_medieval.png',
+  ),
+  styleEighties('assets/png/interrior_design/select_style/interrior_80s.png'),
+  styleWood('assets/png/interrior_design/select_style/interrior_wood.png'),
+  styleChocolate(
+    'assets/png/interrior_design/select_style/interrior_chocolate.png',
+  ),
+  styleCreepy('assets/png/interrior_design/select_style/interrior_creepy.png'),
+  styleCartoon('assets/png/interrior_design/select_style/interrior_cartoon.png'),
+  styleRainbow('assets/png/interrior_design/select_style/interrior_rainbow.png'),
+  styleSkiChalet(
+    'assets/png/interrior_design/select_style/interrior_skichalet.png',
+  ),
+
   // GARDEN DESIGN
   gardenCustomIllustration('assets/png/garden_design/garden_design_custom.png'),
   gardenExample1('assets/png/garden_design/garden_design_1.png'),

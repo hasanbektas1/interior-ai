@@ -39,9 +39,10 @@ flutter:
     - assets/png/onboarding_mini/
     - assets/png/onboarding_result/
     - assets/png/interrior_design/
+    - assets/png/interrior_design/select_style/
     - assets/png/garden_design/
     - assets/png/exterior_design/
-    - assets/floor_restyle/
+    - assets/png/floor_restyle/
     - assets/png/paywall/
     - assets/png/settings/
     - assets/svg/home/
