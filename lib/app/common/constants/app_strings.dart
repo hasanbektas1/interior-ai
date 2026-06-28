@@ -1,6 +1,6 @@
 final class AppStrings {
   // SPLASH
-  static const String appName = "Interior AI";
+  static const String appName = "Roomora AI";
 
   // LOGIN
   static const String hello = "Hello!";
@@ -110,7 +110,7 @@ final class AppStrings {
       "Tap to star to rate it on the App Store";
   static const String settingsNotNow = "Not Now";
   static const String settingsShareMessage =
-      "Reimagine your space with Interior AI!";
+      "Reimagine your space with Roomora AI!";
   static const String sampleUserId = "b7a2f730-91cb-4f85-9f...";
 
   // INTERIOR DESIGN
