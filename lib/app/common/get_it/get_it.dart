@@ -1,5 +1,7 @@
 import 'package:interior_ai/app/features/data/datasources/local/test_local_datasource.dart';
+import 'package:interior_ai/app/features/data/datasources/remote/image_generation_remote_datasource.dart';
 import 'package:interior_ai/app/features/data/datasources/remote/test_remote_datasource.dart';
+import 'package:interior_ai/app/features/data/repositories/image_generation_repository.dart';
 import 'package:interior_ai/app/features/data/repositories/test_repository.dart';
 import 'package:interior_ai/app/features/presentation/collection/cubit/collection_cubit.dart';
 import 'package:interior_ai/app/features/presentation/exterior_design/cubit/exterior_design_cubit.dart';
@@ -52,17 +54,26 @@ final class ServiceLocator {
       )
       ..registerLazySingleton<TestLocalDatasource>(
         () => TestLocalDatasourceImpl(),
+      )
+      ..registerLazySingleton<ImageGenerationRemoteDatasource>(
+        () => ImageGenerationRemoteDatasourceImpl(),
       );
   }
 
   /// **Repository Dependency**
   void _setupRepository() {
-    getIt.registerLazySingleton<TestRepository>(
-      () => TestRepositoryImpl(
-        remoteDatasource: getIt<TestRemoteDatasource>(),
-        localDatasource: getIt<TestLocalDatasource>(),
-      ),
-    );
+    getIt
+      ..registerLazySingleton<TestRepository>(
+        () => TestRepositoryImpl(
+          remoteDatasource: getIt<TestRemoteDatasource>(),
+          localDatasource: getIt<TestLocalDatasource>(),
+        ),
+      )
+      ..registerLazySingleton<ImageGenerationRepository>(
+        () => ImageGenerationRepositoryImpl(
+          remoteDatasource: getIt<ImageGenerationRemoteDatasource>(),
+        ),
+      );
   }
 
   /// **BLoC, Cubit and ViewModel Dependency**
@@ -81,6 +92,7 @@ final class ServiceLocator {
         () => InteriorDesignCubit(
           mediaPickerService: getIt<MediaPickerService>(),
           collectionCubit: getIt<CollectionCubit>(),
+          imageRepository: getIt<ImageGenerationRepository>(),
         ),
       )
       ..registerLazySingleton<StyleReferenceCubit>(

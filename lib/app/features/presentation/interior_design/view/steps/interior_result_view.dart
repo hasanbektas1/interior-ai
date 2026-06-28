@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:interior_ai/app/common/enums/app_assets.dart';
+import 'package:interior_ai/app/common/widgets/app_photo.dart';
 import 'package:interior_ai/app/features/presentation/collection/cubit/collection_cubit.dart';
 import 'package:interior_ai/app/common/widgets/dialogs/result_action_dialog.dart';
 import 'package:interior_ai/app/common/widgets/result_info_chip.dart';
@@ -28,7 +28,7 @@ class InteriorResultView extends StatelessWidget {
 
   Future<void> _onSave(BuildContext context) async {
     await context.read<CollectionCubit>().saveToGallery(
-          AppAsset.interiorResult.path,
+          state.resultImagePath ?? AppAsset.interiorResult.path,
         );
     if (!context.mounted) return;
     await ResultActionDialog.show(
@@ -78,12 +78,11 @@ class InteriorResultView extends StatelessWidget {
               height: imageHeight,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(context.width16),
-                child: Image.asset(
-                  AppAsset.interiorResult.path,
+                child: SizedBox(
                   width: double.infinity,
-                  fit: BoxFit.cover,
-                  errorBuilder: (_, __, ___) =>
-                      const ColoredBox(color: AppColors.magnolia),
+                  child: AppPhoto(
+                    path: state.resultImagePath ?? AppAsset.interiorResult.path,
+                  ),
                 ),
               ),
             ),

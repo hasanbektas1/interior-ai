@@ -23,6 +23,7 @@ final class InteriorDesignState extends Equatable {
   final DesignStyle? style;
   final String? customPrompt;
   final ColorPalette? colorPalette;
+  final String? resultImagePath;
 
   const InteriorDesignState({
     this.step = InteriorStep.addPhoto,
@@ -33,6 +34,7 @@ final class InteriorDesignState extends Equatable {
     this.style,
     this.customPrompt,
     this.colorPalette,
+    this.resultImagePath,
   });
 
   InteriorDesignState copyWith({
@@ -44,6 +46,7 @@ final class InteriorDesignState extends Equatable {
     DesignStyle? style,
     String? customPrompt,
     ColorPalette? colorPalette,
+    String? resultImagePath,
     bool clearExample = false,
     bool clearAddedPhoto = false,
     bool clearCustomRoomName = false,
@@ -61,6 +64,7 @@ final class InteriorDesignState extends Equatable {
       customPrompt:
           clearCustomPrompt ? null : (customPrompt ?? this.customPrompt),
       colorPalette: colorPalette ?? this.colorPalette,
+      resultImagePath: resultImagePath ?? this.resultImagePath,
     );
   }
 
@@ -111,5 +115,6 @@ final class InteriorDesignState extends Equatable {
         style,
         customPrompt,
         colorPalette,
+        resultImagePath,
       ];
 }

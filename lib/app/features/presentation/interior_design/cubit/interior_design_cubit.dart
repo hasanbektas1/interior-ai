@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
-import 'package:interior_ai/app/common/enums/app_assets.dart';
+import 'package:interior_ai/app/features/data/repositories/image_generation_repository.dart';
 import 'package:interior_ai/app/features/presentation/collection/cubit/collection_cubit.dart';
 import 'package:interior_ai/app/features/presentation/collection/enums/collection_category.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/cubit/interior_design_state.dart';
@@ -14,12 +14,15 @@ final class InteriorDesignCubit extends Cubit<InteriorDesignState> {
   InteriorDesignCubit({
     required MediaPickerService mediaPickerService,
     required CollectionCubit collectionCubit,
+    required ImageGenerationRepository imageRepository,
   })  : _mediaPickerService = mediaPickerService,
         _collectionCubit = collectionCubit,
+        _imageRepository = imageRepository,
         super(const InteriorDesignState());
 
   final MediaPickerService _mediaPickerService;
   final CollectionCubit _collectionCubit;
+  final ImageGenerationRepository _imageRepository;
 
   void reset() => emit(const InteriorDesignState());
 
@@ -105,22 +108,58 @@ final class InteriorDesignCubit extends Cubit<InteriorDesignState> {
   }
 
   Future<void> startProcessing() async {
+    final source = state.selectedPhotoPath;
+    if (source == null) {
+      emit(state.copyWith(step: InteriorStep.error));
+      return;
+    }
     emit(state.copyWith(step: InteriorStep.processing));
     final id = await _collectionCubit.startGenerating(
       category: CollectionCategory.interiorDesign,
       title: AppStrings.interiorCollectionTitle,
-      placeholderImagePath:
-          state.selectedPhotoPath ?? AppAsset.interiorResult.path,
+      placeholderImagePath: source,
       styleLabel: state.styleLabel,
       roomType: state.roomType,
       prompt: state.isCustomStyle ? state.customPrompt : null,
     );
-    await Future.delayed(const Duration(seconds: 3));
+
+    final result = await _imageRepository.generate(
+      prompt: _buildPrompt(),
+      sourceImagePath: source,
+    );
     if (isClosed) return;
-    await _collectionCubit.completeGenerating(id, AppAsset.interiorResult.path);
-    if (state.step == InteriorStep.processing) {
-      emit(state.copyWith(step: InteriorStep.result));
+
+    final resultPath = result.data;
+    if (result.success && resultPath != null) {
+      await _collectionCubit.completeGenerating(id, resultPath);
+      if (state.step == InteriorStep.processing) {
+        emit(state.copyWith(
+          step: InteriorStep.result,
+          resultImagePath: resultPath,
+        ));
+      }
+      return;
     }
+
+    await _collectionCubit.deleteItem(id);
+    if (state.step == InteriorStep.processing) {
+      emit(state.copyWith(step: InteriorStep.error));
+    }
+  }
+
+  String _buildPrompt() {
+    if (state.isCustomStyle &&
+        (state.customPrompt?.trim().isNotEmpty ?? false)) {
+      return 'Redesign this ${state.roomDisplayValue} interior. '
+          '${state.customPrompt!.trim()}. Keep the original room architecture, '
+          'windows, and camera perspective. Photorealistic, high detail.';
+    }
+    final palette = state.colorPalette?.label;
+    return 'Redesign this ${state.roomDisplayValue} interior in '
+        '${state.styleLabel} style'
+        '${palette != null ? ' with a $palette color palette' : ''}. '
+        'Keep the original room architecture, layout, windows, and camera '
+        'perspective. Photorealistic interior design, high detail.';
   }
 
   void setError() {
