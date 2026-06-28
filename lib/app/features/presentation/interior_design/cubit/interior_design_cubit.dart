@@ -1,13 +1,17 @@
 import 'package:bloc/bloc.dart';
-import 'package:interior_ai/app/common/enums/app_assets.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/cubit/interior_design_state.dart';
+import 'package:interior_ai/core/helpers/media_picker_service.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/enums/color_palette.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/enums/design_style.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/enums/interior_step.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/enums/room_type.dart';
 
 final class InteriorDesignCubit extends Cubit<InteriorDesignState> {
-  InteriorDesignCubit() : super(const InteriorDesignState());
+  InteriorDesignCubit({required MediaPickerService mediaPickerService})
+      : _mediaPickerService = mediaPickerService,
+        super(const InteriorDesignState());
+
+  final MediaPickerService _mediaPickerService;
 
   void reset() => emit(const InteriorDesignState());
 
@@ -15,13 +19,16 @@ final class InteriorDesignCubit extends Cubit<InteriorDesignState> {
     emit(state.copyWith(exampleIndex: index, clearAddedPhoto: true));
   }
 
-  void addSamplePhoto() {
-    emit(
-      state.copyWith(
-        addedPhotoPath: AppOnboardingResultSpaceImage.livingRoom.basePath(),
-        clearExample: true,
-      ),
-    );
+  Future<void> pickPhotoFromCamera() async {
+    final path = await _mediaPickerService.pickFromCamera();
+    if (path == null || isClosed) return;
+    emit(state.copyWith(addedPhotoPath: path, clearExample: true));
+  }
+
+  Future<void> pickPhotoFromGallery() async {
+    final path = await _mediaPickerService.pickFromGallery();
+    if (path == null || isClosed) return;
+    emit(state.copyWith(addedPhotoPath: path, clearExample: true));
   }
 
   void removePhoto() {

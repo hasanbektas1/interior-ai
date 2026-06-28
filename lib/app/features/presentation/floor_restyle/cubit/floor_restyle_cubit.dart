@@ -1,13 +1,15 @@
 import 'package:bloc/bloc.dart';
-import 'package:interior_ai/app/common/enums/app_assets.dart';
 import 'package:interior_ai/app/features/presentation/floor_restyle/cubit/floor_restyle_state.dart';
 import 'package:interior_ai/app/features/presentation/floor_restyle/enums/floor_material.dart';
 import 'package:interior_ai/app/features/presentation/floor_restyle/enums/floor_step.dart';
+import 'package:interior_ai/core/helpers/media_picker_service.dart';
 
 final class FloorRestyleCubit extends Cubit<FloorRestyleState> {
-  FloorRestyleCubit() : super(const FloorRestyleState());
+  FloorRestyleCubit({required MediaPickerService mediaPickerService})
+      : _mediaPickerService = mediaPickerService,
+        super(const FloorRestyleState());
 
-  String get _samplePhoto => AppAsset.floorResult.path;
+  final MediaPickerService _mediaPickerService;
 
   void reset() => emit(const FloorRestyleState());
 
@@ -15,8 +17,16 @@ final class FloorRestyleCubit extends Cubit<FloorRestyleState> {
     emit(state.copyWith(exampleIndex: index, clearAddedPhoto: true));
   }
 
-  void addSamplePhoto() {
-    emit(state.copyWith(addedPhotoPath: _samplePhoto, clearExample: true));
+  Future<void> pickPhotoFromCamera() async {
+    final path = await _mediaPickerService.pickFromCamera();
+    if (path == null || isClosed) return;
+    emit(state.copyWith(addedPhotoPath: path, clearExample: true));
+  }
+
+  Future<void> pickPhotoFromGallery() async {
+    final path = await _mediaPickerService.pickFromGallery();
+    if (path == null || isClosed) return;
+    emit(state.copyWith(addedPhotoPath: path, clearExample: true));
   }
 
   void removePhoto() {

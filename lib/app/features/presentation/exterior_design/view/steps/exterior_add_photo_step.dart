@@ -15,8 +15,15 @@ class ExteriorAddPhotoStep extends StatelessWidget {
   Future<void> _onAddPressed(BuildContext context) async {
     final cubit = context.read<ExteriorDesignCubit>();
     final source = await AddPhotoBottomSheet.show(context);
-    if (source == null) return;
-    cubit.addSamplePhoto();
+    switch (source) {
+      case PhotoSource.camera:
+        await cubit.pickPhotoFromCamera();
+      case PhotoSource.library:
+        await cubit.pickPhotoFromGallery();
+      case PhotoSource.example:
+      case null:
+        break;
+    }
   }
 
   Future<void> _onRemovePressed(BuildContext context) async {

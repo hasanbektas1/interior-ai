@@ -13,6 +13,7 @@ import 'package:interior_ai/app/features/presentation/settings/cubit/settings_cu
 import 'package:interior_ai/app/features/presentation/replace_objects/cubit/replace_objects_cubit.dart';
 import 'package:interior_ai/app/features/presentation/style_reference/cubit/style_reference_cubit.dart';
 import 'package:interior_ai/app/features/presentation/test/cubit/test_cubit.dart';
+import 'package:interior_ai/core/helpers/media_picker_service.dart';
 import 'package:get_it/get_it.dart';
 
 final getIt = GetIt.instance;
@@ -22,6 +23,7 @@ final class ServiceLocator {
   /// **Main method to call to set up dependencies**
   void setup() {
     _setupRouter();
+    _setupServices();
     _setupDataSource();
     _setupRepository();
     _setupCubit();
@@ -30,6 +32,11 @@ final class ServiceLocator {
   /// **Router Dependency**
   void _setupRouter() {
     // getIt.registerLazySingleton<AppRouter>(() => AppRouter());
+  }
+
+  /// **Service Dependency**
+  void _setupServices() {
+    getIt.registerLazySingleton<MediaPickerService>(() => MediaPickerService());
   }
 
   /// **DataSource Dependency**
@@ -59,13 +66,37 @@ final class ServiceLocator {
       ..registerLazySingleton<MainCubit>(() => MainCubit())
       ..registerLazySingleton<OnboardingCubit>(() => OnboardingCubit())
       ..registerLazySingleton<SettingsCubit>(() => SettingsCubit())
-      ..registerLazySingleton<InteriorDesignCubit>(() => InteriorDesignCubit())
+      ..registerLazySingleton<InteriorDesignCubit>(
+        () => InteriorDesignCubit(
+          mediaPickerService: getIt<MediaPickerService>(),
+        ),
+      )
       ..registerLazySingleton<CollectionCubit>(() => CollectionCubit())
-      ..registerLazySingleton<StyleReferenceCubit>(() => StyleReferenceCubit())
-      ..registerLazySingleton<ReplaceObjectsCubit>(() => ReplaceObjectsCubit())
-      ..registerLazySingleton<GardenDesignCubit>(() => GardenDesignCubit())
-      ..registerLazySingleton<ExteriorDesignCubit>(() => ExteriorDesignCubit())
-      ..registerLazySingleton<FloorRestyleCubit>(() => FloorRestyleCubit())
+      ..registerLazySingleton<StyleReferenceCubit>(
+        () => StyleReferenceCubit(
+          mediaPickerService: getIt<MediaPickerService>(),
+        ),
+      )
+      ..registerLazySingleton<ReplaceObjectsCubit>(
+        () => ReplaceObjectsCubit(
+          mediaPickerService: getIt<MediaPickerService>(),
+        ),
+      )
+      ..registerLazySingleton<GardenDesignCubit>(
+        () => GardenDesignCubit(
+          mediaPickerService: getIt<MediaPickerService>(),
+        ),
+      )
+      ..registerLazySingleton<ExteriorDesignCubit>(
+        () => ExteriorDesignCubit(
+          mediaPickerService: getIt<MediaPickerService>(),
+        ),
+      )
+      ..registerLazySingleton<FloorRestyleCubit>(
+        () => FloorRestyleCubit(
+          mediaPickerService: getIt<MediaPickerService>(),
+        ),
+      )
       ..registerLazySingleton<HomeCubit>(
         () => HomeCubit(testRepository: getIt<TestRepository>()),
       )

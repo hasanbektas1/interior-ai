@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
+import 'package:interior_ai/app/common/widgets/app_photo.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 
 class _Stroke {
@@ -74,12 +75,7 @@ class PaintMaskCanvasState extends State<PaintMaskCanvas> {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            Image.asset(
-              widget.photoPath,
-              fit: BoxFit.cover,
-              errorBuilder: (_, __, ___) =>
-                  const ColoredBox(color: AppColors.magnolia),
-            ),
+            AppPhoto(path: widget.photoPath),
             CustomPaint(painter: _MaskPainter(_strokes), size: Size.infinite),
           ],
         ),

@@ -1,13 +1,15 @@
 import 'package:bloc/bloc.dart';
-import 'package:interior_ai/app/common/enums/app_assets.dart';
 import 'package:interior_ai/app/features/presentation/garden_design/cubit/garden_design_state.dart';
 import 'package:interior_ai/app/features/presentation/garden_design/enums/garden_step.dart';
 import 'package:interior_ai/app/features/presentation/garden_design/enums/garden_style.dart';
+import 'package:interior_ai/core/helpers/media_picker_service.dart';
 
 final class GardenDesignCubit extends Cubit<GardenDesignState> {
-  GardenDesignCubit() : super(const GardenDesignState());
+  GardenDesignCubit({required MediaPickerService mediaPickerService})
+      : _mediaPickerService = mediaPickerService,
+        super(const GardenDesignState());
 
-  String get _samplePhoto => AppAsset.gardenStyleCity.path;
+  final MediaPickerService _mediaPickerService;
 
   void reset() => emit(const GardenDesignState());
 
@@ -15,8 +17,16 @@ final class GardenDesignCubit extends Cubit<GardenDesignState> {
     emit(state.copyWith(exampleIndex: index, clearAddedPhoto: true));
   }
 
-  void addSamplePhoto() {
-    emit(state.copyWith(addedPhotoPath: _samplePhoto, clearExample: true));
+  Future<void> pickPhotoFromCamera() async {
+    final path = await _mediaPickerService.pickFromCamera();
+    if (path == null || isClosed) return;
+    emit(state.copyWith(addedPhotoPath: path, clearExample: true));
+  }
+
+  Future<void> pickPhotoFromGallery() async {
+    final path = await _mediaPickerService.pickFromGallery();
+    if (path == null || isClosed) return;
+    emit(state.copyWith(addedPhotoPath: path, clearExample: true));
   }
 
   void removePhoto() {

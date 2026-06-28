@@ -1,12 +1,14 @@
 import 'package:bloc/bloc.dart';
-import 'package:interior_ai/app/common/enums/app_assets.dart';
 import 'package:interior_ai/app/features/presentation/style_reference/cubit/style_reference_state.dart';
 import 'package:interior_ai/app/features/presentation/style_reference/enums/style_reference_step.dart';
+import 'package:interior_ai/core/helpers/media_picker_service.dart';
 
 final class StyleReferenceCubit extends Cubit<StyleReferenceState> {
-  StyleReferenceCubit() : super(const StyleReferenceState());
+  StyleReferenceCubit({required MediaPickerService mediaPickerService})
+      : _mediaPickerService = mediaPickerService,
+        super(const StyleReferenceState());
 
-  String get _samplePhoto => AppOnboardingResultSpaceImage.livingRoom.basePath();
+  final MediaPickerService _mediaPickerService;
 
   void reset() => emit(const StyleReferenceState());
 
@@ -18,12 +20,24 @@ final class StyleReferenceCubit extends Cubit<StyleReferenceState> {
     emit(state.copyWith(refIndex: index, clearRefPath: true));
   }
 
-  void addSamplePhoto() {
+  Future<void> pickPhotoFromCamera() async {
+    final path = await _mediaPickerService.pickFromCamera();
+    if (path == null || isClosed) return;
+    _applyPickedPhoto(path);
+  }
+
+  Future<void> pickPhotoFromGallery() async {
+    final path = await _mediaPickerService.pickFromGallery();
+    if (path == null || isClosed) return;
+    _applyPickedPhoto(path);
+  }
+
+  void _applyPickedPhoto(String path) {
     if (state.step == StyleReferenceStep.yourPhoto) {
-      emit(state.copyWith(photoPath: _samplePhoto, clearPhotoIndex: true));
+      emit(state.copyWith(photoPath: path, clearPhotoIndex: true));
       return;
     }
-    emit(state.copyWith(refPath: _samplePhoto, clearRefIndex: true));
+    emit(state.copyWith(refPath: path, clearRefIndex: true));
   }
 
   void removePhoto() {

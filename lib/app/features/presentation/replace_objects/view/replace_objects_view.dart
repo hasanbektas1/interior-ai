@@ -87,13 +87,19 @@ class _EditorState extends State<_Editor> {
   Future<void> _onAdd(BuildContext context) async {
     final cubit = context.read<ReplaceObjectsCubit>();
     final source = await AddPhotoBottomSheet.show(context, showExampleOption: true);
-    if (source == null || !context.mounted) return;
-    if (source == PhotoSource.example) {
-      final picked = await ExamplePhotosSheet.show(context, kReplaceExamplePhotos);
-      if (picked != null) cubit.setPhoto(picked.path);
-      return;
+    if (!context.mounted) return;
+    switch (source) {
+      case PhotoSource.camera:
+        await cubit.pickPhotoFromCamera();
+      case PhotoSource.library:
+        await cubit.pickPhotoFromGallery();
+      case PhotoSource.example:
+        final picked =
+            await ExamplePhotosSheet.show(context, kReplaceExamplePhotos);
+        if (picked != null) cubit.setPhoto(picked.path);
+      case null:
+        break;
     }
-    cubit.addSamplePhoto();
   }
 
   Future<void> _onRemove(BuildContext context) async {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
+import 'package:interior_ai/app/common/widgets/app_photo.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 
 class PhotoPickerBox extends StatelessWidget {
@@ -59,12 +60,7 @@ class PhotoPickerBox extends StatelessWidget {
           Positioned.fill(
             child: ClipRRect(
               borderRadius: BorderRadius.circular(context.width16),
-              child: Image.asset(
-                photoPath!,
-                fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) =>
-                    const ColoredBox(color: AppColors.magnolia),
-              ),
+              child: AppPhoto(path: photoPath!),
             ),
           ),
           Positioned(

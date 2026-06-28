@@ -4,6 +4,8 @@ PODS:
   - device_info_plus (0.0.1):
     - Flutter
   - Flutter (1.0.0)
+  - image_picker_ios (0.0.1):
+    - Flutter
   - in_app_review (2.0.0):
     - Flutter
   - path_provider_foundation (0.0.1):
@@ -21,6 +23,7 @@ DEPENDENCIES:
   - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
   - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
   - Flutter (from `Flutter`)
+  - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - in_app_review (from `.symlinks/plugins/in_app_review/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
@@ -34,6 +37,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/device_info_plus/ios"
   Flutter:
     :path: Flutter
+  image_picker_ios:
+    :path: ".symlinks/plugins/image_picker_ios/ios"
   in_app_review:
     :path: ".symlinks/plugins/in_app_review/ios"
   path_provider_foundation:
@@ -49,6 +54,7 @@ SPEC CHECKSUMS:
   connectivity_plus: cb623214f4e1f6ef8fe7403d580fdad517d2f7dd
   device_info_plus: 21fcca2080fbcd348be798aa36c3e5ed849eefbe
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
+  image_picker_ios: e0ece4aa2a75771a7de3fa735d26d90817041326
   in_app_review: 7dd1ea365263f834b8464673f9df72c80c17c937
   path_provider_foundation: bb55f6dbba17d0dccd6737fe6f7f34fbd0376880
   share_plus: 50da8cb520a8f0f65671c6c6a99b3617ed10a58a

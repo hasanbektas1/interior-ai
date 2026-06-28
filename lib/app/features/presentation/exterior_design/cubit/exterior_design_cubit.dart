@@ -1,15 +1,17 @@
 import 'package:bloc/bloc.dart';
-import 'package:interior_ai/app/common/enums/app_assets.dart';
 import 'package:interior_ai/app/features/presentation/exterior_design/cubit/exterior_design_state.dart';
 import 'package:interior_ai/app/features/presentation/exterior_design/enums/building_type.dart';
 import 'package:interior_ai/app/features/presentation/exterior_design/enums/exterior_color_palette.dart';
 import 'package:interior_ai/app/features/presentation/exterior_design/enums/exterior_step.dart';
 import 'package:interior_ai/app/features/presentation/exterior_design/enums/exterior_style.dart';
+import 'package:interior_ai/core/helpers/media_picker_service.dart';
 
 final class ExteriorDesignCubit extends Cubit<ExteriorDesignState> {
-  ExteriorDesignCubit() : super(const ExteriorDesignState());
+  ExteriorDesignCubit({required MediaPickerService mediaPickerService})
+      : _mediaPickerService = mediaPickerService,
+        super(const ExteriorDesignState());
 
-  String get _samplePhoto => AppAsset.exteriorStyleModern.path;
+  final MediaPickerService _mediaPickerService;
 
   void reset() => emit(const ExteriorDesignState());
 
@@ -17,8 +19,16 @@ final class ExteriorDesignCubit extends Cubit<ExteriorDesignState> {
     emit(state.copyWith(exampleIndex: index, clearAddedPhoto: true));
   }
 
-  void addSamplePhoto() {
-    emit(state.copyWith(addedPhotoPath: _samplePhoto, clearExample: true));
+  Future<void> pickPhotoFromCamera() async {
+    final path = await _mediaPickerService.pickFromCamera();
+    if (path == null || isClosed) return;
+    emit(state.copyWith(addedPhotoPath: path, clearExample: true));
+  }
+
+  Future<void> pickPhotoFromGallery() async {
+    final path = await _mediaPickerService.pickFromGallery();
+    if (path == null || isClosed) return;
+    emit(state.copyWith(addedPhotoPath: path, clearExample: true));
   }
 
   void removePhoto() {
