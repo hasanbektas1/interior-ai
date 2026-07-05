@@ -229,31 +229,31 @@ enum AppAsset {
   ),
 
   // FLOOR RESTYLE
-  floorCustomIllustration('assets/floor_restyle/floor_restyle_custom.png'),
-  floorResult('assets/floor_restyle/floor_restyle_img.png'),
-  floorExample1('assets/floor_restyle/floor_restyle_1.png'),
-  floorExample2('assets/floor_restyle/floor_restyle_2.png'),
-  floorExample3('assets/floor_restyle/floor_restyle_3.png'),
-  floorExample4('assets/floor_restyle/floor_restyle_4.png'),
+  floorCustomIllustration('assets/png/floor_restyle/floor_restyle_custom.png'),
+  floorResult('assets/png/floor_restyle/floor_restyle_img.png'),
+  floorExample1('assets/png/floor_restyle/floor_restyle_1.png'),
+  floorExample2('assets/png/floor_restyle/floor_restyle_2.png'),
+  floorExample3('assets/png/floor_restyle/floor_restyle_3.png'),
+  floorExample4('assets/png/floor_restyle/floor_restyle_4.png'),
   floorMaterialClassicParquet(
-    'assets/floor_restyle/floor_restyle_classicparquet.png',
+    'assets/png/floor_restyle/floor_restyle_classicparquet.png',
   ),
-  floorMaterialRusticWood('assets/floor_restyle/floor_restyle_rusticwood.png'),
-  floorMaterialLightOak('assets/floor_restyle/floor_restyle_lightoak.png'),
-  floorMaterialDarkWalnut('assets/floor_restyle/floor_restyle_darkwalnut.png'),
+  floorMaterialRusticWood('assets/png/floor_restyle/floor_restyle_rusticwood.png'),
+  floorMaterialLightOak('assets/png/floor_restyle/floor_restyle_lightoak.png'),
+  floorMaterialDarkWalnut('assets/png/floor_restyle/floor_restyle_darkwalnut.png'),
   floorMaterialGlossyWhiteTile(
-    'assets/floor_restyle/floor_restyle_glossywhitetile.png',
+    'assets/png/floor_restyle/floor_restyle_glossywhitetile.png',
   ),
   floorMaterialPatternedTile(
-    'assets/floor_restyle/floor_restyle_patternedtile.png',
+    'assets/png/floor_restyle/floor_restyle_patternedtile.png',
   ),
   floorMaterialWhiteMarble(
-    'assets/floor_restyle/floor_restyle_whitemarble.png',
+    'assets/png/floor_restyle/floor_restyle_whitemarble.png',
   ),
   floorMaterialBlackMarble(
-    'assets/floor_restyle/floor_restyle_blackmarbie.png',
+    'assets/png/floor_restyle/floor_restyle_blackmarbie.png',
   ),
-  floorMaterialCarpet('assets/floor_restyle/floor_restyle_carpet.png');
+  floorMaterialCarpet('assets/png/floor_restyle/floor_restyle_carpet.png');
 
   final String path;
   const AppAsset(this.path);
