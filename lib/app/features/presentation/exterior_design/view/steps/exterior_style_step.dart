@@ -58,9 +58,9 @@ class ExteriorStyleStep extends StatelessWidget {
             itemCount: ExteriorStyle.values.length,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              crossAxisSpacing: context.width12,
-              mainAxisSpacing: context.height12,
-              childAspectRatio: 0.92,
+              crossAxisSpacing: context.width8,
+              mainAxisSpacing: context.height8,
+              childAspectRatio: 1.25,
             ),
             itemBuilder: (context, index) {
               final style = ExteriorStyle.values[index];

@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/enums/app_assets.dart';
+import 'package:interior_ai/app/common/widgets/marquee_text.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 
 class HomeCard extends StatelessWidget {
@@ -63,8 +64,8 @@ class HomeCard extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: context.height6),
-                        Text(
-                          subtitle,
+                        MarqueeText(
+                          text: subtitle,
                           style: const TextStyle(
                             color: AppColors.whiteSmoke,
                             fontSize: 12,
