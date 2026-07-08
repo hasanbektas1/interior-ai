@@ -38,8 +38,9 @@ class CustomStyleBottomSheet extends StatefulWidget {
 }
 
 class _CustomStyleBottomSheetState extends State<CustomStyleBottomSheet> {
-  late final TextEditingController _controller =
-      TextEditingController(text: widget.initialPrompt);
+  late final TextEditingController _controller = TextEditingController(
+    text: widget.initialPrompt,
+  );
 
   @override
   void initState() {
@@ -245,7 +246,7 @@ class _PromptLibraryItem extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           color: AppColors.cloudGray,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(
             color: isSelected ? AppColors.softPurple : Colors.transparent,
             width: 2,
