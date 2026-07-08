@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
-import 'package:interior_ai/app/common/widgets/app_photo.dart';
 import 'package:interior_ai/app/common/widgets/buttons/app_button.dart';
 import 'package:interior_ai/app/common/widgets/dialogs/result_action_dialog.dart';
 import 'package:interior_ai/app/common/widgets/result_info_chip.dart';
+import 'package:interior_ai/app/common/widgets/result_layout.dart';
+import 'package:interior_ai/app/common/widgets/result_variant_strip.dart';
 import 'package:interior_ai/app/features/presentation/collection/cubit/collection_cubit.dart';
+import 'package:interior_ai/app/features/presentation/collection/enums/collection_category.dart';
 import 'package:interior_ai/app/features/presentation/collection/models/collection_item.dart';
+import 'package:interior_ai/app/features/presentation/replace_objects/cubit/replace_objects_state.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
-import 'package:interior_ai/core/extensions/widgets/padding_extensions.dart';
 import 'package:share_plus/share_plus.dart';
 
 class CollectionResultView extends StatelessWidget {
@@ -59,136 +61,34 @@ class CollectionResultView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.ghostWhite,
-      body: SafeArea(
-        child: Column(
-          children: [
-            _Header(title: item.title, onShare: _onShare, onClose: onClose),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: context.height16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: context.height24),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(context.width16),
-                      child: SizedBox(
-                        width: double.infinity,
-                        height: context.height340,
-                        child: AppPhoto(path: item.imagePath),
-                      ),
-                    ),
-                    SizedBox(height: context.height20),
-                    if (item.prompt?.isNotEmpty ?? false)
-                      _PromptSection(prompt: item.prompt!),
-                    Row(
-                      children: [
-                        if (item.roomType != null) ...[
-                          Expanded(
-                            child: ResultInfoChip(
-                              label: AppStrings.interiorRoomType,
-                              value: item.roomType!.label,
-                              icon: item.roomType!.icon,
-                            ),
-                          ),
-                          SizedBox(width: context.width12),
-                        ],
-                        Expanded(
-                          child: ResultInfoChip(
-                            label: AppStrings.interiorStyle,
-                            value: item.styleLabel,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: AppButton(
-                    text: AppStrings.collectionDelete,
-                    onPressed: () => _onDelete(context),
-                    backgroundColor: AppColors.white,
-                    textColor: AppColors.hanPurple,
-                    hasBorder: true,
-                    borderRadius: 14,
-                    height: 54,
-                  ),
-                ),
-                SizedBox(width: context.width12),
-                Expanded(
-                  child: AppButton.fill(
-                    text: AppStrings.interiorSaveButton,
-                    onPressed: () => _onSave(context),
-                    backgroundColor: AppColors.hanPurple,
-                    borderRadius: 14,
-                    height: 54,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: context.height16),
-          ],
-        ).symmetricPadding(horizontal: context.width24),
-      ),
-    );
-  }
-}
-
-class _Header extends StatelessWidget {
-  const _Header({
-    required this.title,
-    required this.onShare,
-    required this.onClose,
-  });
-
-  final String title;
-  final VoidCallback onShare;
-  final VoidCallback onClose;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: context.height44,
-      child: Stack(
-        alignment: Alignment.center,
+    return ResultLayout(
+      title: item.title,
+      imagePath: item.imagePath,
+      onShare: _onShare,
+      onClose: onClose,
+      prompt: item.prompt,
+      details: _ResultDetails(item: item),
+      footer: Row(
         children: [
-          Text(
-            title,
-            style: const TextStyle(
-              color: AppColors.smokyBlack,
-              fontSize: 18,
-              fontWeight: FontWeight.w700,
+          Expanded(
+            child: AppButton(
+              text: AppStrings.collectionDelete,
+              onPressed: () => _onDelete(context),
+              backgroundColor: AppColors.white,
+              textColor: AppColors.hanPurple,
+              hasBorder: true,
+              borderRadius: 14,
+              height: 54,
             ),
           ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: onShare,
-              child: Icon(
-                Icons.ios_share_rounded,
-                size: context.width24,
-                color: AppColors.smokyBlack,
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: onClose,
-              child: Icon(
-                Icons.close_rounded,
-                size: context.width24,
-                color: AppColors.smokyBlack,
-              ),
+          SizedBox(width: context.width12),
+          Expanded(
+            child: AppButton.fill(
+              text: AppStrings.interiorSaveButton,
+              onPressed: () => _onSave(context),
+              backgroundColor: AppColors.hanPurple,
+              borderRadius: 14,
+              height: 54,
             ),
           ),
         ],
@@ -197,43 +97,41 @@ class _Header extends StatelessWidget {
   }
 }
 
-class _PromptSection extends StatelessWidget {
-  const _PromptSection({required this.prompt});
+/// Content shown under the image. Replace Object designs mirror their result
+/// screen with the variant strip; every other category shows info chips.
+class _ResultDetails extends StatelessWidget {
+  const _ResultDetails({required this.item});
 
-  final String prompt;
+  final CollectionItem item;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    if (item.category == CollectionCategory.replaceObject) {
+      final int selectedIndex = kReplaceResultVariants
+          .indexWhere((variant) => variant.path == item.imagePath);
+      return ResultVariantStrip(
+        variants: kReplaceResultVariants,
+        selectedIndex: selectedIndex,
+      );
+    }
+    return Row(
       children: [
-        const Text(
-          AppStrings.interiorPrompt,
-          style: TextStyle(
-            color: AppColors.smokyBlack,
-            fontSize: 17,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        SizedBox(height: context.height10),
-        Container(
-          width: double.infinity,
-          padding: EdgeInsets.all(context.width16),
-          decoration: BoxDecoration(
-            color: AppColors.cloudGray,
-            borderRadius: BorderRadius.circular(14),
-          ),
-          child: Text(
-            prompt,
-            style: const TextStyle(
-              color: AppColors.smokyBlack,
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-              height: 1.3,
+        if (item.roomType != null) ...[
+          Expanded(
+            child: ResultInfoChip(
+              label: AppStrings.interiorRoomType,
+              value: item.roomType!.label,
+              icon: item.roomType!.icon,
             ),
           ),
+          SizedBox(width: context.width12),
+        ],
+        Expanded(
+          child: ResultInfoChip(
+            label: AppStrings.interiorStyle,
+            value: item.styleLabel,
+          ),
         ),
-        SizedBox(height: context.height16),
       ],
     );
   }

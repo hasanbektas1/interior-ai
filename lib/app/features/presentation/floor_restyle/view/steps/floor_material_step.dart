@@ -68,7 +68,6 @@ class FloorMaterialStep extends StatelessWidget {
                 label: material.label,
                 isCustom: material.isCustom,
                 imageAsset: material.isCustom ? null : material.image,
-                customImage: material.isCustom ? material.image : null,
                 isSelected: state.material == material,
                 isDimmed: state.material != null && state.material != material,
                 onTap: () => _onSelect(context, material),

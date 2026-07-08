@@ -66,7 +66,7 @@ final class CollectionCubit extends Cubit<CollectionState> {
     final now = DateTime.now();
     final item = CollectionItem(
       id: now.microsecondsSinceEpoch.toString(),
-      title: title,
+      title: _numberedTitle(title),
       category: category,
       dateLabel: _formatDate(now),
       createdAt: now.millisecondsSinceEpoch,
@@ -93,6 +93,22 @@ final class CollectionCubit extends Cubit<CollectionState> {
     final items = [...state.items];
     items[index] = updated;
     emit(state.copyWith(items: items));
+  }
+
+  /// Appends an auto-incrementing "#n" suffix to [base] so repeated designs of
+  /// the same kind read as "Interior Design #1", "Interior Design #2", …
+  String _numberedTitle(String base) {
+    final prefix = '$base #';
+    int maxIndex = 0;
+    for (final item in state.items) {
+      if (item.title == base) {
+        if (maxIndex < 1) maxIndex = 1;
+      } else if (item.title.startsWith(prefix)) {
+        final parsed = int.tryParse(item.title.substring(prefix.length));
+        if (parsed != null && parsed > maxIndex) maxIndex = parsed;
+      }
+    }
+    return '$base #${maxIndex + 1}';
   }
 
   Future<void> saveToGallery(String imagePath) =>

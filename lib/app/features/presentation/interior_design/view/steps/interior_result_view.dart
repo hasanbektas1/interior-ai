@@ -2,16 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:interior_ai/app/common/enums/app_assets.dart';
-import 'package:interior_ai/app/common/widgets/app_photo.dart';
 import 'package:interior_ai/app/features/presentation/collection/cubit/collection_cubit.dart';
 import 'package:interior_ai/app/common/widgets/dialogs/result_action_dialog.dart';
 import 'package:interior_ai/app/common/widgets/result_info_chip.dart';
+import 'package:interior_ai/app/common/widgets/result_layout.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/cubit/interior_design_state.dart';
 import 'package:interior_ai/app/common/widgets/result_action_bar.dart';
-import 'package:interior_ai/app/features/presentation/interior_design/widgets/interior_prompt_section.dart';
-import 'package:interior_ai/app/features/presentation/interior_design/widgets/interior_result_header.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
-import 'package:interior_ai/core/extensions/widgets/padding_extensions.dart';
 import 'package:share_plus/share_plus.dart';
 
 class InteriorResultView extends StatelessWidget {
@@ -67,56 +64,35 @@ class InteriorResultView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final imageHeight = MediaQuery.sizeOf(context).height * 0.6;
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            InteriorResultHeader(onShare: _onShare, onClose: onClose),
-            SizedBox(height: context.height8),
-            SizedBox(
-              height: imageHeight,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(context.width16),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: AppPhoto(
-                    path: state.resultImagePath ?? AppAsset.interiorResult.path,
-                  ),
-                ),
-              ),
+    final bool hasPrompt =
+        state.isCustomStyle && (state.customPrompt?.isNotEmpty ?? false);
+    return ResultLayout(
+      imagePath: state.resultImagePath ?? AppAsset.interiorResult.path,
+      onShare: _onShare,
+      onClose: onClose,
+      prompt: hasPrompt ? state.customPrompt : null,
+      details: Row(
+        children: [
+          Expanded(
+            child: ResultInfoChip(
+              label: AppStrings.interiorRoomType,
+              value: state.roomDisplayValue,
+              icon: state.roomType?.icon,
             ),
-            SizedBox(height: context.height20),
-            if (state.isCustomStyle &&
-                (state.customPrompt?.isNotEmpty ?? false))
-              InteriorPromptSection(prompt: state.customPrompt!),
-            Row(
-              children: [
-                Expanded(
-                  child: ResultInfoChip(
-                    label: AppStrings.interiorRoomType,
-                    value: state.roomDisplayValue,
-                    icon: state.roomType?.icon,
-                  ),
-                ),
-                SizedBox(width: context.width12),
-                Expanded(
-                  child: ResultInfoChip(
-                    label: AppStrings.interiorStyle,
-                    value: state.styleLabel,
-                  ),
-                ),
-              ],
+          ),
+          SizedBox(width: context.width12),
+          Expanded(
+            child: ResultInfoChip(
+              label: AppStrings.interiorStyle,
+              value: state.styleLabel,
             ),
-            const Spacer(),
-            ResultActionBar(
-              onDelete: () => _onDelete(context),
-              onRegenerate: () => _onRegenerate(context),
-              onSave: () => _onSave(context),
-            ),
-            SizedBox(height: context.height16),
-          ],
-        ).symmetricPadding(horizontal: context.width24),
+          ),
+        ],
+      ),
+      footer: ResultActionBar(
+        onDelete: () => _onDelete(context),
+        onRegenerate: () => _onRegenerate(context),
+        onSave: () => _onSave(context),
       ),
     );
   }

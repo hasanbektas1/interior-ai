@@ -3,15 +3,19 @@ import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 
-class InteriorResultHeader extends StatelessWidget {
-  const InteriorResultHeader({
+/// Shared top bar for every result screen: centered title with an optional
+/// share action on the left and a close action on the right.
+class ResultHeader extends StatelessWidget {
+  const ResultHeader({
     super.key,
-    required this.onShare,
     required this.onClose,
+    this.title = AppStrings.interiorResultHeader,
+    this.onShare,
   });
 
-  final VoidCallback onShare;
   final VoidCallback onClose;
+  final String title;
+  final VoidCallback? onShare;
 
   @override
   Widget build(BuildContext context) {
@@ -20,26 +24,27 @@ class InteriorResultHeader extends StatelessWidget {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          const Text(
-            AppStrings.interiorResultHeader,
-            style: TextStyle(
+          Text(
+            title,
+            style: const TextStyle(
               color: AppColors.smokyBlack,
               fontSize: 18,
               fontWeight: FontWeight.w700,
             ),
           ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: onShare,
-              child: Icon(
-                Icons.ios_share_rounded,
-                size: context.width24,
-                color: AppColors.smokyBlack,
+          if (onShare != null)
+            Align(
+              alignment: Alignment.centerLeft,
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: onShare,
+                child: Icon(
+                  Icons.ios_share_rounded,
+                  size: context.width24,
+                  color: AppColors.smokyBlack,
+                ),
               ),
             ),
-          ),
           Align(
             alignment: Alignment.centerRight,
             child: GestureDetector(

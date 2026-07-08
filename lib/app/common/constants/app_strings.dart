@@ -173,7 +173,7 @@ final class AppStrings {
   static const String interiorRegenerate = "Regenerate";
 
   // COLLECTION
-  static const String collectionTitle = "Your Design Collection";
+  static const String collectionTitle = "Collection";
   static const String collectionFilterAll = "All";
   static const String collectionGenerating = "Generating...";
   static const String collectionEmptyTitle = "No design here.";

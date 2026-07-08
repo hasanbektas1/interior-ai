@@ -51,6 +51,8 @@ class StepFlowHeader extends StatelessWidget {
         if (filledCount != null) ...[
           SizedBox(height: context.height16),
           StepProgressBar(filledCount: filledCount!, count: count),
+          // Persistent gap so scrolling content never touches the progress bar.
+          SizedBox(height: context.height4),
         ],
       ],
     );

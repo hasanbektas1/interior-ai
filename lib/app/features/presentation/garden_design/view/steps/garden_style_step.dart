@@ -68,7 +68,6 @@ class GardenStyleStep extends StatelessWidget {
                 label: style.label,
                 isCustom: style.isCustom,
                 imageAsset: style.isCustom ? null : style.previewImage,
-                customImage: style.isCustom ? style.previewImage : null,
                 isSelected: state.style == style,
                 isDimmed: state.style != null && state.style != style,
                 onTap: () => _onSelect(context, style),

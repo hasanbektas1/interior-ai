@@ -37,6 +37,23 @@ class CollectionCard extends StatelessWidget {
               if (item.isGenerating)
                 _GeneratingOverlay()
               else ...[
+                Positioned.fill(
+                  child: IgnorePointer(
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Colors.transparent,
+                            AppColors.smokyBlack.withValues(alpha: 0.55),
+                          ],
+                          stops: const [0.45, 1],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
                 _BottomInfo(title: item.title, date: item.dateLabel),
                 Positioned(
                   top: context.height12,
@@ -92,38 +109,32 @@ class _BottomInfo extends StatelessWidget {
       left: 0,
       right: 0,
       bottom: 0,
-      child: ClipRect(
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
-          child: Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: context.width16,
-              vertical: context.height12,
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: context.width16,
+          vertical: context.height12,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(
+                color: AppColors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+              ),
             ),
-            color: AppColors.paletteScrim,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    color: AppColors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                SizedBox(height: context.height4),
-                Text(
-                  date,
-                  style: TextStyle(
-                    color: AppColors.white.withValues(alpha: 0.8),
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ],
+            SizedBox(height: context.height4),
+            Text(
+              date,
+              style: TextStyle(
+                color: AppColors.white.withValues(alpha: 0.8),
+                fontSize: 12,
+                fontWeight: FontWeight.w400,
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

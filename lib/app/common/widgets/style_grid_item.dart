@@ -13,7 +13,6 @@ class StyleGridItem extends StatelessWidget {
     required this.isDimmed,
     required this.onTap,
     this.imageAsset,
-    this.customImage,
   });
 
   final String label;
@@ -22,7 +21,6 @@ class StyleGridItem extends StatelessWidget {
   final bool isDimmed;
   final VoidCallback onTap;
   final AppAsset? imageAsset;
-  final AppAsset? customImage;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +33,9 @@ class StyleGridItem extends StatelessWidget {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           decoration: BoxDecoration(
-            color: AppColors.softPurpleFaint,
+            // Only the custom card keeps the faint purple fill; image cards
+            // stay transparent so no border-like ring shows when unselected.
+            color: isCustom ? AppColors.softPurpleFaint : null,
             borderRadius: BorderRadius.circular(context.width16),
             border: Border.all(
               color: isSelected ? AppColors.softPurple : Colors.transparent,
@@ -55,27 +55,11 @@ class StyleGridItem extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        if (customImage != null)
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.all(context.width12),
-              child: Image.asset(
-                customImage!.path,
-                fit: BoxFit.contain,
-                errorBuilder: (_, __, ___) => Icon(
-                  Icons.weekend_rounded,
-                  size: context.width48,
-                  color: AppColors.softPurple,
-                ),
-              ),
-            ),
-          )
-        else
-          Icon(
-            Icons.weekend_rounded,
-            size: context.width48,
-            color: AppColors.softPurple,
-          ),
+        Icon(
+          Icons.weekend_rounded,
+          size: context.width48,
+          color: AppColors.softPurple,
+        ),
         SizedBox(height: context.height8),
         Text(
           label,

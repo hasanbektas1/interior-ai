@@ -3,8 +3,13 @@ import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 
-class InteriorPromptSection extends StatelessWidget {
-  const InteriorPromptSection({super.key, required this.prompt});
+/// "Prompt" label above a rounded box holding the prompt text.
+///
+/// The box grows with the text up to three lines; beyond that it stays fixed
+/// at three lines tall and scrolls internally so the surrounding layout never
+/// overflows.
+class ResultPromptSection extends StatelessWidget {
+  const ResultPromptSection({super.key, required this.prompt});
 
   final String prompt;
 
@@ -29,17 +34,22 @@ class InteriorPromptSection extends StatelessWidget {
             color: AppColors.cloudGray,
             borderRadius: BorderRadius.circular(14),
           ),
-          child: Text(
-            prompt,
-            style: const TextStyle(
-              color: AppColors.smokyBlack,
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-              height: 1.3,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxHeight: context.height56),
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Text(
+                prompt,
+                style: const TextStyle(
+                  color: AppColors.smokyBlack,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  height: 1.3,
+                ),
+              ),
             ),
           ),
         ),
-        SizedBox(height: context.height16),
       ],
     );
   }
