@@ -82,6 +82,7 @@ class _GardenDesignBody extends StatelessWidget {
                     ),
                   ),
                 ),
+                SizedBox(height: context.height4),
                 AppButton.fill(
                   text: AppStrings.interiorContinue,
                   onPressed: state.canContinue ? cubit.next : null,
