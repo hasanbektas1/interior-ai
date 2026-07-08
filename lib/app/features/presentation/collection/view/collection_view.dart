@@ -12,7 +12,7 @@ import 'package:interior_ai/app/features/presentation/collection/widgets/collect
 import 'package:interior_ai/app/features/presentation/collection/widgets/collection_filter_chips.dart';
 import 'package:interior_ai/app/features/presentation/collection/widgets/collection_item_menu.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
-import 'package:share_plus/share_plus.dart';
+import 'package:interior_ai/core/helpers/app_share.dart';
 
 class CollectionView extends StatelessWidget {
   const CollectionView({super.key});
@@ -52,7 +52,7 @@ class CollectionView extends StatelessWidget {
           primaryLabel: AppStrings.interiorDone,
         );
       case CollectionMenuAction.share:
-        Share.share(AppStrings.settingsShareMessage);
+        if (context.mounted) await AppShare.image(context, item.imagePath);
       case CollectionMenuAction.delete:
         final confirmed = await ResultActionDialog.show(
           context,

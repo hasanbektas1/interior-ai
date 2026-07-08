@@ -8,7 +8,7 @@ import 'package:interior_ai/app/common/widgets/result_variant_strip.dart';
 import 'package:interior_ai/app/features/presentation/collection/cubit/collection_cubit.dart';
 import 'package:interior_ai/app/features/presentation/replace_objects/cubit/replace_objects_cubit.dart';
 import 'package:interior_ai/app/features/presentation/replace_objects/cubit/replace_objects_state.dart';
-import 'package:share_plus/share_plus.dart';
+import 'package:interior_ai/core/helpers/app_share.dart';
 
 class ReplaceObjectsResultView extends StatelessWidget {
   const ReplaceObjectsResultView({
@@ -35,8 +35,6 @@ class ReplaceObjectsResultView extends StatelessWidget {
     );
     if (context.mounted) onClose();
   }
-
-  void _onShare() => Share.share(AppStrings.settingsShareMessage);
 
   Future<void> _onDelete(BuildContext context) async {
     final confirmed = await ResultActionDialog.show(
@@ -65,7 +63,7 @@ class ReplaceObjectsResultView extends StatelessWidget {
     final cubit = context.read<ReplaceObjectsCubit>();
     return ResultLayout(
       imagePath: state.selectedResult.path,
-      onShare: _onShare,
+      onShare: () => AppShare.image(context, state.selectedResult.path),
       onClose: onClose,
       prompt: state.prompt,
       details: ResultVariantStrip(

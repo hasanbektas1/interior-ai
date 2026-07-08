@@ -12,7 +12,7 @@ import 'package:interior_ai/app/features/presentation/collection/enums/collectio
 import 'package:interior_ai/app/features/presentation/collection/models/collection_item.dart';
 import 'package:interior_ai/app/features/presentation/replace_objects/cubit/replace_objects_state.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
-import 'package:share_plus/share_plus.dart';
+import 'package:interior_ai/core/helpers/app_share.dart';
 
 class CollectionResultView extends StatelessWidget {
   const CollectionResultView({
@@ -35,10 +35,6 @@ class CollectionResultView extends StatelessWidget {
       subtitle: AppStrings.interiorImageSavedSubtitle,
       primaryLabel: AppStrings.interiorDone,
     );
-  }
-
-  void _onShare() {
-    Share.share(AppStrings.settingsShareMessage);
   }
 
   Future<void> _onDelete(BuildContext context) async {
@@ -64,7 +60,7 @@ class CollectionResultView extends StatelessWidget {
     return ResultLayout(
       title: item.title,
       imagePath: item.imagePath,
-      onShare: _onShare,
+      onShare: () => AppShare.image(context, item.imagePath),
       onClose: onClose,
       prompt: item.prompt,
       details: _ResultDetails(item: item),

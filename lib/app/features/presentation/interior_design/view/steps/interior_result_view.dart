@@ -9,7 +9,7 @@ import 'package:interior_ai/app/common/widgets/result_layout.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/cubit/interior_design_state.dart';
 import 'package:interior_ai/app/common/widgets/result_action_bar.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
-import 'package:share_plus/share_plus.dart';
+import 'package:interior_ai/core/helpers/app_share.dart';
 
 class InteriorResultView extends StatelessWidget {
   const InteriorResultView({
@@ -34,10 +34,6 @@ class InteriorResultView extends StatelessWidget {
       subtitle: AppStrings.interiorImageSavedSubtitle,
       primaryLabel: AppStrings.interiorDone,
     );
-  }
-
-  void _onShare() {
-    Share.share(AppStrings.settingsShareMessage);
   }
 
   Future<void> _onDelete(BuildContext context) async {
@@ -66,9 +62,10 @@ class InteriorResultView extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool hasPrompt =
         state.isCustomStyle && (state.customPrompt?.isNotEmpty ?? false);
+    final imagePath = state.resultImagePath ?? AppAsset.interiorResult.path;
     return ResultLayout(
-      imagePath: state.resultImagePath ?? AppAsset.interiorResult.path,
-      onShare: _onShare,
+      imagePath: imagePath,
+      onShare: () => AppShare.image(context, imagePath),
       onClose: onClose,
       prompt: hasPrompt ? state.customPrompt : null,
       details: Row(

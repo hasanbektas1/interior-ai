@@ -15,7 +15,7 @@ import 'package:interior_ai/app/features/presentation/settings/widgets/settings_
 import 'package:interior_ai/app/features/presentation/settings/widgets/settings_tile.dart';
 import 'package:interior_ai/app/features/presentation/settings/widgets/settings_user_id_tile.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
-import 'package:share_plus/share_plus.dart';
+import 'package:interior_ai/core/helpers/app_share.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});
@@ -43,8 +43,8 @@ class _SettingsViewBody extends StatelessWidget {
     RateUsDialog.show(context, (_) => Navigator.of(context).maybePop());
   }
 
-  void _onShareApp() {
-    Share.share(AppStrings.settingsShareMessage);
+  void _onShareApp(BuildContext context) {
+    AppShare.app(context);
   }
 
   void _openPaywall(BuildContext context) {
@@ -109,7 +109,7 @@ class _SettingsViewBody extends StatelessWidget {
                 SettingsTile(
                   icon: AppAsset.settingsIconShareApp,
                   label: AppStrings.settingsShareApp,
-                  onTap: _onShareApp,
+                  onTap: () => _onShareApp(context),
                 ),
                 SizedBox(height: context.height12),
                 SettingsTile(

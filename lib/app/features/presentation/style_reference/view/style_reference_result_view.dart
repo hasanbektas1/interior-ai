@@ -6,7 +6,7 @@ import 'package:interior_ai/app/features/presentation/collection/cubit/collectio
 import 'package:interior_ai/app/common/widgets/dialogs/result_action_dialog.dart';
 import 'package:interior_ai/app/common/widgets/result_action_bar.dart';
 import 'package:interior_ai/app/common/widgets/result_layout.dart';
-import 'package:share_plus/share_plus.dart';
+import 'package:interior_ai/core/helpers/app_share.dart';
 
 class StyleReferenceResultView extends StatelessWidget {
   const StyleReferenceResultView({
@@ -29,10 +29,6 @@ class StyleReferenceResultView extends StatelessWidget {
       subtitle: AppStrings.interiorImageSavedSubtitle,
       primaryLabel: AppStrings.interiorDone,
     );
-  }
-
-  void _onShare() {
-    Share.share(AppStrings.settingsShareMessage);
   }
 
   Future<void> _onDelete(BuildContext context) async {
@@ -61,7 +57,7 @@ class StyleReferenceResultView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ResultLayout(
       imagePath: AppAsset.interiorResult.path,
-      onShare: _onShare,
+      onShare: () => AppShare.image(context, AppAsset.interiorResult.path),
       onClose: onClose,
       footer: ResultActionBar(
         onDelete: () => _onDelete(context),

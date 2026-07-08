@@ -8,7 +8,7 @@ import 'package:interior_ai/app/common/widgets/result_action_bar.dart';
 import 'package:interior_ai/app/common/widgets/result_info_chip.dart';
 import 'package:interior_ai/app/common/widgets/result_layout.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
-import 'package:share_plus/share_plus.dart';
+import 'package:interior_ai/core/helpers/app_share.dart';
 
 class ExteriorResultView extends StatelessWidget {
   const ExteriorResultView({
@@ -39,8 +39,6 @@ class ExteriorResultView extends StatelessWidget {
     );
   }
 
-  void _onShare() => Share.share(AppStrings.settingsShareMessage);
-
   Future<void> _onDelete(BuildContext context) async {
     final confirmed = await ResultActionDialog.show(
       context,
@@ -67,7 +65,7 @@ class ExteriorResultView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ResultLayout(
       imagePath: AppAsset.exteriorStyleModern.path,
-      onShare: _onShare,
+      onShare: () => AppShare.image(context, AppAsset.exteriorStyleModern.path),
       onClose: onClose,
       prompt: customPrompt,
       details: Row(
