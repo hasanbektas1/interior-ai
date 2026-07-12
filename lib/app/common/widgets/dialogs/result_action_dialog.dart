@@ -87,7 +87,7 @@ class ResultActionDialog extends StatelessWidget {
                   child: const Text(
                     AppStrings.interiorCancel,
                     style: TextStyle(
-                      color: AppColors.azure,
+                      color: AppColors.hanPurple,
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                     ),

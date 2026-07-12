@@ -72,14 +72,7 @@ class _RingPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth
       ..strokeCap = StrokeCap.round
-      ..shader = const SweepGradient(
-        colors: [
-          AppColors.progressArcStart,
-          AppColors.progressArcEnd,
-          AppColors.progressArcStart,
-        ],
-        stops: [0.0, 0.7, 1.0],
-      ).createShader(rect);
+      ..color = AppColors.hanPurple;
     canvas.drawArc(rect, -math.pi / 2, math.pi * 1.5, false, arcPaint);
   }
 

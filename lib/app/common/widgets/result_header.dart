@@ -3,8 +3,8 @@ import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 
-/// Shared top bar for every result screen: centered title with an optional
-/// share action on the left and a close action on the right.
+/// Shared top bar for every result screen: centered title with a close action
+/// on the left and an optional share action on the right.
 class ResultHeader extends StatelessWidget {
   const ResultHeader({
     super.key,
@@ -32,21 +32,8 @@ class ResultHeader extends StatelessWidget {
               fontWeight: FontWeight.w700,
             ),
           ),
-          if (onShare != null)
-            Align(
-              alignment: Alignment.centerLeft,
-              child: GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: onShare,
-                child: Icon(
-                  Icons.ios_share_rounded,
-                  size: context.width24,
-                  color: AppColors.smokyBlack,
-                ),
-              ),
-            ),
           Align(
-            alignment: Alignment.centerRight,
+            alignment: Alignment.centerLeft,
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: onClose,
@@ -57,6 +44,19 @@ class ResultHeader extends StatelessWidget {
               ),
             ),
           ),
+          if (onShare != null)
+            Align(
+              alignment: Alignment.centerRight,
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: onShare,
+                child: Icon(
+                  Icons.ios_share_rounded,
+                  size: context.width24,
+                  color: AppColors.smokyBlack,
+                ),
+              ),
+            ),
         ],
       ),
     );
