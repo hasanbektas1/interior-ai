@@ -80,13 +80,15 @@ final class ServiceLocator {
   void _setupCubit() {
     getIt
       ..registerLazySingleton<MainCubit>(() => MainCubit())
-      ..registerLazySingleton<OnboardingCubit>(() => OnboardingCubit())
       ..registerLazySingleton<SettingsCubit>(() => SettingsCubit())
       ..registerLazySingleton<CollectionCubit>(
         () => CollectionCubit(
           storage: getIt<CollectionStorage>(),
           gallerySaver: getIt<GallerySaverService>(),
         ),
+      )
+      ..registerLazySingleton<OnboardingCubit>(
+        () => OnboardingCubit(collectionCubit: getIt<CollectionCubit>()),
       )
       ..registerLazySingleton<InteriorDesignCubit>(
         () => InteriorDesignCubit(
