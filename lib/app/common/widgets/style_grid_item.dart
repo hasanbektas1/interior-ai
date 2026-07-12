@@ -29,7 +29,7 @@ class StyleGridItem extends StatelessWidget {
       onTap: onTap,
       child: AnimatedOpacity(
         duration: const Duration(milliseconds: 200),
-        opacity: isDimmed ? 0.5 : 1,
+        opacity: isDimmed ? 0.7 : 1,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           decoration: BoxDecoration(

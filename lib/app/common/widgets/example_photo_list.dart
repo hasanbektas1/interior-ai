@@ -32,7 +32,7 @@ class ExamplePhotoList extends StatelessWidget {
             onTap: () => onSelect(index),
             child: AnimatedOpacity(
               duration: const Duration(milliseconds: 200),
-              opacity: isDimmed ? 0.5 : 1,
+              opacity: isDimmed ? 0.7 : 1,
               child: Container(
                 width: context.width96,
                 foregroundDecoration: BoxDecoration(
