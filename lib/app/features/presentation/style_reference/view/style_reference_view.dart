@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
 import 'package:interior_ai/app/common/widgets/buttons/app_button.dart';
+import 'package:interior_ai/app/common/widgets/dialogs/feature_tutorial.dart';
 import 'package:interior_ai/app/common/widgets/generated_error_view.dart';
 import 'package:interior_ai/app/common/widgets/step_flow_header.dart';
 import 'package:interior_ai/app/common/widgets/generated_processing_view.dart';
@@ -30,6 +31,9 @@ class _StyleReferenceBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (context.mounted) FeatureTutorial.styleReference(context);
+    });
     return BlocBuilder<StyleReferenceCubit, StyleReferenceState>(
       builder: (context, state) {
         final cubit = context.read<StyleReferenceCubit>();

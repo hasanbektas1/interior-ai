@@ -43,6 +43,8 @@ flutter:
     - assets/png/garden_design/
     - assets/png/exterior_design/
     - assets/png/floor_restyle/
+    - assets/png/style_reference/
+    - assets/png/replace_object/
     - assets/png/paywall/
     - assets/png/settings/
     - assets/svg/home/

@@ -253,7 +253,19 @@ enum AppAsset {
   floorMaterialBlackMarble(
     'assets/png/floor_restyle/floor_restyle_blackmarbie.png',
   ),
-  floorMaterialCarpet('assets/png/floor_restyle/floor_restyle_carpet.png');
+  floorMaterialCarpet('assets/png/floor_restyle/floor_restyle_carpet.png'),
+
+  // TUTORIAL (first-time feature intro)
+  interiorTutorial1('assets/png/exterior_design/interrior_design_show.jpg'),
+  interiorTutorial2('assets/png/exterior_design/interrior_design_show1.jpg'),
+  interiorTutorial3('assets/png/exterior_design/interrior_design_show2.png'),
+  styleReferenceTutorial1('assets/png/style_reference/style_reference_show.jpg'),
+  styleReferenceTutorial2(
+    'assets/png/style_reference/style_reference_show1.jpg',
+  ),
+  replaceObjectTutorial1('assets/png/replace_object/replace_object_show.jpg'),
+  replaceObjectTutorial2('assets/png/replace_object/replace_object_show1.png'),
+  replaceObjectTutorial3('assets/png/replace_object/replace_object_show2.png');
 
   final String path;
   const AppAsset(this.path);

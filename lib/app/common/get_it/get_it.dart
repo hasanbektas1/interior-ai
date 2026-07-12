@@ -18,6 +18,7 @@ import 'package:interior_ai/app/features/presentation/test/cubit/test_cubit.dart
 import 'package:interior_ai/core/helpers/gallery_saver_service.dart';
 import 'package:interior_ai/core/helpers/media_picker_service.dart';
 import 'package:interior_ai/core/storage/collection_storage.dart';
+import 'package:interior_ai/core/storage/tutorial_storage.dart';
 import 'package:get_it/get_it.dart';
 
 final getIt = GetIt.instance;
@@ -43,7 +44,8 @@ final class ServiceLocator {
     getIt
       ..registerLazySingleton<MediaPickerService>(() => MediaPickerService())
       ..registerLazySingleton<GallerySaverService>(() => GallerySaverService())
-      ..registerLazySingleton<CollectionStorage>(() => CollectionStorage());
+      ..registerLazySingleton<CollectionStorage>(() => CollectionStorage())
+      ..registerLazySingleton<TutorialStorage>(() => TutorialStorage());
   }
 
   /// **DataSource Dependency**

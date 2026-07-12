@@ -252,4 +252,26 @@ final class AppStrings {
     "Rustic farmhouse kitchen with reclaimed wood, open shelving, and vintage copper pots",
     "Mid-century modern home office with walnut desk, leather chair, and warm ambient lighting",
   ];
+
+  // TUTORIAL (first-time feature intro)
+  static const String tutorialStep = "Step";
+  static const String tutorialNext = "Next";
+  static const String tutorialDone = "Done";
+
+  static const List<String> interiorTutorialSteps = [
+    "Take a photo of your space or choose an example photo.",
+    "Choose a room type for AI to design.",
+    "Choose an interior design and color palette then wait for the result!",
+  ];
+
+  static const List<String> styleReferenceTutorialSteps = [
+    "Take a photo of your space or choose an example photo.",
+    "Take a photo of another space or choose an example photo for AI to reference.",
+  ];
+
+  static const List<String> replaceObjectTutorialSteps = [
+    "Take a photo of your space or choose an example photo.",
+    "Select the object you wish to replace.",
+    "Choose an AI object and see the result!",
+  ];
 }

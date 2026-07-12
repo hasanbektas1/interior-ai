@@ -4,6 +4,7 @@ import 'package:interior_ai/app/common/config/config.dart';
 import 'package:interior_ai/app/common/get_it/get_it.dart';
 import 'package:interior_ai/core/helpers/device/device_info_helper.dart';
 import 'package:interior_ai/core/storage/collection_storage.dart';
+import 'package:interior_ai/core/storage/tutorial_storage.dart';
 
 final class AppFunctions {
   AppFunctions._();
@@ -14,6 +15,7 @@ final class AppFunctions {
     //     widgetsBinding: ensureInitialized); //Splash'te silmelisin
     await DeviceInfoHelper.instance.init();
     await CollectionStorage.init();
+    await TutorialStorage.init();
     Config.currentEnvironment = Environment.development;
     ServiceLocator().setup();
     SystemChrome.setPreferredOrientations([

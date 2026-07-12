@@ -4,6 +4,7 @@ import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
 import 'package:interior_ai/app/common/widgets/buttons/app_button.dart';
 import 'package:interior_ai/app/common/widgets/dialogs/add_photo_bottom_sheet.dart';
+import 'package:interior_ai/app/common/widgets/dialogs/feature_tutorial.dart';
 import 'package:interior_ai/app/common/widgets/dialogs/remove_photo_dialog.dart';
 import 'package:interior_ai/app/common/widgets/example_photos_sheet.dart';
 import 'package:interior_ai/app/common/widgets/generated_error_view.dart';
@@ -35,6 +36,9 @@ class _ReplaceObjectsBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (context.mounted) FeatureTutorial.replaceObject(context);
+    });
     return BlocBuilder<ReplaceObjectsCubit, ReplaceObjectsState>(
       builder: (context, state) {
         final cubit = context.read<ReplaceObjectsCubit>();

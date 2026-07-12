@@ -13,6 +13,7 @@ import 'package:interior_ai/app/common/widgets/generated_processing_view.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/view/steps/interior_result_view.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/view/steps/room_type_step.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/view/steps/style_step.dart';
+import 'package:interior_ai/app/common/widgets/dialogs/feature_tutorial.dart';
 import 'package:interior_ai/app/common/widgets/step_flow_header.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 import 'package:interior_ai/core/extensions/widgets/padding_extensions.dart';
@@ -22,6 +23,9 @@ class InteriorDesignView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (context.mounted) FeatureTutorial.interior(context);
+    });
     return BlocBuilder<InteriorDesignCubit, InteriorDesignState>(
       builder: (context, state) {
         final cubit = context.read<InteriorDesignCubit>();
