@@ -67,6 +67,7 @@ class PickSpaceView extends StatelessWidget {
                   isSelected: selectedSpace == space,
                   onTap: () => onSelect(space),
                   showLabel: false,
+                  isDimmed: selectedSpace != null && selectedSpace != space,
                 );
               },
             ),
