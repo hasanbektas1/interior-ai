@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:in_app_review/in_app_review.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/widgets/buttons/app_button.dart';
+import 'package:interior_ai/app/common/widgets/dialogs/rate_us_dialog.dart';
 import 'package:interior_ai/app/features/presentation/onboarding/cubit/onboarding_cubit.dart';
 import 'package:interior_ai/app/features/presentation/onboarding/cubit/onboarding_state.dart';
 import 'package:interior_ai/app/features/presentation/onboarding/view/dream_space_view.dart';
@@ -76,7 +76,12 @@ class OnboardingView extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(24, 12, 24, 40),
+                      padding: EdgeInsets.fromLTRB(
+                        24,
+                        12,
+                        24,
+                        state.step == OnboardingStep.helpUsGrow ? 12 : 40,
+                      ),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -91,10 +96,9 @@ class OnboardingView extends StatelessWidget {
                                 ? () async {
                                     if (state.step ==
                                         OnboardingStep.helpUsGrow) {
-                                      final inAppReview = InAppReview.instance;
-                                      if (await inAppReview.isAvailable()) {
-                                        await inAppReview.requestReview();
-                                      }
+                                      await RateUsDialog.show(context, (rating) {
+                                        Navigator.of(context).maybePop();
+                                      });
                                       if (!context.mounted) return;
                                       Navigator.of(context).pushAndRemoveUntil(
                                         MaterialPageRoute(
@@ -112,6 +116,31 @@ class OnboardingView extends StatelessWidget {
                             disabledBackgroundColor: AppColors.gainsboro,
                             disabledTextColor: AppColors.sonicSilver,
                           ),
+                          if (state.step == OnboardingStep.helpUsGrow) ...[
+                            const SizedBox(height: 2),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).pushAndRemoveUntil(
+                                  MaterialPageRoute(
+                                    builder: (_) => const MainView(),
+                                  ),
+                                  (_) => false,
+                                );
+                              },
+                              behavior: HitTestBehavior.opaque,
+                              child: const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 4),
+                                child: Text(
+                                  'Maybe Later',
+                                  style: TextStyle(
+                                    color: AppColors.richBlack,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ],
                       ),
                     ),
