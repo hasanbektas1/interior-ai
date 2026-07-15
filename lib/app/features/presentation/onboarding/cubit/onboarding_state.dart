@@ -49,17 +49,19 @@ final class OnboardingState extends Equatable {
     OnboardingStep.helpUsGrow => true,
   };
 
-  String get buttonText => step == OnboardingStep.welcome
-      ? AppStrings.onboardingLetsCreate
-      : AppStrings.continueButton;
+  String get buttonText => switch (step) {
+    OnboardingStep.welcome => AppStrings.onboardingLetsCreate,
+    OnboardingStep.processing => AppStrings.onboardingProcessingLabel,
+    _ => AppStrings.continueButton,
+  };
 
   int get pageIndex => switch (step) {
     OnboardingStep.welcome => 0,
     OnboardingStep.pickSpace => 1,
     OnboardingStep.findStyle => 2,
-    OnboardingStep.processing => 2,
-    OnboardingStep.dreamSpace => 3,
-    OnboardingStep.helpUsGrow => 4,
+    OnboardingStep.processing => 3,
+    OnboardingStep.dreamSpace => 4,
+    OnboardingStep.helpUsGrow => 5,
   };
 
   String get dreamMainImage {

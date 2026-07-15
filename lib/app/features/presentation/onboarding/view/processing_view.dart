@@ -9,57 +9,59 @@ class ProcessingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: AppColors.ghostWhite,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 16),
-            const Text(
-              AppStrings.onboardingProcessingTitle,
-              style: TextStyle(
-                color: AppColors.richBlack,
-                fontSize: 32,
-                fontWeight: FontWeight.w600,
-                height: 1.2,
-              ),
-            ),
-            const SizedBox(height: 10),
-            const Text(
-              AppStrings.onboardingProcessingSubtitle,
-              style: TextStyle(
-                color: AppColors.richBlack,
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            Expanded(
-              child: Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    GradientProgressRing(
-                      size: context.width140,
-                      strokeWidth: 10,
-                    ),
-                    const SizedBox(height: 24),
-                    const Text(
-                      AppStrings.onboardingProcessingLabel,
-                      style: TextStyle(
-                        color: AppColors.nickel,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 16),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: const [
+              Text(
+                AppStrings.onboardingProcessingTitle,
+                style: TextStyle(
+                  color: AppColors.richBlack,
+                  fontSize: 32,
+                  fontWeight: FontWeight.w600,
+                  height: 1.2,
                 ),
               ),
-            ),
-          ],
+              SizedBox(height: 10),
+              Text(
+                AppStrings.onboardingProcessingSubtitle,
+                style: TextStyle(
+                  color: AppColors.richBlack,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
+        Expanded(
+          child: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                GradientProgressRing(
+                  size: context.width140,
+                  strokeWidth: 10,
+                ),
+                const SizedBox(height: 24),
+                const Text(
+                  AppStrings.onboardingProcessingLabel,
+                  style: TextStyle(
+                    color: AppColors.nickel,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

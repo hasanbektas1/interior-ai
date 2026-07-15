@@ -34,7 +34,7 @@ enum AppAsset {
   onboardingMiniWorkspace('assets/png/onboarding_mini/mini_workspace_png.png'),
   onboardingMiniGreySofa('assets/png/onboarding_mini/mini_grey_sofa_png.png'),
   onboardingMiniArmchair('assets/png/onboarding_mini/mini_armchair_png.png'),
-  onboardingRateStars('assets/png/onboarding/onboarding_result_starts.png'),
+  onboardingRateStars('assets/png/onboarding/onboarding_rate_us.png'),
 
   // PAYWALL
   paywallBackground('assets/png/paywall/paywall_png3x.png'),
