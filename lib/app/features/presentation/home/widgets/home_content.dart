@@ -16,6 +16,7 @@ import 'package:interior_ai/app/features/presentation/replace_objects/view/repla
 import 'package:interior_ai/app/features/presentation/style_reference/cubit/style_reference_cubit.dart';
 import 'package:interior_ai/app/features/presentation/style_reference/view/style_reference_view.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
+import 'package:interior_ai/core/helpers/navigation_helper/navigation_helper.dart';
 
 class HomeContent extends StatelessWidget {
   const HomeContent({super.key});
@@ -47,10 +48,8 @@ class HomeContent extends StatelessWidget {
                   subtitle: AppStrings.homeInteriorSubtitle,
                   onTap: () {
                     context.read<InteriorDesignCubit>().reset();
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => const InteriorDesignView(),
-                      ),
+                    Navigation.pushBottomToTop(
+                      page: const InteriorDesignView(),
                     );
                   },
                 ),
@@ -68,10 +67,8 @@ class HomeContent extends StatelessWidget {
                       subtitle: AppStrings.homeExteriorSubtitle,
                       onTap: () {
                         context.read<ExteriorDesignCubit>().reset();
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) => const ExteriorDesignView(),
-                          ),
+                        Navigation.pushBottomToTop(
+                          page: const ExteriorDesignView(),
                         );
                       },
                     ),
@@ -86,10 +83,8 @@ class HomeContent extends StatelessWidget {
                       subtitle: AppStrings.homeReplaceObjectsSubtitle,
                       onTap: () {
                         context.read<ReplaceObjectsCubit>().reset();
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) => const ReplaceObjectsView(),
-                          ),
+                        Navigation.pushBottomToTop(
+                          page: const ReplaceObjectsView(),
                         );
                       },
                     ),
@@ -112,10 +107,8 @@ class HomeContent extends StatelessWidget {
                             subtitle: AppStrings.homeFloorRestyleSubtitle,
                             onTap: () {
                               context.read<FloorRestyleCubit>().reset();
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (_) => const FloorRestyleView(),
-                                ),
+                              Navigation.pushBottomToTop(
+                                page: const FloorRestyleView(),
                               );
                             },
                           ),
@@ -129,10 +122,8 @@ class HomeContent extends StatelessWidget {
                             subtitle: AppStrings.homeGardenSubtitle,
                             onTap: () {
                               context.read<GardenDesignCubit>().reset();
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (_) => const GardenDesignView(),
-                                ),
+                              Navigation.pushBottomToTop(
+                                page: const GardenDesignView(),
                               );
                             },
                           ),
@@ -150,10 +141,8 @@ class HomeContent extends StatelessWidget {
                       subtitle: AppStrings.homeStyleReferenceSubtitle,
                       onTap: () {
                         context.read<StyleReferenceCubit>().reset();
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) => const StyleReferenceView(),
-                          ),
+                        Navigation.pushBottomToTop(
+                          page: const StyleReferenceView(),
                         );
                       },
                     ),

@@ -24,4 +24,23 @@ class Navigation {
 
   static MaterialPageRoute<T> materialPageRoute<T>(Widget page) =>
       MaterialPageRoute(builder: (context) => page);
+
+  static Future<T?>? pushBottomToTop<T>({required Widget page}) =>
+      navigationKey.currentState?.push(bottomToTopPageRoute(page));
+
+  static PageRouteBuilder<T> bottomToTopPageRoute<T>(Widget page) =>
+      PageRouteBuilder<T>(
+        pageBuilder: (context, animation, secondaryAnimation) => page,
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          const begin = Offset(0, 1);
+          const end = Offset.zero;
+          final tween = Tween(begin: begin, end: end)
+              .chain(CurveTween(curve: Curves.easeInOut));
+          return SlideTransition(
+            position: animation.drive(tween),
+            child: child,
+          );
+        },
+        transitionDuration: const Duration(milliseconds: 300),
+      );
 }

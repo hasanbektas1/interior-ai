@@ -4,6 +4,7 @@ import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
 import 'package:interior_ai/app/common/widgets/buttons/app_button.dart';
 import 'package:interior_ai/app/common/widgets/step_flow_header.dart';
+import 'package:interior_ai/app/common/widgets/step_page_view.dart';
 import 'package:interior_ai/app/common/widgets/generated_error_view.dart';
 import 'package:interior_ai/app/common/widgets/generated_processing_view.dart';
 import 'package:interior_ai/app/features/presentation/garden_design/cubit/garden_design_cubit.dart';
@@ -69,17 +70,12 @@ class _GardenDesignBody extends StatelessWidget {
                   onBack: state.step == GardenStep.style ? cubit.back : null,
                 ),
                 Expanded(
-                  child: ClipRect(
-                    child: AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 300),
-                      transitionBuilder: (child, animation) {
-                        return FadeTransition(opacity: animation, child: child);
-                      },
-                      child: SizedBox.expand(
-                        key: ValueKey(state.step),
-                        child: _StepContent(state: state),
-                      ),
-                    ),
+                  child: StepPageView(
+                    index: state.step.progressIndex,
+                    children: [
+                      GardenAddPhotoStep(state: state),
+                      GardenStyleStep(state: state),
+                    ],
                   ),
                 ),
                 SizedBox(height: context.height4),
@@ -99,22 +95,5 @@ class _GardenDesignBody extends StatelessWidget {
         );
       },
     );
-  }
-}
-
-class _StepContent extends StatelessWidget {
-  const _StepContent({required this.state});
-
-  final GardenDesignState state;
-
-  @override
-  Widget build(BuildContext context) {
-    return switch (state.step) {
-      GardenStep.addPhoto => GardenAddPhotoStep(state: state),
-      GardenStep.style => GardenStyleStep(state: state),
-      GardenStep.processing => const SizedBox.shrink(),
-      GardenStep.result => const SizedBox.shrink(),
-      GardenStep.error => const SizedBox.shrink(),
-    };
   }
 }

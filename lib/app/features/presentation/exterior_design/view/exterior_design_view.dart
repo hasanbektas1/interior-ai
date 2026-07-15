@@ -4,6 +4,7 @@ import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
 import 'package:interior_ai/app/common/widgets/buttons/app_button.dart';
 import 'package:interior_ai/app/common/widgets/step_flow_header.dart';
+import 'package:interior_ai/app/common/widgets/step_page_view.dart';
 import 'package:interior_ai/app/common/widgets/generated_error_view.dart';
 import 'package:interior_ai/app/common/widgets/generated_processing_view.dart';
 import 'package:interior_ai/app/features/presentation/exterior_design/cubit/exterior_design_cubit.dart';
@@ -73,17 +74,14 @@ class _ExteriorDesignBody extends StatelessWidget {
                       state.step == ExteriorStep.addPhoto ? null : cubit.back,
                 ),
                 Expanded(
-                  child: ClipRect(
-                    child: AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 300),
-                      transitionBuilder: (child, animation) {
-                        return FadeTransition(opacity: animation, child: child);
-                      },
-                      child: SizedBox.expand(
-                        key: ValueKey(state.step),
-                        child: _StepContent(state: state),
-                      ),
-                    ),
+                  child: StepPageView(
+                    index: state.step.progressIndex,
+                    children: [
+                      ExteriorAddPhotoStep(state: state),
+                      BuildingTypeStep(state: state),
+                      ExteriorStyleStep(state: state),
+                      ExteriorPaletteStep(state: state),
+                    ],
                   ),
                 ),
                 SizedBox(height: context.height4),
@@ -103,24 +101,5 @@ class _ExteriorDesignBody extends StatelessWidget {
         );
       },
     );
-  }
-}
-
-class _StepContent extends StatelessWidget {
-  const _StepContent({required this.state});
-
-  final ExteriorDesignState state;
-
-  @override
-  Widget build(BuildContext context) {
-    return switch (state.step) {
-      ExteriorStep.addPhoto => ExteriorAddPhotoStep(state: state),
-      ExteriorStep.buildingType => BuildingTypeStep(state: state),
-      ExteriorStep.style => ExteriorStyleStep(state: state),
-      ExteriorStep.colorPalette => ExteriorPaletteStep(state: state),
-      ExteriorStep.processing => const SizedBox.shrink(),
-      ExteriorStep.result => const SizedBox.shrink(),
-      ExteriorStep.error => const SizedBox.shrink(),
-    };
   }
 }

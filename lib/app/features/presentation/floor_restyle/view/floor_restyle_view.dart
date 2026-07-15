@@ -4,6 +4,7 @@ import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
 import 'package:interior_ai/app/common/widgets/buttons/app_button.dart';
 import 'package:interior_ai/app/common/widgets/step_flow_header.dart';
+import 'package:interior_ai/app/common/widgets/step_page_view.dart';
 import 'package:interior_ai/app/common/widgets/generated_error_view.dart';
 import 'package:interior_ai/app/common/widgets/generated_processing_view.dart';
 import 'package:interior_ai/app/features/presentation/floor_restyle/cubit/floor_restyle_cubit.dart';
@@ -70,17 +71,13 @@ class _FloorRestyleBody extends StatelessWidget {
                   onBack: state.step == FloorStep.addPhoto ? null : cubit.back,
                 ),
                 Expanded(
-                  child: ClipRect(
-                    child: AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 300),
-                      transitionBuilder: (child, animation) {
-                        return FadeTransition(opacity: animation, child: child);
-                      },
-                      child: SizedBox.expand(
-                        key: ValueKey(state.step),
-                        child: _StepContent(state: state),
-                      ),
-                    ),
+                  child: StepPageView(
+                    index: state.step.progressIndex,
+                    children: [
+                      FloorAddPhotoStep(state: state),
+                      FloorPaintStep(state: state),
+                      FloorMaterialStep(state: state),
+                    ],
                   ),
                 ),
                 SizedBox(height: context.height4),
@@ -100,23 +97,5 @@ class _FloorRestyleBody extends StatelessWidget {
         );
       },
     );
-  }
-}
-
-class _StepContent extends StatelessWidget {
-  const _StepContent({required this.state});
-
-  final FloorRestyleState state;
-
-  @override
-  Widget build(BuildContext context) {
-    return switch (state.step) {
-      FloorStep.addPhoto => FloorAddPhotoStep(state: state),
-      FloorStep.paint => FloorPaintStep(state: state),
-      FloorStep.material => FloorMaterialStep(state: state),
-      FloorStep.processing => const SizedBox.shrink(),
-      FloorStep.result => const SizedBox.shrink(),
-      FloorStep.error => const SizedBox.shrink(),
-    };
   }
 }
