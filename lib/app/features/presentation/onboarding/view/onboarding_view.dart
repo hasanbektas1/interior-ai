@@ -26,10 +26,12 @@ class OnboardingView extends StatelessWidget {
         return Scaffold(
           backgroundColor: AppColors.ghostWhite,
           body: SafeArea(
+            bottom: false,
             child: Stack(
               children: [
                 Column(
                   children: [
+                    SizedBox(height: 20),
                     Expanded(
                       child: ClipRect(
                         child: AnimatedSwitcher(
@@ -64,11 +66,12 @@ class OnboardingView extends StatelessWidget {
                                 selectedStyle: state.selectedStyle,
                                 onSelect: cubit.selectStyle,
                               ),
-                              3 => DreamSpaceView(
+                              3 => const ProcessingView(),
+                              4 => DreamSpaceView(
                                 mainImage: state.dreamMainImage,
                                 miniImage: state.dreamMiniImage,
                               ),
-                              4 => const HelpUsGrowView(),
+                              5 => const HelpUsGrowView(),
                               _ => const WelcomeView(),
                             },
                           ),
@@ -76,18 +79,13 @@ class OnboardingView extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.fromLTRB(
-                        24,
-                        12,
-                        24,
-                        state.step == OnboardingStep.helpUsGrow ? 12 : 40,
-                      ),
+                      padding: const EdgeInsets.fromLTRB(24, 12, 24, 40),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           OnboardingPageIndicator(
                             currentIndex: state.pageIndex,
-                            count: 5,
+                            count: 6,
                           ),
                           const SizedBox(height: 16),
                           AppButton.fill(
@@ -96,7 +94,9 @@ class OnboardingView extends StatelessWidget {
                                 ? () async {
                                     if (state.step ==
                                         OnboardingStep.helpUsGrow) {
-                                      await RateUsDialog.show(context, (rating) {
+                                      await RateUsDialog.show(context, (
+                                        rating,
+                                      ) {
                                         Navigator.of(context).maybePop();
                                       });
                                       if (!context.mounted) return;
@@ -116,38 +116,12 @@ class OnboardingView extends StatelessWidget {
                             disabledBackgroundColor: AppColors.gainsboro,
                             disabledTextColor: AppColors.sonicSilver,
                           ),
-                          if (state.step == OnboardingStep.helpUsGrow) ...[
-                            const SizedBox(height: 2),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).pushAndRemoveUntil(
-                                  MaterialPageRoute(
-                                    builder: (_) => const MainView(),
-                                  ),
-                                  (_) => false,
-                                );
-                              },
-                              behavior: HitTestBehavior.opaque,
-                              child: const Padding(
-                                padding: EdgeInsets.symmetric(vertical: 4),
-                                child: Text(
-                                  'Maybe Later',
-                                  style: TextStyle(
-                                    color: AppColors.richBlack,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
+
                         ],
                       ),
                     ),
                   ],
                 ),
-                if (state.step == OnboardingStep.processing)
-                  const ProcessingView(),
               ],
             ),
           ),
