@@ -172,6 +172,15 @@ final class AppStrings {
       "This design will be lost if you regenerate.";
   static const String interiorRegenerate = "Regenerate";
 
+  // CREDITS
+  static const String creditsBuyTitle = "Buy Credits";
+  static const String creditsBalanceLabel = "Your balance";
+  static const String creditsUnit = "credits";
+  static const String creditsBuyAction = "Buy";
+  static const String creditsUnavailable =
+      "Credits are currently unavailable. Please try again later.";
+  static const String creditsRetry = "Retry";
+
   // COLLECTION
   static const String collectionTitle = "Collection";
   static const String collectionFilterAll = "All";

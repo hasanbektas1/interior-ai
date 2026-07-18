@@ -4,6 +4,7 @@ import 'package:interior_ai/app/features/data/datasources/remote/test_remote_dat
 import 'package:interior_ai/app/features/data/repositories/image_generation_repository.dart';
 import 'package:interior_ai/app/features/data/repositories/test_repository.dart';
 import 'package:interior_ai/app/features/presentation/collection/cubit/collection_cubit.dart';
+import 'package:interior_ai/app/features/presentation/credits/cubit/credits_cubit/credits_cubit.dart';
 import 'package:interior_ai/app/features/presentation/exterior_design/cubit/exterior_design_cubit.dart';
 import 'package:interior_ai/app/features/presentation/floor_restyle/cubit/floor_restyle_cubit.dart';
 import 'package:interior_ai/app/features/presentation/garden_design/cubit/garden_design_cubit.dart';
@@ -132,6 +133,7 @@ final class ServiceLocator {
       ..registerLazySingleton<HomeCubit>(
         () => HomeCubit(testRepository: getIt<TestRepository>()),
       )
+      ..registerLazySingleton<CreditsCubit>(() => CreditsCubit())
       ..registerLazySingleton<TestCubit>(
         () => TestCubit(testRepository: getIt<TestRepository>()),
       );
