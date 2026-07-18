@@ -6,6 +6,7 @@ import 'package:interior_ai/app/common/widgets/buttons/app_button.dart';
 import 'package:interior_ai/app/common/widgets/dialogs/feature_tutorial.dart';
 import 'package:interior_ai/app/common/widgets/generated_error_view.dart';
 import 'package:interior_ai/app/common/widgets/step_flow_header.dart';
+import 'package:interior_ai/app/common/widgets/step_page_view.dart';
 import 'package:interior_ai/app/common/widgets/generated_processing_view.dart';
 import 'package:interior_ai/app/features/presentation/style_reference/cubit/style_reference_cubit.dart';
 import 'package:interior_ai/app/features/presentation/style_reference/cubit/style_reference_state.dart';
@@ -69,17 +70,22 @@ class _StyleReferenceBody extends StatelessWidget {
                   onClose: () => _exit(context),
                 ),
                 Expanded(
-                  child: ClipRect(
-                    child: AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 300),
-                      transitionBuilder: (child, animation) {
-                        return FadeTransition(opacity: animation, child: child);
-                      },
-                      child: SizedBox.expand(
-                        key: ValueKey(state.step),
-                        child: _StepContent(state: state),
+                  child: StepPageView(
+                    index: state.step.progressIndex,
+                    children: [
+                      StyleReferencePhotoStep(
+                        label: AppStrings.interiorAddYourPhoto,
+                        photoPath: state.photoSelectedPath,
+                        exampleIndex: state.photoIndex,
+                        photos: kStylePhotos,
                       ),
-                    ),
+                      StyleReferencePhotoStep(
+                        label: AppStrings.styleAddReferencePhoto,
+                        photoPath: state.refSelectedPath,
+                        exampleIndex: state.refIndex,
+                        photos: kReferencePhotos,
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(height: context.height4),
@@ -99,32 +105,5 @@ class _StyleReferenceBody extends StatelessWidget {
         );
       },
     );
-  }
-}
-
-class _StepContent extends StatelessWidget {
-  const _StepContent({required this.state});
-
-  final StyleReferenceState state;
-
-  @override
-  Widget build(BuildContext context) {
-    return switch (state.step) {
-      StyleReferenceStep.yourPhoto => StyleReferencePhotoStep(
-          label: AppStrings.interiorAddYourPhoto,
-          photoPath: state.photoSelectedPath,
-          exampleIndex: state.photoIndex,
-          photos: kStylePhotos,
-        ),
-      StyleReferenceStep.referencePhoto => StyleReferencePhotoStep(
-          label: AppStrings.styleAddReferencePhoto,
-          photoPath: state.refSelectedPath,
-          exampleIndex: state.refIndex,
-          photos: kReferencePhotos,
-        ),
-      StyleReferenceStep.processing => const SizedBox.shrink(),
-      StyleReferenceStep.result => const SizedBox.shrink(),
-      StyleReferenceStep.error => const SizedBox.shrink(),
-    };
   }
 }

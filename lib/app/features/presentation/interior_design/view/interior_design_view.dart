@@ -15,6 +15,7 @@ import 'package:interior_ai/app/features/presentation/interior_design/view/steps
 import 'package:interior_ai/app/features/presentation/interior_design/view/steps/style_step.dart';
 import 'package:interior_ai/app/common/widgets/dialogs/feature_tutorial.dart';
 import 'package:interior_ai/app/common/widgets/step_flow_header.dart';
+import 'package:interior_ai/app/common/widgets/step_page_view.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 import 'package:interior_ai/core/extensions/widgets/padding_extensions.dart';
 
@@ -63,17 +64,14 @@ class InteriorDesignView extends StatelessWidget {
                       : cubit.back,
                 ),
                 Expanded(
-                  child: ClipRect(
-                    child: AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 300),
-                      transitionBuilder: (child, animation) {
-                        return FadeTransition(opacity: animation, child: child);
-                      },
-                      child: SizedBox.expand(
-                        key: ValueKey(state.step),
-                        child: _StepContent(state: state),
-                      ),
-                    ),
+                  child: StepPageView(
+                    index: state.step.progressIndex,
+                    children: [
+                      AddPhotoStep(state: state),
+                      RoomTypeStep(state: state),
+                      StyleStep(state: state),
+                      ColorPaletteStep(state: state),
+                    ],
                   ),
                 ),
                 SizedBox(height: context.height4),
@@ -93,24 +91,5 @@ class InteriorDesignView extends StatelessWidget {
         );
       },
     );
-  }
-}
-
-class _StepContent extends StatelessWidget {
-  const _StepContent({required this.state});
-
-  final InteriorDesignState state;
-
-  @override
-  Widget build(BuildContext context) {
-    return switch (state.step) {
-      InteriorStep.addPhoto => AddPhotoStep(state: state),
-      InteriorStep.roomType => RoomTypeStep(state: state),
-      InteriorStep.style => StyleStep(state: state),
-      InteriorStep.colorPalette => ColorPaletteStep(state: state),
-      InteriorStep.processing => const SizedBox.shrink(),
-      InteriorStep.result => const SizedBox.shrink(),
-      InteriorStep.error => const SizedBox.shrink(),
-    };
   }
 }
