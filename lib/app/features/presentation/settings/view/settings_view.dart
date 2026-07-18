@@ -7,7 +7,6 @@ import 'package:interior_ai/app/common/enums/app_assets.dart';
 import 'package:interior_ai/app/features/presentation/paywall/view/paywall_view.dart';
 import 'package:interior_ai/app/features/presentation/settings/cubit/settings_cubit.dart';
 import 'package:interior_ai/app/features/presentation/settings/cubit/settings_state.dart';
-import 'package:interior_ai/app/common/widgets/dialogs/rate_us_dialog.dart';
 import 'package:interior_ai/app/features/presentation/settings/widgets/settings_confirmation_dialog.dart';
 import 'package:interior_ai/app/features/presentation/settings/widgets/settings_copied_snackbar.dart';
 import 'package:interior_ai/app/features/presentation/settings/widgets/settings_premium_banner.dart';
@@ -15,6 +14,7 @@ import 'package:interior_ai/app/features/presentation/settings/widgets/settings_
 import 'package:interior_ai/app/features/presentation/settings/widgets/settings_tile.dart';
 import 'package:interior_ai/app/features/presentation/settings/widgets/settings_user_id_tile.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
+import 'package:interior_ai/core/helpers/app_rate.dart';
 import 'package:interior_ai/core/helpers/app_share.dart';
 
 class SettingsView extends StatelessWidget {
@@ -40,7 +40,7 @@ class _SettingsViewBody extends StatelessWidget {
   }
 
   void _onRateUs(BuildContext context) {
-    RateUsDialog.show(context, (_) => Navigator.of(context).maybePop());
+    AppRate.request();
   }
 
   void _onShareApp(BuildContext context) {

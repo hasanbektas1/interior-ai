@@ -1,141 +1,42 @@
-import 'package:flutter/material.dart';
-import 'package:interior_ai/app/common/constants/app_colors.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
-import 'package:interior_ai/core/extensions/build_context_extensions.dart';
-import 'package:interior_ai/core/extensions/widgets/padding_extensions.dart';
 
 enum PhotoSource { camera, library, example }
 
-class AddPhotoBottomSheet extends StatelessWidget {
-  const AddPhotoBottomSheet({super.key, this.showExampleOption = false});
-
-  final bool showExampleOption;
-
+/// Native iOS-style action sheet for picking a photo source.
+abstract final class AddPhotoBottomSheet {
   static Future<PhotoSource?> show(
     BuildContext context, {
     bool showExampleOption = false,
   }) {
-    return showModalBottomSheet<PhotoSource>(
+    return showCupertinoModalPopup<PhotoSource>(
       context: context,
-      backgroundColor: Colors.transparent,
-      builder: (_) => AddPhotoBottomSheet(showExampleOption: showExampleOption),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              color: AppColors.white,
-              borderRadius: BorderRadius.circular(context.width16),
-            ),
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: context.width20,
-                    vertical: context.height16,
-                  ),
-                  child: Column(
-                    children: [
-                      const Text(
-                        AppStrings.interiorAddPhotoTitle,
-                        style: TextStyle(
-                          color: AppColors.smokyBlack,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      SizedBox(height: context.height4),
-                      Text(
-                        showExampleOption
-                            ? AppStrings.replaceAddPhotoSubtitle
-                            : AppStrings.interiorAddPhotoSubtitle,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          color: AppColors.nickel,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const Divider(height: 1, color: AppColors.platinum),
-                _SheetAction(
-                  label: AppStrings.interiorTakePhoto,
-                  color: AppColors.azure,
-                  onTap: () => Navigator.of(context).pop(PhotoSource.camera),
-                ),
-                const Divider(height: 1, color: AppColors.platinum),
-                _SheetAction(
-                  label: AppStrings.interiorChooseFromLibrary,
-                  color: AppColors.azure,
-                  onTap: () => Navigator.of(context).pop(PhotoSource.library),
-                ),
-                if (showExampleOption) ...[
-                  const Divider(height: 1, color: AppColors.platinum),
-                  _SheetAction(
-                    label: AppStrings.interiorUseExamplePhoto,
-                    color: AppColors.azure,
-                    onTap: () => Navigator.of(context).pop(PhotoSource.example),
-                  ),
-                ],
-              ],
-            ),
+      builder: (context) => CupertinoActionSheet(
+        title: const Text(AppStrings.interiorAddPhotoTitle),
+        message: Text(
+          showExampleOption
+              ? AppStrings.replaceAddPhotoSubtitle
+              : AppStrings.interiorAddPhotoSubtitle,
+        ),
+        actions: [
+          CupertinoActionSheetAction(
+            onPressed: () => Navigator.of(context).pop(PhotoSource.camera),
+            child: const Text(AppStrings.interiorTakePhoto),
           ),
-          SizedBox(height: context.height10),
-          Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: AppColors.white,
-              borderRadius: BorderRadius.circular(context.width16),
-            ),
-            child: _SheetAction(
-              label: AppStrings.interiorCancel,
-              color: AppColors.azure,
-              onTap: () => Navigator.of(context).pop(),
-            ),
+          CupertinoActionSheetAction(
+            onPressed: () => Navigator.of(context).pop(PhotoSource.library),
+            child: const Text(AppStrings.interiorChooseFromLibrary),
           ),
+          if (showExampleOption)
+            CupertinoActionSheetAction(
+              onPressed: () => Navigator.of(context).pop(PhotoSource.example),
+              child: const Text(AppStrings.interiorUseExamplePhoto),
+            ),
         ],
-      ).symmetricPadding(horizontal: context.width10),
-    );
-  }
-}
-
-class _SheetAction extends StatelessWidget {
-  const _SheetAction({
-    required this.label,
-    required this.color,
-    required this.onTap,
-  });
-
-  final String label;
-  final Color color;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: onTap,
-      child: SizedBox(
-        width: double.infinity,
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: context.height16),
-          child: Text(
-            label,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: color,
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
+        cancelButton: CupertinoActionSheetAction(
+          isDefaultAction: true,
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text(AppStrings.interiorCancel),
         ),
       ),
     );

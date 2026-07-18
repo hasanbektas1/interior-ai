@@ -5,7 +5,7 @@ import 'package:interior_ai/app/common/constants/app_strings.dart';
 import 'package:interior_ai/app/common/widgets/color_palette_tile.dart';
 import 'package:interior_ai/app/features/presentation/exterior_design/cubit/exterior_design_cubit.dart';
 import 'package:interior_ai/app/features/presentation/exterior_design/cubit/exterior_design_state.dart';
-import 'package:interior_ai/app/features/presentation/exterior_design/enums/exterior_color_palette.dart';
+import 'package:interior_ai/app/features/presentation/interior_design/enums/color_palette.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 
 class ExteriorPaletteStep extends StatelessWidget {
@@ -31,12 +31,12 @@ class ExteriorPaletteStep extends StatelessWidget {
             ),
           ),
           SizedBox(height: context.height16),
-          for (final palette in ExteriorColorPalette.values)
+          for (final palette in ColorPalette.values)
             Padding(
               padding: EdgeInsets.only(bottom: context.height12),
               child: ColorPaletteTile(
                 label: palette.label,
-                colors: palette.colors,
+                imagePath: palette.image.path,
                 isSelected: state.colorPalette == palette,
                 isDimmed:
                     state.colorPalette != null && state.colorPalette != palette,

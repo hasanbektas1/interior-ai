@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:interior_ai/app/common/enums/app_assets.dart';
 import 'package:interior_ai/app/features/presentation/exterior_design/enums/building_type.dart';
-import 'package:interior_ai/app/features/presentation/exterior_design/enums/exterior_color_palette.dart';
 import 'package:interior_ai/app/features/presentation/exterior_design/enums/exterior_step.dart';
+import 'package:interior_ai/app/features/presentation/interior_design/enums/color_palette.dart';
 import 'package:interior_ai/app/features/presentation/exterior_design/enums/exterior_style.dart';
 
 const List<AppAsset> kExteriorExamplePhotos = [
@@ -19,7 +19,7 @@ final class ExteriorDesignState extends Equatable {
   final BuildingType? buildingType;
   final ExteriorStyle? style;
   final String? customPrompt;
-  final ExteriorColorPalette? colorPalette;
+  final ColorPalette? colorPalette;
 
   const ExteriorDesignState({
     this.step = ExteriorStep.addPhoto,
@@ -38,7 +38,7 @@ final class ExteriorDesignState extends Equatable {
     BuildingType? buildingType,
     ExteriorStyle? style,
     String? customPrompt,
-    ExteriorColorPalette? colorPalette,
+    ColorPalette? colorPalette,
     bool clearExample = false,
     bool clearAddedPhoto = false,
     bool clearCustomPrompt = false,

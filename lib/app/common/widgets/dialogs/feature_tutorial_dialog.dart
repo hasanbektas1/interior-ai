@@ -24,7 +24,8 @@ class FeatureTutorialDialog extends StatefulWidget {
   static Future<void> show(BuildContext context, List<TutorialStep> steps) {
     return showDialog<void>(
       context: context,
-      barrierDismissible: true,
+      // Tapping outside must not dismiss the intro; it closes only via Done.
+      barrierDismissible: false,
       builder: (_) => FeatureTutorialDialog(steps: steps),
     );
   }
@@ -57,6 +58,12 @@ class _FeatureTutorialDialogState extends State<FeatureTutorialDialog> {
   @override
   Widget build(BuildContext context) {
     final bool isLast = _index == widget.steps.length - 1;
+    // Fixed image box sized from the dialog width so portrait and landscape
+    // sources render consistently (and don't zoom/shift as the text height
+    // changes between steps).
+    final double imageWidth =
+        context.width - context.width40 * 2 - context.width20 * 2;
+    final double imageHeight = imageWidth;
     return Dialog(
       backgroundColor: AppColors.white,
       insetPadding: EdgeInsets.symmetric(horizontal: context.width40),
@@ -69,13 +76,17 @@ class _FeatureTutorialDialogState extends State<FeatureTutorialDialog> {
           mainAxisSize: MainAxisSize.min,
           children: [
             SizedBox(
-              height: context.height360,
+              height: imageHeight + context.height96,
               child: PageView(
                 controller: _controller,
                 onPageChanged: (value) => setState(() => _index = value),
                 children: [
                   for (int i = 0; i < widget.steps.length; i++)
-                    _TutorialPage(step: widget.steps[i], stepNumber: i + 1),
+                    _TutorialPage(
+                      step: widget.steps[i],
+                      stepNumber: i + 1,
+                      imageHeight: imageHeight,
+                    ),
                 ],
               ),
             ),
@@ -95,22 +106,27 @@ class _FeatureTutorialDialogState extends State<FeatureTutorialDialog> {
 }
 
 class _TutorialPage extends StatelessWidget {
-  const _TutorialPage({required this.step, required this.stepNumber});
+  const _TutorialPage({
+    required this.step,
+    required this.stepNumber,
+    required this.imageHeight,
+  });
 
   final TutorialStep step;
   final int stepNumber;
+  final double imageHeight;
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Expanded(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(context.width16),
-            child: SizedBox(
-              width: double.infinity,
-              child: AppPhoto(path: step.image.path),
-            ),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(context.width16),
+          child: SizedBox(
+            width: double.infinity,
+            height: imageHeight,
+            child: AppPhoto(path: step.image.path),
           ),
         ),
         SizedBox(height: context.height16),

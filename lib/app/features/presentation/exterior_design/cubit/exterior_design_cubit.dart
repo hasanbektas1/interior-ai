@@ -5,9 +5,9 @@ import 'package:interior_ai/app/features/presentation/collection/cubit/collectio
 import 'package:interior_ai/app/features/presentation/collection/enums/collection_category.dart';
 import 'package:interior_ai/app/features/presentation/exterior_design/cubit/exterior_design_state.dart';
 import 'package:interior_ai/app/features/presentation/exterior_design/enums/building_type.dart';
-import 'package:interior_ai/app/features/presentation/exterior_design/enums/exterior_color_palette.dart';
 import 'package:interior_ai/app/features/presentation/exterior_design/enums/exterior_step.dart';
 import 'package:interior_ai/app/features/presentation/exterior_design/enums/exterior_style.dart';
+import 'package:interior_ai/app/features/presentation/interior_design/enums/color_palette.dart';
 import 'package:interior_ai/core/helpers/media_picker_service.dart';
 
 final class ExteriorDesignCubit extends Cubit<ExteriorDesignState> {
@@ -59,7 +59,7 @@ final class ExteriorDesignCubit extends Cubit<ExteriorDesignState> {
     emit(state.copyWith(style: ExteriorStyle.custom, customPrompt: prompt));
   }
 
-  void selectColorPalette(ExteriorColorPalette palette) {
+  void selectColorPalette(ColorPalette palette) {
     emit(state.copyWith(colorPalette: palette));
   }
 

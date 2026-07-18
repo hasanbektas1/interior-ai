@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/widgets/buttons/app_button.dart';
-import 'package:interior_ai/app/common/widgets/dialogs/rate_us_dialog.dart';
 import 'package:interior_ai/app/features/presentation/onboarding/cubit/onboarding_cubit.dart';
 import 'package:interior_ai/app/features/presentation/onboarding/cubit/onboarding_state.dart';
 import 'package:interior_ai/app/features/presentation/onboarding/view/dream_space_view.dart';
@@ -13,6 +12,7 @@ import 'package:interior_ai/app/features/presentation/onboarding/view/processing
 import 'package:interior_ai/app/features/presentation/onboarding/view/welcome_view.dart';
 import 'package:interior_ai/app/features/presentation/onboarding/widgets/onboarding_page_indicator.dart';
 import 'package:interior_ai/app/features/presentation/main/view/main_view.dart';
+import 'package:interior_ai/core/helpers/app_rate.dart';
 
 class OnboardingView extends StatelessWidget {
   const OnboardingView({super.key});
@@ -94,11 +94,7 @@ class OnboardingView extends StatelessWidget {
                                 ? () async {
                                     if (state.step ==
                                         OnboardingStep.helpUsGrow) {
-                                      await RateUsDialog.show(context, (
-                                        rating,
-                                      ) {
-                                        Navigator.of(context).maybePop();
-                                      });
+                                      await AppRate.request();
                                       if (!context.mounted) return;
                                       Navigator.of(context).pushAndRemoveUntil(
                                         MaterialPageRoute(
