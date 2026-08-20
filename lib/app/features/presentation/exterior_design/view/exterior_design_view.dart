@@ -46,6 +46,7 @@ class _ExteriorDesignBody extends StatelessWidget {
         }
         if (state.step == ExteriorStep.result) {
           return ExteriorResultView(
+            imagePath: state.resultImagePath ?? '',
             buildingTypeLabel: state.buildingType?.label ?? '',
             styleLabel: state.style?.label ?? '',
             customPrompt: state.customPrompt,

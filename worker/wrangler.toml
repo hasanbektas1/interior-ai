@@ -8,7 +8,7 @@ compatibility_date = "2024-11-01"
 RC_PROJECT_ID = "3c4c3e04"
 CREDITS_CURRENCY = "CREDITS"
 GENERATION_COST = "1"
-FAL_MODEL = "fal-ai/flux/dev/image-to-image"
+FAL_MODEL = "fal-ai/nano-banana/edit"
 
 # Secrets — DO NOT put here. Set with:
 #   wrangler secret put RC_SECRET_KEY   (RevenueCat v2 secret key, starts with sk_)

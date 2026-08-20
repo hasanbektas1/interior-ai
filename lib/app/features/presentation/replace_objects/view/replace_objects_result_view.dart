@@ -4,9 +4,7 @@ import 'package:interior_ai/app/common/constants/app_strings.dart';
 import 'package:interior_ai/app/common/widgets/dialogs/result_action_dialog.dart';
 import 'package:interior_ai/app/common/widgets/result_action_bar.dart';
 import 'package:interior_ai/app/common/widgets/result_layout.dart';
-import 'package:interior_ai/app/common/widgets/result_variant_strip.dart';
 import 'package:interior_ai/app/features/presentation/collection/cubit/collection_cubit.dart';
-import 'package:interior_ai/app/features/presentation/replace_objects/cubit/replace_objects_cubit.dart';
 import 'package:interior_ai/app/features/presentation/replace_objects/cubit/replace_objects_state.dart';
 import 'package:interior_ai/core/helpers/app_share.dart';
 
@@ -24,7 +22,7 @@ class ReplaceObjectsResultView extends StatelessWidget {
 
   Future<void> _onSave(BuildContext context) async {
     await context.read<CollectionCubit>().saveToGallery(
-          state.selectedResult.path,
+          state.resultImagePath ?? '',
         );
     if (!context.mounted) return;
     await ResultActionDialog.show(
@@ -60,17 +58,12 @@ class ReplaceObjectsResultView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<ReplaceObjectsCubit>();
+    final imagePath = state.resultImagePath ?? '';
     return ResultLayout(
-      imagePath: state.selectedResult.path,
-      onShare: () => AppShare.image(context, state.selectedResult.path),
+      imagePath: imagePath,
+      onShare: () => AppShare.image(context, imagePath),
       onClose: onClose,
       prompt: state.prompt,
-      details: ResultVariantStrip(
-        variants: kReplaceResultVariants,
-        selectedIndex: state.selectedResultIndex,
-        onSelect: cubit.selectResult,
-      ),
       footer: ResultActionBar(
         onDelete: () => _onDelete(context),
         onRegenerate: () => _onRegeneratePressed(context),

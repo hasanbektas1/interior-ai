@@ -17,6 +17,7 @@ final class FloorRestyleState extends Equatable {
   final bool hasPainted;
   final FloorMaterial? material;
   final String? customPrompt;
+  final String? resultImagePath;
 
   const FloorRestyleState({
     this.step = FloorStep.addPhoto,
@@ -25,6 +26,7 @@ final class FloorRestyleState extends Equatable {
     this.hasPainted = false,
     this.material,
     this.customPrompt,
+    this.resultImagePath,
   });
 
   FloorRestyleState copyWith({
@@ -34,6 +36,7 @@ final class FloorRestyleState extends Equatable {
     bool? hasPainted,
     FloorMaterial? material,
     String? customPrompt,
+    String? resultImagePath,
     bool clearExample = false,
     bool clearAddedPhoto = false,
     bool clearCustomPrompt = false,
@@ -47,6 +50,7 @@ final class FloorRestyleState extends Equatable {
       material: material ?? this.material,
       customPrompt:
           clearCustomPrompt ? null : (customPrompt ?? this.customPrompt),
+      resultImagePath: resultImagePath ?? this.resultImagePath,
     );
   }
 
@@ -75,5 +79,6 @@ final class FloorRestyleState extends Equatable {
         hasPainted,
         material,
         customPrompt,
+        resultImagePath,
       ];
 }

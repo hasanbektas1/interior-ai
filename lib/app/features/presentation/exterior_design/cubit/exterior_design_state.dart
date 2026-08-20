@@ -20,6 +20,7 @@ final class ExteriorDesignState extends Equatable {
   final ExteriorStyle? style;
   final String? customPrompt;
   final ColorPalette? colorPalette;
+  final String? resultImagePath;
 
   const ExteriorDesignState({
     this.step = ExteriorStep.addPhoto,
@@ -29,6 +30,7 @@ final class ExteriorDesignState extends Equatable {
     this.style,
     this.customPrompt,
     this.colorPalette,
+    this.resultImagePath,
   });
 
   ExteriorDesignState copyWith({
@@ -39,6 +41,7 @@ final class ExteriorDesignState extends Equatable {
     ExteriorStyle? style,
     String? customPrompt,
     ColorPalette? colorPalette,
+    String? resultImagePath,
     bool clearExample = false,
     bool clearAddedPhoto = false,
     bool clearCustomPrompt = false,
@@ -53,6 +56,7 @@ final class ExteriorDesignState extends Equatable {
       customPrompt:
           clearCustomPrompt ? null : (customPrompt ?? this.customPrompt),
       colorPalette: colorPalette ?? this.colorPalette,
+      resultImagePath: resultImagePath ?? this.resultImagePath,
     );
   }
 
@@ -83,5 +87,6 @@ final class ExteriorDesignState extends Equatable {
         style,
         customPrompt,
         colorPalette,
+        resultImagePath,
       ];
 }

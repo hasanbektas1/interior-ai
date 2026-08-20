@@ -21,7 +21,7 @@ Responses:
 
 1. `npm i -g wrangler` (once), then `cd worker`.
 2. Confirm `RC_PROJECT_ID` in `wrangler.toml` (RevenueCat dashboard URL) and
-   `FAL_MODEL` (default: `fal-ai/flux/dev/image-to-image`).
+   `FAL_MODEL` (default: `fal-ai/nano-banana/edit`).
 3. Set the secrets:
    ```
    wrangler secret put RC_SECRET_KEY   # RevenueCat → API keys → SECRET key (sk_...), customer read/write

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:interior_ai/app/common/enums/app_assets.dart';
 import 'package:interior_ai/app/features/presentation/collection/cubit/collection_cubit.dart';
 import 'package:interior_ai/app/common/widgets/dialogs/result_action_dialog.dart';
 import 'package:interior_ai/app/common/widgets/result_action_bar.dart';
@@ -13,6 +12,7 @@ import 'package:interior_ai/core/helpers/app_share.dart';
 class ExteriorResultView extends StatelessWidget {
   const ExteriorResultView({
     super.key,
+    required this.imagePath,
     required this.buildingTypeLabel,
     required this.styleLabel,
     required this.customPrompt,
@@ -20,6 +20,7 @@ class ExteriorResultView extends StatelessWidget {
     required this.onRegenerate,
   });
 
+  final String imagePath;
   final String buildingTypeLabel;
   final String styleLabel;
   final String? customPrompt;
@@ -27,9 +28,7 @@ class ExteriorResultView extends StatelessWidget {
   final VoidCallback onRegenerate;
 
   Future<void> _onSave(BuildContext context) async {
-    await context.read<CollectionCubit>().saveToGallery(
-          AppAsset.exteriorStyleModern.path,
-        );
+    await context.read<CollectionCubit>().saveToGallery(imagePath);
     if (!context.mounted) return;
     await ResultActionDialog.show(
       context,
@@ -64,8 +63,8 @@ class ExteriorResultView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ResultLayout(
-      imagePath: AppAsset.exteriorStyleModern.path,
-      onShare: () => AppShare.image(context, AppAsset.exteriorStyleModern.path),
+      imagePath: imagePath,
+      onShare: () => AppShare.image(context, imagePath),
       onClose: onClose,
       prompt: customPrompt,
       details: Row(

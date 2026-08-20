@@ -15,6 +15,7 @@ final class GardenDesignState extends Equatable {
   final String? addedPhotoPath;
   final GardenStyle? style;
   final String? customPrompt;
+  final String? resultImagePath;
 
   const GardenDesignState({
     this.step = GardenStep.addPhoto,
@@ -22,6 +23,7 @@ final class GardenDesignState extends Equatable {
     this.addedPhotoPath,
     this.style,
     this.customPrompt,
+    this.resultImagePath,
   });
 
   GardenDesignState copyWith({
@@ -30,6 +32,7 @@ final class GardenDesignState extends Equatable {
     String? addedPhotoPath,
     GardenStyle? style,
     String? customPrompt,
+    String? resultImagePath,
     bool clearExample = false,
     bool clearAddedPhoto = false,
     bool clearCustomPrompt = false,
@@ -42,6 +45,7 @@ final class GardenDesignState extends Equatable {
       style: style ?? this.style,
       customPrompt:
           clearCustomPrompt ? null : (customPrompt ?? this.customPrompt),
+      resultImagePath: resultImagePath ?? this.resultImagePath,
     );
   }
 
@@ -62,6 +66,12 @@ final class GardenDesignState extends Equatable {
       };
 
   @override
-  List<Object?> get props =>
-      [step, exampleIndex, addedPhotoPath, style, customPrompt];
+  List<Object?> get props => [
+        step,
+        exampleIndex,
+        addedPhotoPath,
+        style,
+        customPrompt,
+        resultImagePath,
+      ];
 }

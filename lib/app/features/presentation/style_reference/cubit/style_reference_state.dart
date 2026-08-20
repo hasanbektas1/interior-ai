@@ -26,6 +26,7 @@ final class StyleReferenceState extends Equatable {
   final String? photoPath;
   final int? refIndex;
   final String? refPath;
+  final String? resultImagePath;
 
   const StyleReferenceState({
     this.step = StyleReferenceStep.yourPhoto,
@@ -33,6 +34,7 @@ final class StyleReferenceState extends Equatable {
     this.photoPath,
     this.refIndex,
     this.refPath,
+    this.resultImagePath,
   });
 
   StyleReferenceState copyWith({
@@ -41,6 +43,7 @@ final class StyleReferenceState extends Equatable {
     String? photoPath,
     int? refIndex,
     String? refPath,
+    String? resultImagePath,
     bool clearPhotoIndex = false,
     bool clearPhotoPath = false,
     bool clearRefIndex = false,
@@ -52,6 +55,7 @@ final class StyleReferenceState extends Equatable {
       photoPath: clearPhotoPath ? null : (photoPath ?? this.photoPath),
       refIndex: clearRefIndex ? null : (refIndex ?? this.refIndex),
       refPath: clearRefPath ? null : (refPath ?? this.refPath),
+      resultImagePath: resultImagePath ?? this.resultImagePath,
     );
   }
 
@@ -76,5 +80,12 @@ final class StyleReferenceState extends Equatable {
       };
 
   @override
-  List<Object?> get props => [step, photoIndex, photoPath, refIndex, refPath];
+  List<Object?> get props => [
+        step,
+        photoIndex,
+        photoPath,
+        refIndex,
+        refPath,
+        resultImagePath,
+      ];
 }

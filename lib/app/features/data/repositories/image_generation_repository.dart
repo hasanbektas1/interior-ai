@@ -20,6 +20,7 @@ abstract class ImageGenerationRepository {
   Future<DataResult<String>> generate({
     required String prompt,
     required String sourceImagePath,
+    String? referenceImagePath,
   });
 }
 
@@ -34,14 +35,20 @@ final class ImageGenerationRepositoryImpl implements ImageGenerationRepository {
   Future<DataResult<String>> generate({
     required String prompt,
     required String sourceImagePath,
+    String? referenceImagePath,
   }) async {
     try {
       final bytes = await _readBytes(sourceImagePath);
+      final refBytes = referenceImagePath != null
+          ? await _readBytes(referenceImagePath)
+          : null;
       final appUserId = await PurchaseService.appUserId();
       final response = await _remoteDatasource.generate(
         appUserId: appUserId,
         prompt: prompt,
         imageBase64: base64Encode(bytes),
+        referenceImageBase64:
+            refBytes != null ? base64Encode(refBytes) : null,
       );
 
       if (!response.isSuccess) {

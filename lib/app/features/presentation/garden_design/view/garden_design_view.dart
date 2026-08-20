@@ -44,6 +44,7 @@ class _GardenDesignBody extends StatelessWidget {
         }
         if (state.step == GardenStep.result) {
           return GardenResultView(
+            imagePath: state.resultImagePath ?? '',
             styleLabel: state.style?.label ?? '',
             customPrompt: state.customPrompt,
             onClose: () => _exit(context),

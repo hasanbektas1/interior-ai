@@ -47,6 +47,7 @@ class _StyleReferenceBody extends StatelessWidget {
         }
         if (state.step == StyleReferenceStep.result) {
           return StyleReferenceResultView(
+            imagePath: state.resultImagePath ?? '',
             onClose: () => _exit(context),
             onRegenerate: cubit.retry,
           );

@@ -24,12 +24,14 @@ final class ReplaceObjectsState extends Equatable {
   final String? photoPath;
   final String prompt;
   final int selectedResultIndex;
+  final String? resultImagePath;
 
   const ReplaceObjectsState({
     this.step = ReplaceObjectsStep.editor,
     this.photoPath,
     this.prompt = '',
     this.selectedResultIndex = 0,
+    this.resultImagePath,
   });
 
   ReplaceObjectsState copyWith({
@@ -37,6 +39,7 @@ final class ReplaceObjectsState extends Equatable {
     String? photoPath,
     String? prompt,
     int? selectedResultIndex,
+    String? resultImagePath,
     bool clearPhoto = false,
   }) {
     return ReplaceObjectsState(
@@ -44,6 +47,7 @@ final class ReplaceObjectsState extends Equatable {
       photoPath: clearPhoto ? null : (photoPath ?? this.photoPath),
       prompt: prompt ?? this.prompt,
       selectedResultIndex: selectedResultIndex ?? this.selectedResultIndex,
+      resultImagePath: resultImagePath ?? this.resultImagePath,
     );
   }
 
@@ -52,5 +56,6 @@ final class ReplaceObjectsState extends Equatable {
   AppAsset get selectedResult => kReplaceResultVariants[selectedResultIndex];
 
   @override
-  List<Object?> get props => [step, photoPath, prompt, selectedResultIndex];
+  List<Object?> get props =>
+      [step, photoPath, prompt, selectedResultIndex, resultImagePath];
 }

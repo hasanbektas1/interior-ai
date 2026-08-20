@@ -105,30 +105,40 @@ final class ServiceLocator {
         () => StyleReferenceCubit(
           mediaPickerService: getIt<MediaPickerService>(),
           collectionCubit: getIt<CollectionCubit>(),
+          imageRepository: getIt<ImageGenerationRepository>(),
+          creditsCubit: getIt<CreditsCubit>(),
         ),
       )
       ..registerLazySingleton<ReplaceObjectsCubit>(
         () => ReplaceObjectsCubit(
           mediaPickerService: getIt<MediaPickerService>(),
           collectionCubit: getIt<CollectionCubit>(),
+          imageRepository: getIt<ImageGenerationRepository>(),
+          creditsCubit: getIt<CreditsCubit>(),
         ),
       )
       ..registerLazySingleton<GardenDesignCubit>(
         () => GardenDesignCubit(
           mediaPickerService: getIt<MediaPickerService>(),
           collectionCubit: getIt<CollectionCubit>(),
+          imageRepository: getIt<ImageGenerationRepository>(),
+          creditsCubit: getIt<CreditsCubit>(),
         ),
       )
       ..registerLazySingleton<ExteriorDesignCubit>(
         () => ExteriorDesignCubit(
           mediaPickerService: getIt<MediaPickerService>(),
           collectionCubit: getIt<CollectionCubit>(),
+          imageRepository: getIt<ImageGenerationRepository>(),
+          creditsCubit: getIt<CreditsCubit>(),
         ),
       )
       ..registerLazySingleton<FloorRestyleCubit>(
         () => FloorRestyleCubit(
           mediaPickerService: getIt<MediaPickerService>(),
           collectionCubit: getIt<CollectionCubit>(),
+          imageRepository: getIt<ImageGenerationRepository>(),
+          creditsCubit: getIt<CreditsCubit>(),
         ),
       )
       ..registerLazySingleton<HomeCubit>(

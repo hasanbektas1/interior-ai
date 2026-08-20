@@ -1,22 +1,31 @@
 import 'package:bloc/bloc.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
-import 'package:interior_ai/app/common/enums/app_assets.dart';
+import 'package:interior_ai/app/features/data/repositories/image_generation_repository.dart';
 import 'package:interior_ai/app/features/presentation/collection/cubit/collection_cubit.dart';
 import 'package:interior_ai/app/features/presentation/collection/enums/collection_category.dart';
+import 'package:interior_ai/app/features/presentation/credits/cubit/credits_cubit/credits_cubit.dart';
 import 'package:interior_ai/app/features/presentation/style_reference/cubit/style_reference_state.dart';
 import 'package:interior_ai/app/features/presentation/style_reference/enums/style_reference_step.dart';
+import 'package:interior_ai/app/features/presentation/paywall/view/paywall_view.dart';
 import 'package:interior_ai/core/helpers/media_picker_service.dart';
+import 'package:interior_ai/core/helpers/navigation_helper/navigation_helper.dart';
 
 final class StyleReferenceCubit extends Cubit<StyleReferenceState> {
   StyleReferenceCubit({
     required MediaPickerService mediaPickerService,
     required CollectionCubit collectionCubit,
+    required ImageGenerationRepository imageRepository,
+    required CreditsCubit creditsCubit,
   })  : _mediaPickerService = mediaPickerService,
         _collectionCubit = collectionCubit,
+        _imageRepository = imageRepository,
+        _creditsCubit = creditsCubit,
         super(const StyleReferenceState());
 
   final MediaPickerService _mediaPickerService;
   final CollectionCubit _collectionCubit;
+  final ImageGenerationRepository _imageRepository;
+  final CreditsCubit _creditsCubit;
 
   void reset() => emit(const StyleReferenceState());
 
@@ -76,19 +85,55 @@ final class StyleReferenceCubit extends Cubit<StyleReferenceState> {
   }
 
   Future<void> startProcessing() async {
+    final source = state.photoSelectedPath;
+    final reference = state.refSelectedPath;
+    if (source == null || reference == null) {
+      emit(state.copyWith(step: StyleReferenceStep.error));
+      return;
+    }
     emit(state.copyWith(step: StyleReferenceStep.processing));
     final id = await _collectionCubit.startGenerating(
       category: CollectionCategory.styleReference,
       title: AppStrings.styleReferenceCollectionTitle,
-      placeholderImagePath:
-          state.photoSelectedPath ?? AppAsset.interiorResult.path,
+      placeholderImagePath: source,
       styleLabel: CollectionCategory.styleReference.label,
     );
-    await Future.delayed(const Duration(seconds: 3));
+
+    final result = await _imageRepository.generate(
+      prompt: 'Restyle the first image so it adopts the interior style, '
+          'materials, colors, and mood of the second (reference) image. Keep '
+          "the first image's room architecture, layout, windows, and camera "
+          'perspective unchanged. Photorealistic, high detail.',
+      sourceImagePath: source,
+      referenceImagePath: reference,
+    );
     if (isClosed) return;
-    await _collectionCubit.completeGenerating(id, AppAsset.interiorResult.path);
+
+    final resultPath = result.data;
+    if (result.success && resultPath != null) {
+      await _collectionCubit.completeGenerating(id, resultPath);
+      await _creditsCubit.refresh();
+      if (state.step == StyleReferenceStep.processing) {
+        emit(state.copyWith(
+          step: StyleReferenceStep.result,
+          resultImagePath: resultPath,
+        ));
+      }
+      return;
+    }
+
+    await _collectionCubit.deleteItem(id);
+
+    if (result.message == kInsufficientCreditsError) {
+      if (state.step == StyleReferenceStep.processing) {
+        emit(state.copyWith(step: StyleReferenceStep.referencePhoto));
+      }
+      Navigation.push(page: const PaywallView());
+      return;
+    }
+
     if (state.step == StyleReferenceStep.processing) {
-      emit(state.copyWith(step: StyleReferenceStep.result));
+      emit(state.copyWith(step: StyleReferenceStep.error));
     }
   }
 

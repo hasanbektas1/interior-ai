@@ -34,13 +34,9 @@ export default {
       return json({ error: 'bad_json' }, 400);
     }
 
-    const {
-      appUserId,
-      prompt,
-      imageB64,
-      strength = 0.65,
-      numSteps = 28,
-    } = body;
+    // refB64 is an optional second image (e.g. a style reference); when present
+    // it's passed alongside the primary image so the model can use both.
+    const { appUserId, prompt, imageB64, refB64 } = body;
 
     if (!appUserId || !prompt || !imageB64) {
       return json({ error: 'missing_fields' }, 400);
@@ -71,9 +67,14 @@ export default {
     const reserveData = await reserve.json().catch(() => null);
     const balanceAfter = balanceFrom(reserveData, currency);
 
-    // 2) Generate on fal.ai.
+    // 2) Generate on fal.ai (nano-banana/edit: instruction-based image edit,
+    //    takes image_urls[] and no strength/steps).
     try {
-      const model = env.FAL_MODEL || 'fal-ai/flux/dev/image-to-image';
+      const model = env.FAL_MODEL || 'fal-ai/nano-banana/edit';
+      const imageUrls = [`data:${mimeFromB64(imageB64)};base64,${imageB64}`];
+      if (refB64) {
+        imageUrls.push(`data:${mimeFromB64(refB64)};base64,${refB64}`);
+      }
       const falRes = await fetch(`https://fal.run/${model}`, {
         method: 'POST',
         headers: {
@@ -82,9 +83,9 @@ export default {
         },
         body: JSON.stringify({
           prompt,
-          image_url: `data:image/png;base64,${imageB64}`,
-          strength,
-          num_inference_steps: numSteps,
+          image_urls: imageUrls,
+          num_images: 1,
+          output_format: 'jpeg',
         }),
       });
       if (!falRes.ok) throw new Error(`fal_status_${falRes.status}`);
@@ -117,6 +118,15 @@ function json(obj, status = 200) {
     status,
     headers: { 'Content-Type': 'application/json' },
   });
+}
+
+/// Detect the image type from the leading base64 chars so the data URI carries
+/// the right mime (camera photos are usually JPEG, example assets PNG).
+function mimeFromB64(b64) {
+  if (b64.startsWith('/9j/')) return 'image/jpeg';
+  if (b64.startsWith('iVBOR')) return 'image/png';
+  if (b64.startsWith('UklGR')) return 'image/webp';
+  return 'image/png';
 }
 
 function base64FromBytes(bytes) {

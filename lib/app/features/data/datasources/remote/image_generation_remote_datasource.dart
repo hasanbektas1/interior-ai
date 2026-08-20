@@ -10,6 +10,7 @@ abstract class ImageGenerationRemoteDatasource {
     required String appUserId,
     required String prompt,
     required String imageBase64,
+    String? referenceImageBase64,
   });
 }
 
@@ -26,6 +27,7 @@ final class ImageGenerationRemoteDatasourceImpl
     required String appUserId,
     required String prompt,
     required String imageBase64,
+    String? referenceImageBase64,
   }) async {
     return _dioApiManager.post<String>(
       '/generate',
@@ -33,6 +35,7 @@ final class ImageGenerationRemoteDatasourceImpl
         'appUserId': appUserId,
         'prompt': prompt,
         'imageB64': imageBase64,
+        if (referenceImageBase64 != null) 'refB64': referenceImageBase64,
       },
       converter: (data) {
         final map = data as Map;

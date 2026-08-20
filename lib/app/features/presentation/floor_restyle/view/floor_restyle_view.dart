@@ -45,6 +45,7 @@ class _FloorRestyleBody extends StatelessWidget {
         }
         if (state.step == FloorStep.result) {
           return FloorResultView(
+            imagePath: state.resultImagePath ?? '',
             materialLabel: state.material?.label ?? '',
             customPrompt: state.customPrompt,
             onClose: () => _exit(context),
