@@ -1,0 +1,15 @@
+name = "roomora-generate"
+main = "src/index.js"
+compatibility_date = "2024-11-01"
+
+# Non-secret config. Replace RC_PROJECT_ID with your RevenueCat project id
+# (from the dashboard URL: app.revenuecat.com/projects/<THIS>/...).
+[vars]
+RC_PROJECT_ID = "3c4c3e04"
+CREDITS_CURRENCY = "CREDITS"
+GENERATION_COST = "1"
+FAL_MODEL = "fal-ai/flux/dev/image-to-image"
+
+# Secrets — DO NOT put here. Set with:
+#   wrangler secret put RC_SECRET_KEY   (RevenueCat v2 secret key, starts with sk_)
+#   wrangler secret put FAL_KEY         (fal.ai API key from fal.ai → API Keys)

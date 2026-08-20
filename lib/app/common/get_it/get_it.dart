@@ -98,6 +98,7 @@ final class ServiceLocator {
           mediaPickerService: getIt<MediaPickerService>(),
           collectionCubit: getIt<CollectionCubit>(),
           imageRepository: getIt<ImageGenerationRepository>(),
+          creditsCubit: getIt<CreditsCubit>(),
         ),
       )
       ..registerLazySingleton<StyleReferenceCubit>(

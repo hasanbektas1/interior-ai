@@ -1,0 +1,163 @@
+/**
+ * Roomora AI — generation proxy Worker (fal.ai).
+ *
+ * The app calls POST /generate instead of hitting fal.ai/RevenueCat directly,
+ * so secrets never ship in the app and credits are spent server-side (the only
+ * secure way — RevenueCat's SDK can't deduct).
+ *
+ * Flow:
+ *   1. Reserve 1 credit in RevenueCat (atomic; HTTP 422 if the user has none).
+ *   2. Generate the image on fal.ai with the secret key.
+ *   3. Refund the credit if generation fails.
+ *   4. Return { image_b64, balance }.
+ *
+ * Secrets (wrangler secret put ...): RC_SECRET_KEY, FAL_KEY
+ * Vars (wrangler.toml): RC_PROJECT_ID, CREDITS_CURRENCY, GENERATION_COST,
+ *   FAL_MODEL
+ */
+
+export default {
+  async fetch(request, env) {
+    const url = new URL(request.url);
+
+    if (request.method === 'GET' && url.pathname === '/health') {
+      return json({ ok: true });
+    }
+    if (request.method !== 'POST' || url.pathname !== '/generate') {
+      return json({ error: 'not_found' }, 404);
+    }
+
+    let body;
+    try {
+      body = await request.json();
+    } catch {
+      return json({ error: 'bad_json' }, 400);
+    }
+
+    const {
+      appUserId,
+      prompt,
+      imageB64,
+      strength = 0.65,
+      numSteps = 28,
+    } = body;
+
+    if (!appUserId || !prompt || !imageB64) {
+      return json({ error: 'missing_fields' }, 400);
+    }
+
+    const currency = env.CREDITS_CURRENCY || 'CREDITS';
+    const cost = Number(env.GENERATION_COST || '1');
+    const rcBase =
+      `https://api.revenuecat.com/v2/projects/${env.RC_PROJECT_ID}` +
+      `/customers/${encodeURIComponent(appUserId)}/virtual_currencies`;
+    const rcHeaders = {
+      Authorization: `Bearer ${env.RC_SECRET_KEY}`,
+      'Content-Type': 'application/json',
+    };
+
+    // 1) Reserve the credit (atomic: 422 = not enough, nothing deducted).
+    const reserve = await fetch(`${rcBase}/transactions`, {
+      method: 'POST',
+      headers: rcHeaders,
+      body: JSON.stringify({ adjustments: { [currency]: -cost } }),
+    });
+    if (reserve.status === 422) {
+      return json({ error: 'insufficient_credits' }, 402);
+    }
+    if (!reserve.ok) {
+      return json({ error: 'rc_deduct_failed', status: reserve.status }, 502);
+    }
+    const reserveData = await reserve.json().catch(() => null);
+    const balanceAfter = balanceFrom(reserveData, currency);
+
+    // 2) Generate on fal.ai.
+    try {
+      const model = env.FAL_MODEL || 'fal-ai/flux/dev/image-to-image';
+      const falRes = await fetch(`https://fal.run/${model}`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Key ${env.FAL_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          prompt,
+          image_url: `data:image/png;base64,${imageB64}`,
+          strength,
+          num_inference_steps: numSteps,
+        }),
+      });
+      if (!falRes.ok) throw new Error(`fal_status_${falRes.status}`);
+      const falData = await falRes.json();
+      const imageUrl = imageUrlFrom(falData);
+      if (!imageUrl) throw new Error('no_image_in_response');
+
+      // fal returns a hosted URL; fetch it and hand the app base64 (matches the
+      // app's existing contract).
+      const imgRes = await fetch(imageUrl);
+      if (!imgRes.ok) throw new Error(`img_fetch_${imgRes.status}`);
+      const bytes = new Uint8Array(await imgRes.arrayBuffer());
+      const image_b64 = base64FromBytes(bytes);
+
+      return json({ image_b64, balance: balanceAfter }, 200);
+    } catch (_) {
+      // 3) Refund on failure — don't charge for a failed generation.
+      await fetch(`${rcBase}/transactions`, {
+        method: 'POST',
+        headers: rcHeaders,
+        body: JSON.stringify({ adjustments: { [currency]: cost } }),
+      }).catch(() => {});
+      return json({ error: 'generation_failed' }, 502);
+    }
+  },
+};
+
+function json(obj, status = 200) {
+  return new Response(JSON.stringify(obj), {
+    status,
+    headers: { 'Content-Type': 'application/json' },
+  });
+}
+
+function base64FromBytes(bytes) {
+  let binary = '';
+  const chunk = 0x8000;
+  for (let i = 0; i < bytes.length; i += chunk) {
+    binary += String.fromCharCode.apply(null, bytes.subarray(i, i + chunk));
+  }
+  return btoa(binary);
+}
+
+/// fal responses vary by model; find the first image URL anywhere.
+function imageUrlFrom(data) {
+  let found = null;
+  const walk = (o) => {
+    if (found || !o || typeof o !== 'object') return;
+    if (Array.isArray(o)) return o.forEach(walk);
+    if (typeof o.url === 'string' && o.url.startsWith('http')) {
+      found = o.url;
+      return;
+    }
+    for (const k in o) walk(o[k]);
+  };
+  walk(data);
+  return found;
+}
+
+/// RC responses vary; find the balance for [code] anywhere.
+function balanceFrom(data, code) {
+  let found = null;
+  const walk = (o) => {
+    if (!o || typeof o !== 'object') return;
+    if (Array.isArray(o)) return o.forEach(walk);
+    if (
+      (o.code === code || o.currency_code === code) &&
+      (typeof o.balance === 'number' || typeof o.amount === 'number')
+    ) {
+      found = typeof o.balance === 'number' ? o.balance : o.amount;
+    }
+    for (const k in o) walk(o[k]);
+  };
+  walk(data);
+  return found;
+}

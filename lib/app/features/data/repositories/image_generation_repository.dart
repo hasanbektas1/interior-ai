@@ -3,9 +3,15 @@ import 'dart:io';
 
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:interior_ai/app/features/data/datasources/remote/image_generation_remote_datasource.dart';
+import 'package:interior_ai/core/helpers/purchase_service.dart';
 import 'package:interior_ai/core/logger/app_logger.dart';
 import 'package:interior_ai/core/result/result.dart';
 import 'package:path_provider/path_provider.dart';
+
+/// [ErrorDataResult.message] the cubit checks to open the paywall when the
+/// Worker reports the user has no credits left (HTTP 402). Technical code, not
+/// a user-facing string.
+const String kInsufficientCreditsError = 'insufficient_credits';
 
 abstract class ImageGenerationRepository {
   /// Generates a redesigned image from [sourceImagePath] (an asset path or a
@@ -31,13 +37,18 @@ final class ImageGenerationRepositoryImpl implements ImageGenerationRepository {
   }) async {
     try {
       final bytes = await _readBytes(sourceImagePath);
+      final appUserId = await PurchaseService.appUserId();
       final response = await _remoteDatasource.generate(
+        appUserId: appUserId,
         prompt: prompt,
         imageBase64: base64Encode(bytes),
-        mimeType: _mimeTypeFor(sourceImagePath),
       );
 
       if (!response.isSuccess) {
+        if (response.error?.statusCode == 402) {
+          AppLogger.instance.error('$runtimeType generate() out of credits');
+          return ErrorDataResult(message: kInsufficientCreditsError);
+        }
         final message = response.error?.message ?? 'Generation failed';
         AppLogger.instance.error('$runtimeType generate() $message');
         return ErrorDataResult(message: message);
@@ -63,13 +74,6 @@ final class ImageGenerationRepositoryImpl implements ImageGenerationRepository {
       return data.buffer.asUint8List();
     }
     return File(path).readAsBytes();
-  }
-
-  String _mimeTypeFor(String path) {
-    final lower = path.toLowerCase();
-    if (lower.endsWith('.png')) return 'image/png';
-    if (lower.endsWith('.webp')) return 'image/webp';
-    return 'image/jpeg';
   }
 
   Future<String> _saveImage(List<int> bytes) async {

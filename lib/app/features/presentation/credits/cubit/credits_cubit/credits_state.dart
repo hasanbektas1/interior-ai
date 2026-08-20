@@ -12,7 +12,10 @@ final class CreditsState extends Equatable {
   });
 
   final CreditsStatus status;
+
+  /// Remaining credits from RevenueCat (per user).
   final int balance;
+
   final List<StoreProduct> products;
 
   /// True while a purchase is in flight (blocks duplicate taps).

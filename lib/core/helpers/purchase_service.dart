@@ -71,9 +71,11 @@ class PurchaseService {
     }
   }
 
-  /// Current credit balance from the RevenueCat virtual currency.
-  static Future<int> creditBalance() async {
+  /// Current credit balance from the RevenueCat virtual currency. Pass
+  /// [refresh] after a purchase to bypass the SDK's cached balance.
+  static Future<int> creditBalance({bool refresh = false}) async {
     try {
+      if (refresh) await Purchases.invalidateVirtualCurrenciesCache();
       final currencies = await Purchases.getVirtualCurrencies();
       final balance =
           currencies.all[RevenueCatConfig.creditsCurrencyCode]?.balance ?? 0;
@@ -88,6 +90,10 @@ class PurchaseService {
       rethrow;
     }
   }
+
+  /// The RevenueCat app user id. The generation Worker uses this to spend the
+  /// user's credit balance server-side.
+  static Future<String> appUserId() => Purchases.appUserID;
 
   /// Restores previous purchases (App Store account level).
   static Future<CustomerInfo> restore() async {

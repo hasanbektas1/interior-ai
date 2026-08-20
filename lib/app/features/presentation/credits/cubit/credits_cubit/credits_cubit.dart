@@ -4,9 +4,9 @@ import 'package:interior_ai/app/features/presentation/credits/cubit/credits_cubi
 import 'package:interior_ai/core/helpers/purchase_service.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
-/// Reads the credit packs and the remaining balance from RevenueCat. The
-/// balance comes straight from RevenueCat (`getVirtualCurrencies`) — no backend
-/// or local storage — and every read is logged to the console.
+/// Reads the credit packs and the per-user balance from RevenueCat
+/// (`getVirtualCurrencies`). Spending happens server-side (backend → RC REST
+/// API), so this cubit only reads and buys.
 final class CreditsCubit extends Cubit<CreditsState> {
   CreditsCubit() : super(const CreditsState()) {
     load();
@@ -41,7 +41,7 @@ final class CreditsCubit extends Cubit<CreditsState> {
     emit(state.copyWith(purchasing: true));
     try {
       await PurchaseService.buy(product);
-      final balance = await PurchaseService.creditBalance();
+      final balance = await PurchaseService.creditBalance(refresh: true);
       emit(state.copyWith(purchasing: false, balance: balance));
       return true;
     } catch (_) {
@@ -50,11 +50,20 @@ final class CreditsCubit extends Cubit<CreditsState> {
     }
   }
 
+  /// Re-reads the balance from RevenueCat (e.g. after a backend deduction).
+  Future<void> refresh() async {
+    if (!RevenueCatConfig.isConfigured) return;
+    try {
+      final balance = await PurchaseService.creditBalance(refresh: true);
+      emit(state.copyWith(balance: balance));
+    } catch (_) {}
+  }
+
   Future<void> restore() async {
     if (!RevenueCatConfig.isConfigured) return;
     try {
       await PurchaseService.restore();
-      final balance = await PurchaseService.creditBalance();
+      final balance = await PurchaseService.creditBalance(refresh: true);
       emit(state.copyWith(balance: balance));
     } catch (_) {}
   }

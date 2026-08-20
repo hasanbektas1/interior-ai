@@ -3,8 +3,11 @@ import 'package:interior_ai/app/common/constants/app_strings.dart';
 import 'package:interior_ai/app/features/data/repositories/image_generation_repository.dart';
 import 'package:interior_ai/app/features/presentation/collection/cubit/collection_cubit.dart';
 import 'package:interior_ai/app/features/presentation/collection/enums/collection_category.dart';
+import 'package:interior_ai/app/features/presentation/credits/cubit/credits_cubit/credits_cubit.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/cubit/interior_design_state.dart';
+import 'package:interior_ai/app/features/presentation/paywall/view/paywall_view.dart';
 import 'package:interior_ai/core/helpers/media_picker_service.dart';
+import 'package:interior_ai/core/helpers/navigation_helper/navigation_helper.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/enums/color_palette.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/enums/design_style.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/enums/interior_step.dart';
@@ -15,14 +18,17 @@ final class InteriorDesignCubit extends Cubit<InteriorDesignState> {
     required MediaPickerService mediaPickerService,
     required CollectionCubit collectionCubit,
     required ImageGenerationRepository imageRepository,
+    required CreditsCubit creditsCubit,
   })  : _mediaPickerService = mediaPickerService,
         _collectionCubit = collectionCubit,
         _imageRepository = imageRepository,
+        _creditsCubit = creditsCubit,
         super(const InteriorDesignState());
 
   final MediaPickerService _mediaPickerService;
   final CollectionCubit _collectionCubit;
   final ImageGenerationRepository _imageRepository;
+  final CreditsCubit _creditsCubit;
 
   void reset() => emit(const InteriorDesignState());
 
@@ -132,6 +138,7 @@ final class InteriorDesignCubit extends Cubit<InteriorDesignState> {
     final resultPath = result.data;
     if (result.success && resultPath != null) {
       await _collectionCubit.completeGenerating(id, resultPath);
+      await _creditsCubit.refresh();
       if (state.step == InteriorStep.processing) {
         emit(state.copyWith(
           step: InteriorStep.result,
@@ -142,6 +149,16 @@ final class InteriorDesignCubit extends Cubit<InteriorDesignState> {
     }
 
     await _collectionCubit.deleteItem(id);
+
+    // Out of credits: send the user back a step and open the paywall.
+    if (result.message == kInsufficientCreditsError) {
+      if (state.step == InteriorStep.processing) {
+        emit(state.copyWith(step: InteriorStep.colorPalette));
+      }
+      Navigation.push(page: const PaywallView());
+      return;
+    }
+
     if (state.step == InteriorStep.processing) {
       emit(state.copyWith(step: InteriorStep.error));
     }
