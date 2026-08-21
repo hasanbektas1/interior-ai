@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:interior_ai/app/common/constants/app_theme_data.dart';
 import 'package:interior_ai/app/common/functions/app_functions.dart';
 import 'package:interior_ai/app/common/get_it/get_it.dart';
@@ -20,6 +21,9 @@ import 'package:interior_ai/core/keys/keys.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // Lock the app to portrait up.
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await AppFunctions.instance.init();
   runApp(const MainApp());
 }
@@ -49,6 +53,9 @@ class MainApp extends StatelessWidget {
         navigatorKey: Navigation.navigationKey,
         scaffoldMessengerKey: AppKeys.scaffoldMessengerKey,
         theme: AppThemeData.themeData,
+        // Ignore the device's font-size setting; keep text at a fixed 1.0 scale.
+        builder: (context, child) =>
+            MediaQuery.withNoTextScaling(child: child!),
         home: const SplashView(),
       ),
     );

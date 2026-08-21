@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:interior_ai/app/common/config/config.dart';
 import 'package:interior_ai/app/common/get_it/get_it.dart';
 import 'package:interior_ai/core/helpers/device/device_info_helper.dart';
@@ -20,8 +19,5 @@ final class AppFunctions {
     await PurchaseService.configure();
     Config.currentEnvironment = Environment.development;
     ServiceLocator().setup();
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-    ]);
   }
 }
