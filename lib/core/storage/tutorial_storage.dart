@@ -6,6 +6,10 @@ import 'package:hive_flutter/hive_flutter.dart';
 final class TutorialStorage {
   static const String _boxName = 'tutorial_box';
 
+  /// Set once the user finishes onboarding, so it's shown only on first launch
+  /// per device (until the app is reinstalled).
+  static const String onboardingKey = 'onboarding_completed';
+
   Box get _box => Hive.box(_boxName);
 
   /// Opens the Hive box. Must be awaited once during app startup.

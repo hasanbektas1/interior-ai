@@ -1,6 +1,10 @@
 import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
+import 'package:interior_ai/app/common/get_it/get_it.dart';
+import 'package:interior_ai/app/features/presentation/main/view/main_view.dart';
 import 'package:interior_ai/app/features/presentation/onboarding/view/onboarding_view.dart';
+import 'package:interior_ai/core/helpers/navigation_helper/navigation_helper.dart';
+import 'package:interior_ai/core/storage/tutorial_storage.dart';
 import 'package:flutter/material.dart';
 
 class SplashView extends StatefulWidget {
@@ -20,10 +24,10 @@ class _SplashViewState extends State<SplashView> {
   Future<void> init() async {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await Future.delayed(const Duration(seconds: 1));
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => const OnboardingView()),
-        (_) => false,
+      final seenOnboarding =
+          getIt<TutorialStorage>().hasSeen(TutorialStorage.onboardingKey);
+      Navigation.pushAndRemoveAll(
+        page: seenOnboarding ? const MainView() : const OnboardingView(),
       );
     });
   }

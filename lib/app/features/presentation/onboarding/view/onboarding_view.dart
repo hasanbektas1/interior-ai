@@ -11,8 +11,10 @@ import 'package:interior_ai/app/features/presentation/onboarding/view/pick_space
 import 'package:interior_ai/app/features/presentation/onboarding/view/processing_view.dart';
 import 'package:interior_ai/app/features/presentation/onboarding/view/welcome_view.dart';
 import 'package:interior_ai/app/features/presentation/onboarding/widgets/onboarding_page_indicator.dart';
+import 'package:interior_ai/app/common/get_it/get_it.dart';
 import 'package:interior_ai/app/features/presentation/main/view/main_view.dart';
 import 'package:interior_ai/core/helpers/app_rate.dart';
+import 'package:interior_ai/core/storage/tutorial_storage.dart';
 
 class OnboardingView extends StatelessWidget {
   const OnboardingView({super.key});
@@ -95,6 +97,8 @@ class OnboardingView extends StatelessWidget {
                                     if (state.step ==
                                         OnboardingStep.helpUsGrow) {
                                       await AppRate.request();
+                                      await getIt<TutorialStorage>()
+                                          .markSeen(TutorialStorage.onboardingKey);
                                       if (!context.mounted) return;
                                       Navigator.of(context).pushAndRemoveUntil(
                                         MaterialPageRoute(
