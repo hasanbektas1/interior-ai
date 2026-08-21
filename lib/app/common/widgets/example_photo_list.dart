@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/enums/app_assets.dart';
+import 'package:interior_ai/app/common/widgets/app_photo.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 
 class ExamplePhotoList extends StatelessWidget {
@@ -46,12 +47,7 @@ class ExamplePhotoList extends StatelessWidget {
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(context.width12),
-                  child: Image.asset(
-                    photos[index].path,
-                    fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) =>
-                        const ColoredBox(color: AppColors.magnolia),
-                  ),
+                  child: AppPhoto(path: photos[index].path),
                 ),
               ),
             ),

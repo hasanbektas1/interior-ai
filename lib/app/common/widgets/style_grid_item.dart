@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/enums/app_assets.dart';
+import 'package:interior_ai/app/common/widgets/app_photo.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 
 class StyleGridItem extends StatelessWidget {
@@ -78,12 +79,7 @@ class StyleGridItem extends StatelessWidget {
     return Stack(
       fit: StackFit.expand,
       children: [
-        Image.asset(
-          imageAsset!.path,
-          fit: BoxFit.cover,
-          errorBuilder: (_, __, ___) =>
-              const ColoredBox(color: AppColors.magnolia),
-        ),
+        AppPhoto(path: imageAsset!.path),
         Positioned(
           left: 0,
           right: 0,

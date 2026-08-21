@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
+import 'package:interior_ai/app/common/widgets/app_photo.dart';
 
 class SelectionGridItem extends StatelessWidget {
   const SelectionGridItem({
@@ -41,7 +42,7 @@ class SelectionGridItem extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: Image.asset(imagePath, fit: BoxFit.cover),
+                child: AppPhoto(path: imagePath),
               ),
               if (showLabel)
                 Positioned(

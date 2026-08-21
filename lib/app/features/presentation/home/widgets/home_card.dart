@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/app/common/enums/app_assets.dart';
+import 'package:interior_ai/app/common/widgets/app_photo.dart';
 import 'package:interior_ai/app/common/widgets/marquee_text.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 
@@ -30,13 +31,7 @@ class HomeCard extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            Image.asset(
-              image.path,
-              fit: BoxFit.cover,
-              gaplessPlayback: true,
-              errorBuilder: (_, __, ___) =>
-                  const ColoredBox(color: AppColors.magnolia),
-            ),
+            AppPhoto(path: image.path, gaplessPlayback: true),
             Positioned(
               left: 0,
               right: 0,
