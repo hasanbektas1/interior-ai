@@ -6,6 +6,7 @@ import 'package:interior_ai/app/common/constants/app_links.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
 import 'package:interior_ai/app/common/enums/app_assets.dart';
 import 'package:interior_ai/core/helpers/app_link_launcher.dart';
+import 'package:interior_ai/app/features/presentation/credits/cubit/credits_cubit/credits_cubit.dart';
 import 'package:interior_ai/app/features/presentation/paywall/view/paywall_view.dart';
 import 'package:interior_ai/app/features/presentation/settings/cubit/settings_cubit.dart';
 import 'package:interior_ai/app/features/presentation/settings/cubit/settings_state.dart';
@@ -32,13 +33,21 @@ class _SettingsViewBody extends StatelessWidget {
   const _SettingsViewBody();
 
   void _onCopyUserId(BuildContext context) {
-    Clipboard.setData(const ClipboardData(text: AppStrings.sampleUserId));
+    final userId = context.read<SettingsCubit>().state.userId;
+    if (userId.isEmpty) return;
+    Clipboard.setData(ClipboardData(text: userId));
     context.read<SettingsCubit>().markUserIdCopied();
     SettingsCopiedSnackBar.show(context);
   }
 
-  void _onRestorePurchases(BuildContext context) {
+  Future<void> _onRestorePurchases(BuildContext context) async {
+    await context.read<CreditsCubit>().restore();
+    if (!context.mounted) return;
     SettingsConfirmationDialog.show(context, AppStrings.settingsPurchaseRestored);
+  }
+
+  void _onGiveFeedback(BuildContext context) {
+    AppLinkLauncher.open(AppLinks.feedbackMailto);
   }
 
   void _onRateUs(BuildContext context) {
@@ -117,7 +126,7 @@ class _SettingsViewBody extends StatelessWidget {
                 SettingsTile(
                   icon: AppAsset.settingsIconFeedback,
                   label: AppStrings.settingsGiveFeedback,
-                  onTap: () {},
+                  onTap: () => _onGiveFeedback(context),
                 ),
                 SizedBox(height: context.height24),
                 const SettingsSectionLabel(label: AppStrings.settingsGeneral),
@@ -142,7 +151,7 @@ class _SettingsViewBody extends StatelessWidget {
                 ),
                 SizedBox(height: context.height20),
                 SettingsUserIdTile(
-                  userId: AppStrings.sampleUserId,
+                  userId: state.userId,
                   isCopied: state.isUserIdCopied,
                   onCopy: () => _onCopyUserId(context),
                 ),
