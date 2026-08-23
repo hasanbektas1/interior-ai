@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
+import 'package:interior_ai/app/common/constants/app_links.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
 import 'package:interior_ai/app/common/enums/app_assets.dart';
+import 'package:interior_ai/core/helpers/app_link_launcher.dart';
 import 'package:interior_ai/app/features/presentation/paywall/view/paywall_view.dart';
 import 'package:interior_ai/app/features/presentation/settings/cubit/settings_cubit.dart';
 import 'package:interior_ai/app/features/presentation/settings/cubit/settings_state.dart';
@@ -123,13 +125,13 @@ class _SettingsViewBody extends StatelessWidget {
                 SettingsTile(
                   icon: AppAsset.settingsIconPrivacy,
                   label: AppStrings.settingsPrivacyPolicy,
-                  onTap: () {},
+                  onTap: () => AppLinkLauncher.open(AppLinks.privacyPolicy),
                 ),
                 SizedBox(height: context.height12),
                 SettingsTile(
                   icon: AppAsset.settingsIconTerms,
                   label: AppStrings.settingsTermsOfUse,
-                  onTap: () {},
+                  onTap: () => AppLinkLauncher.open(AppLinks.termsOfUse),
                 ),
                 SizedBox(height: context.height12),
                 SettingsTile(

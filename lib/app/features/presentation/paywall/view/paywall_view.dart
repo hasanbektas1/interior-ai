@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
+import 'package:interior_ai/app/common/constants/app_links.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
+import 'package:interior_ai/core/helpers/app_link_launcher.dart';
 import 'package:interior_ai/app/common/widgets/buttons/app_button.dart';
 import 'package:interior_ai/app/features/presentation/credits/cubit/credits_cubit/credits_cubit.dart';
 import 'package:interior_ai/app/features/presentation/credits/cubit/credits_cubit/credits_state.dart';
@@ -165,7 +167,11 @@ class _Content extends StatelessWidget {
           disabledTextColor: AppColors.disabledText,
         ),
         SizedBox(height: context.height16),
-        PaywallFooter(onRestoreTap: onRestore),
+        PaywallFooter(
+          onTermsTap: () => AppLinkLauncher.open(AppLinks.termsOfUse),
+          onPrivacyTap: () => AppLinkLauncher.open(AppLinks.privacyPolicy),
+          onRestoreTap: onRestore,
+        ),
       ],
     ).symmetricPadding(horizontal: context.width24);
   }
