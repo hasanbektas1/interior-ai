@@ -30,7 +30,14 @@ class ExteriorDesignView extends StatelessWidget {
 class _ExteriorDesignBody extends StatelessWidget {
   const _ExteriorDesignBody();
 
-  void _exit(BuildContext context) => Navigator.of(context).maybePop();
+  // Leave the flow, then clear its state so re-entering always starts fresh
+  // (never re-shows the previous result). Reset runs after the pop completes.
+  Future<void> _exit(BuildContext context) async {
+    final nav = Navigator.of(context);
+    final cubit = context.read<ExteriorDesignCubit>();
+    await nav.maybePop();
+    cubit.reset();
+  }
 
   @override
   Widget build(BuildContext context) {

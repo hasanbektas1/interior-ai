@@ -31,22 +31,31 @@ class InteriorDesignView extends StatelessWidget {
       builder: (context, state) {
         final cubit = context.read<InteriorDesignCubit>();
 
+        // Leave the flow, then clear its state so re-entering always starts
+        // fresh (never re-shows the previous result). Reset runs after the pop
+        // completes so the exiting screen doesn't flash the first step.
+        Future<void> close() async {
+          final nav = Navigator.of(context);
+          await nav.maybePop();
+          cubit.reset();
+        }
+
         if (state.step == InteriorStep.processing) {
           return GeneratedProcessingView(
-            onBackToHome: () => Navigator.of(context).maybePop(),
+            onBackToHome: close,
           );
         }
         if (state.step == InteriorStep.result) {
           return InteriorResultView(
             state: state,
-            onClose: () => Navigator.of(context).maybePop(),
+            onClose: close,
             onRegenerate: cubit.retry,
           );
         }
         if (state.step == InteriorStep.error) {
           return GeneratedErrorView(
             onTryAgain: cubit.retry,
-            onBackToHome: () => Navigator.of(context).maybePop(),
+            onBackToHome: close,
           );
         }
 
@@ -58,7 +67,7 @@ class InteriorDesignView extends StatelessWidget {
                 StepFlowHeader(
                   title: AppStrings.interiorDesign,
                   filledCount: state.step.progressIndex + 1,
-                  onClose: () => Navigator.of(context).maybePop(),
+                  onClose: close,
                   onBack: state.step == InteriorStep.addPhoto
                       ? null
                       : cubit.back,

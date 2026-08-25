@@ -32,7 +32,14 @@ class ReplaceObjectsView extends StatelessWidget {
 class _ReplaceObjectsBody extends StatelessWidget {
   const _ReplaceObjectsBody();
 
-  void _exit(BuildContext context) => Navigator.of(context).maybePop();
+  // Leave the flow, then clear its state so re-entering always starts fresh
+  // (never re-shows the previous result). Reset runs after the pop completes.
+  Future<void> _exit(BuildContext context) async {
+    final nav = Navigator.of(context);
+    final cubit = context.read<ReplaceObjectsCubit>();
+    await nav.maybePop();
+    cubit.reset();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +130,11 @@ class _EditorState extends State<_Editor> {
           children: [
             StepFlowHeader(
               title: AppStrings.replaceObjects,
-              onClose: () => Navigator.of(context).maybePop(),
+              onClose: () async {
+                final nav = Navigator.of(context);
+                await nav.maybePop();
+                cubit.reset();
+              },
             ),
             Expanded(
               child: SingleChildScrollView(
