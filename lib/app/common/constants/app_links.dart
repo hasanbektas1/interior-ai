@@ -9,5 +9,5 @@ abstract final class AppLinks {
   /// Support / feedback contact.
   static const String supportEmail = 'hasanbektasdev@gmail.com';
   static const String feedbackMailto =
-      'mailto:hasanbektasdev@gmail.com?subject=Roomora%20AI%20Feedback';
+      'mailto:hasanbektasdev@gmail.com?subject=Heimly%20Feedback';
 }

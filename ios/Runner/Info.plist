@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Roomora AI</string>
+	<string>Heimly</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -25,11 +25,11 @@
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>NSCameraUsageDescription</key>
-	<string>Roomora AI needs camera access so you can take a photo of your space to redesign.</string>
+	<string>Heimly needs camera access so you can take a photo of your space to redesign.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Roomora AI needs photo library access so you can choose a photo of your space to redesign.</string>
+	<string>Heimly needs photo library access so you can choose a photo of your space to redesign.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Roomora AI needs permission to save your generated designs to your photo library.</string>
+	<string>Heimly needs permission to save your generated designs to your photo library.</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
