@@ -68,37 +68,48 @@ export default {
     const balanceAfter = balanceFrom(reserveData, currency);
 
     // 2) Generate on fal.ai (nano-banana/edit: instruction-based image edit,
-    //    takes image_urls[] and no strength/steps).
+    //    takes image_urls[] and no strength/steps). The credit is already
+    //    reserved, so we can retry fal a few times on transient failures
+    //    without double-charging (the client never retries POST /generate).
     try {
       const model = env.FAL_MODEL || 'fal-ai/nano-banana/edit';
       const imageUrls = [`data:${mimeFromB64(imageB64)};base64,${imageB64}`];
       if (refB64) {
         imageUrls.push(`data:${mimeFromB64(refB64)};base64,${refB64}`);
       }
-      const falRes = await fetch(`https://fal.run/${model}`, {
-        method: 'POST',
-        headers: {
-          Authorization: `Key ${env.FAL_KEY}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          prompt,
-          image_urls: imageUrls,
-          num_images: 1,
-          output_format: 'jpeg',
-        }),
+      const falBody = JSON.stringify({
+        prompt,
+        image_urls: imageUrls,
+        num_images: 1,
+        output_format: 'jpeg',
       });
-      if (!falRes.ok) throw new Error(`fal_status_${falRes.status}`);
-      const falData = await falRes.json();
-      const imageUrl = imageUrlFrom(falData);
-      if (!imageUrl) throw new Error('no_image_in_response');
 
-      // fal returns a hosted URL; fetch it and hand the app base64 (matches the
-      // app's existing contract).
-      const imgRes = await fetch(imageUrl);
-      if (!imgRes.ok) throw new Error(`img_fetch_${imgRes.status}`);
-      const bytes = new Uint8Array(await imgRes.arrayBuffer());
-      const image_b64 = base64FromBytes(bytes);
+      let image_b64 = null;
+      let lastErr = null;
+      for (let attempt = 0; attempt < 3; attempt++) {
+        try {
+          const falRes = await fetch(`https://fal.run/${model}`, {
+            method: 'POST',
+            headers: {
+              Authorization: `Key ${env.FAL_KEY}`,
+              'Content-Type': 'application/json',
+            },
+            body: falBody,
+          });
+          if (!falRes.ok) throw new Error(`fal_status_${falRes.status}`);
+          const falData = await falRes.json();
+          const imageUrl = imageUrlFrom(falData);
+          if (!imageUrl) throw new Error('no_image_in_response');
+          const imgRes = await fetch(imageUrl);
+          if (!imgRes.ok) throw new Error(`img_fetch_${imgRes.status}`);
+          const bytes = new Uint8Array(await imgRes.arrayBuffer());
+          image_b64 = base64FromBytes(bytes);
+          break;
+        } catch (e) {
+          lastErr = e;
+        }
+      }
+      if (image_b64 === null) throw lastErr || new Error('fal_failed');
 
       return json({ image_b64, balance: balanceAfter }, 200);
     } catch (_) {

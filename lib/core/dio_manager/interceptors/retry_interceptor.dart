@@ -27,9 +27,13 @@ class RetryInterceptor extends Interceptor {
   }
 
   bool _shouldRetry(DioException err) {
+    // Only auto-retry idempotent GET requests. Non-idempotent methods (POST
+    // etc.) may have side effects — e.g. /generate deducts a credit and runs a
+    // paid AI job — so retrying them could double-charge or double-generate.
+    if (err.requestOptions.method.toUpperCase() != 'GET') return false;
     return err.type == DioExceptionType.connectionError ||
         err.type == DioExceptionType.receiveTimeout ||
         err.type == DioExceptionType.sendTimeout ||
-        (err.response != null && err.response!.statusCode! >= 500);
+        (err.response?.statusCode != null && err.response!.statusCode! >= 500);
   }
 }

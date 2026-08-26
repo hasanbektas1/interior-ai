@@ -11,7 +11,15 @@ final class MediaPickerService {
   Future<String?> pickFromGallery() => _pick(ImageSource.gallery);
 
   Future<String?> _pick(ImageSource source) async {
-    final file = await _picker.pickImage(source: source, imageQuality: 90);
+    // Downscale before use: the AI only needs ~1536px, and full-resolution
+    // camera photos would bloat the upload (base64 is +33%), memory, and
+    // generation time.
+    final file = await _picker.pickImage(
+      source: source,
+      maxWidth: 1536,
+      maxHeight: 1536,
+      imageQuality: 85,
+    );
     return file?.path;
   }
 }
