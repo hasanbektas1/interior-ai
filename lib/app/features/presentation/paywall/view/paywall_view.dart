@@ -14,6 +14,7 @@ import 'package:interior_ai/app/features/presentation/paywall/widgets/paywall_fo
 import 'package:interior_ai/app/features/presentation/paywall/widgets/paywall_plan_card.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 import 'package:interior_ai/core/extensions/widgets/padding_extensions.dart';
+import 'package:interior_ai/core/widgets/snackbar/app_snackbar.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 class PaywallView extends StatefulWidget {
@@ -40,6 +41,11 @@ class _PaywallViewState extends State<PaywallView> {
   Future<void> _onContinue(StoreProduct product) async {
     final ok = await context.read<CreditsCubit>().buy(product);
     if (ok && mounted) Navigator.of(context).maybePop();
+  }
+
+  Future<void> _onRestore() async {
+    final ok = await context.read<CreditsCubit>().restore();
+    AppSnackBar.show(ok ? AppStrings.restoreDone : AppStrings.restoreFailed);
   }
 
   @override
@@ -69,7 +75,7 @@ class _PaywallViewState extends State<PaywallView> {
                     onSelect: _select,
                     onContinue: _onContinue,
                     onRetry: cubit.load,
-                    onRestore: cubit.restore,
+                    onRestore: _onRestore,
                   ),
                 ),
                 SizedBox(height: context.height16),

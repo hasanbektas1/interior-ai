@@ -80,6 +80,8 @@ final class AppStrings {
   static const String paywallTermsOfUse = "Terms of Use";
   static const String paywallPrivacyPolicy = "Privacy Policy";
   static const String paywallRestorePurchase = "Restore Purchase";
+  static const String restoreDone = "Purchases restored.";
+  static const String restoreFailed = "Couldn't restore. Please try again.";
 
   // SETTINGS
   static const String settingsTitle = "Settings";

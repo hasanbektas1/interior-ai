@@ -59,12 +59,17 @@ final class CreditsCubit extends Cubit<CreditsState> {
     } catch (_) {}
   }
 
-  Future<void> restore() async {
-    if (!RevenueCatConfig.isConfigured) return;
+  /// Restores purchases via RevenueCat and re-reads the balance. Returns whether
+  /// the operation completed without error (used to show user feedback).
+  Future<bool> restore() async {
+    if (!RevenueCatConfig.isConfigured) return false;
     try {
       await PurchaseService.restore();
       final balance = await PurchaseService.creditBalance(refresh: true);
       emit(state.copyWith(balance: balance));
-    } catch (_) {}
+      return true;
+    } catch (_) {
+      return false;
+    }
   }
 }
