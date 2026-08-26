@@ -76,21 +76,10 @@ final class AppStrings {
   static const String paywallFeatureUnlimited = "Unlimited Design";
   static const String paywallFeatureFaster = "Faster Rendering";
   static const String paywallFeatureAdFree = "Ad-free Experience";
-  static const String paywallWeeklyTitle = "Weekly Plan";
-  static const String paywallWeeklyPrice = "\$14.99";
-  static const String paywallAnnualTitle = "Annual Plan";
-  static const String paywallAnnualPrice = "\$119.99";
-  static const String paywallAnnualPerWeek = "Only 2.31 \$ per week";
-  static const String paywallAutoRenewable = "Auto renewable. Cancel Anytime.";
   static const String paywallBestPrice = "Best Price";
-  static const String paywallFreeTrial = "Enable 3-Day Free Trial";
   static const String paywallTermsOfUse = "Terms of Use";
   static const String paywallPrivacyPolicy = "Privacy Policy";
   static const String paywallRestorePurchase = "Restore Purchase";
-
-  // SPECIAL OFFER
-  static const String specialOfferTitle = "One Time Offer";
-  static const String specialOfferDiscount = "80% OFF";
 
   // SETTINGS
   static const String settingsTitle = "Settings";
