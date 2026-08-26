@@ -118,7 +118,9 @@ class _ExamplePhotosSheetState extends State<ExamplePhotosSheet> {
               text: AppStrings.interiorDone,
               onPressed: _selectedIndex == null
                   ? null
-                  : () => Navigator.of(context).pop(widget.photos[_selectedIndex!]),
+                  : () => Navigator.of(
+                      context,
+                    ).pop(widget.photos[_selectedIndex!]),
             ),
           ),
         ],

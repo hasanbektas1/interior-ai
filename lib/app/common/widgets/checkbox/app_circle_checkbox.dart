@@ -22,7 +22,9 @@ final class AppCircleCheckbox extends StatelessWidget {
           shape: BoxShape.circle,
           color: Colors.transparent,
           border: Border.all(
-              color: isSelected ? Colors.red : Colors.grey, width: 2),
+            color: isSelected ? Colors.red : Colors.grey,
+            width: 2,
+          ),
         ),
         child: isSelected
             ? Center(

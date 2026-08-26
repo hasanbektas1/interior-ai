@@ -3,7 +3,11 @@ import 'package:interior_ai/app/common/constants/app_colors.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 
 class EnterNameBottomSheet extends StatefulWidget {
-  const EnterNameBottomSheet({super.key, required this.title, this.initialValue});
+  const EnterNameBottomSheet({
+    super.key,
+    required this.title,
+    this.initialValue,
+  });
 
   final String title;
   final String? initialValue;
@@ -30,8 +34,9 @@ class EnterNameBottomSheet extends StatefulWidget {
 }
 
 class _EnterNameBottomSheetState extends State<EnterNameBottomSheet> {
-  late final TextEditingController _controller =
-      TextEditingController(text: widget.initialValue);
+  late final TextEditingController _controller = TextEditingController(
+    text: widget.initialValue,
+  );
 
   void _submit() {
     final value = _controller.text.trim();
@@ -91,8 +96,10 @@ class _EnterNameBottomSheetState extends State<EnterNameBottomSheet> {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide:
-                      const BorderSide(color: AppColors.softPurple, width: 2),
+                  borderSide: const BorderSide(
+                    color: AppColors.softPurple,
+                    width: 2,
+                  ),
                 ),
               ),
             ),

@@ -36,7 +36,9 @@ class PaywallPlanCard extends StatelessWidget {
               vertical: context.height16,
             ),
             decoration: BoxDecoration(
-              color: isSelected ? AppColors.softPurpleFaint : AppColors.cloudGray,
+              color: isSelected
+                  ? AppColors.softPurpleFaint
+                  : AppColors.cloudGray,
               borderRadius: BorderRadius.circular(14),
               border: Border.all(
                 color: isSelected ? AppColors.softPurple : Colors.transparent,

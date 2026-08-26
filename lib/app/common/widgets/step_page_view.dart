@@ -5,11 +5,7 @@ import 'package:flutter/material.dart';
 /// forward, left-to-right moving back) - the same transition a normal
 /// [PageView] uses, without exposing swipe gestures to the user.
 class StepPageView extends StatefulWidget {
-  const StepPageView({
-    super.key,
-    required this.index,
-    required this.children,
-  });
+  const StepPageView({super.key, required this.index, required this.children});
 
   final int index;
   final List<Widget> children;
@@ -19,8 +15,9 @@ class StepPageView extends StatefulWidget {
 }
 
 class _StepPageViewState extends State<StepPageView> {
-  late final PageController _controller =
-      PageController(initialPage: widget.index);
+  late final PageController _controller = PageController(
+    initialPage: widget.index,
+  );
 
   @override
   void didUpdateWidget(covariant StepPageView oldWidget) {

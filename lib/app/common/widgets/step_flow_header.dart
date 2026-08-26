@@ -31,7 +31,10 @@ class StepFlowHeader extends StatelessWidget {
               GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: onBack,
-                child: const Icon(Icons.chevron_left, color: AppColors.richBlack),
+                child: const Icon(
+                  Icons.chevron_left,
+                  color: AppColors.richBlack,
+                ),
               ),
             Text(
               title,

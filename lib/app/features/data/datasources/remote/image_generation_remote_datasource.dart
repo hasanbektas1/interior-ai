@@ -19,8 +19,9 @@ abstract class ImageGenerationRemoteDatasource {
 /// A 402 means the user is out of credits (surfaced via the response status).
 final class ImageGenerationRemoteDatasourceImpl
     implements ImageGenerationRemoteDatasource {
-  final DioApiManager _dioApiManager =
-      DioApiManager(baseUrl: Config.workerBaseUrl);
+  final DioApiManager _dioApiManager = DioApiManager(
+    baseUrl: Config.workerBaseUrl,
+  );
 
   @override
   Future<ApiResponseModel<String>> generate({

@@ -22,19 +22,20 @@ class FloorRestyleView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const _FloorRestyleBody();
+    // The flow can only be left through its own close/back buttons — system
+    // back and the iOS edge-swipe are disabled (canPop: false) — so `_exit`
+    // is the single exit and always clears the state, letting re-entry start
+    // fresh (never re-showing the previous result).
+    return PopScope(canPop: false, child: const _FloorRestyleBody());
   }
 }
 
 class _FloorRestyleBody extends StatelessWidget {
   const _FloorRestyleBody();
 
-  // Leave the flow, then clear its state so re-entering always starts fresh
-  // (never re-shows the previous result). Reset runs after the pop completes.
   Future<void> _exit(BuildContext context) async {
-    final nav = Navigator.of(context);
     final cubit = context.read<FloorRestyleCubit>();
-    await nav.maybePop();
+    Navigator.of(context).pop();
     cubit.reset();
   }
 
@@ -56,6 +57,12 @@ class _FloorRestyleBody extends StatelessWidget {
             materialLabel: state.material?.label ?? '',
             customPrompt: state.customPrompt,
             onClose: () => _exit(context),
+            onDelete: () async {
+              final nav = Navigator.of(context);
+              await cubit.deleteCurrentResult();
+              nav.pop();
+              cubit.reset();
+            },
             onRegenerate: cubit.retry,
           );
         }

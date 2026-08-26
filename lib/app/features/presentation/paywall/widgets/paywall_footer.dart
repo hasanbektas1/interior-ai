@@ -20,8 +20,14 @@ class PaywallFooter extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         _FooterLink(label: AppStrings.paywallTermsOfUse, onTap: onTermsTap),
-        _FooterLink(label: AppStrings.paywallPrivacyPolicy, onTap: onPrivacyTap),
-        _FooterLink(label: AppStrings.paywallRestorePurchase, onTap: onRestoreTap),
+        _FooterLink(
+          label: AppStrings.paywallPrivacyPolicy,
+          onTap: onPrivacyTap,
+        ),
+        _FooterLink(
+          label: AppStrings.paywallRestorePurchase,
+          onTap: onRestoreTap,
+        ),
       ],
     );
   }

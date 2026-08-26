@@ -15,9 +15,15 @@ final class CollectionStorage {
   }
 
   List<CollectionItem> getAll() {
-    return _box.values
-        .map((value) => CollectionItem.fromMap(Map<dynamic, dynamic>.from(value)))
-        .toList();
+    final items = <CollectionItem>[];
+    for (final value in _box.values) {
+      try {
+        items.add(CollectionItem.fromMap(Map<dynamic, dynamic>.from(value)));
+      } catch (_) {
+        // Skip a corrupt/legacy record instead of failing the whole load.
+      }
+    }
+    return items;
   }
 
   Future<void> put(CollectionItem item) => _box.put(item.id, item.toMap());

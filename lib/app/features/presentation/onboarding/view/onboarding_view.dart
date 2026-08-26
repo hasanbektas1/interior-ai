@@ -97,8 +97,9 @@ class OnboardingView extends StatelessWidget {
                                     if (state.step ==
                                         OnboardingStep.helpUsGrow) {
                                       await AppRate.request();
-                                      await getIt<TutorialStorage>()
-                                          .markSeen(TutorialStorage.onboardingKey);
+                                      await getIt<TutorialStorage>().markSeen(
+                                        TutorialStorage.onboardingKey,
+                                      );
                                       if (!context.mounted) return;
                                       Navigator.of(context).pushAndRemoveUntil(
                                         MaterialPageRoute(
@@ -116,7 +117,6 @@ class OnboardingView extends StatelessWidget {
                             disabledBackgroundColor: AppColors.gainsboro,
                             disabledTextColor: AppColors.sonicSilver,
                           ),
-
                         ],
                       ),
                     ),

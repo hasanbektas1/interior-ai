@@ -16,12 +16,12 @@ extension InteriorStepX on InteriorStep {
       this == InteriorStep.colorPalette;
 
   int get progressIndex => switch (this) {
-        InteriorStep.addPhoto => 0,
-        InteriorStep.roomType => 1,
-        InteriorStep.style => 2,
-        InteriorStep.colorPalette => 3,
-        InteriorStep.processing => 3,
-        InteriorStep.result => 3,
-        InteriorStep.error => 3,
-      };
+    InteriorStep.addPhoto => 0,
+    InteriorStep.roomType => 1,
+    InteriorStep.style => 2,
+    InteriorStep.colorPalette => 3,
+    InteriorStep.processing => 3,
+    InteriorStep.result => 3,
+    InteriorStep.error => 3,
+  };
 }

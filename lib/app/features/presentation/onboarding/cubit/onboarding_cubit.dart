@@ -7,8 +7,8 @@ import 'package:interior_ai/app/features/presentation/onboarding/onboarding_mode
 
 final class OnboardingCubit extends Cubit<OnboardingState> {
   OnboardingCubit({required CollectionCubit collectionCubit})
-      : _collectionCubit = collectionCubit,
-        super(const OnboardingState());
+    : _collectionCubit = collectionCubit,
+      super(const OnboardingState());
 
   final CollectionCubit _collectionCubit;
 

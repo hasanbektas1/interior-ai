@@ -10,7 +10,8 @@ class PurchaseService {
 
   static const String _tag = '[RevenueCat]';
 
-  static void _log(String message) => applog.AppLogger.instance.log('$_tag $message');
+  static void _log(String message) =>
+      applog.AppLogger.instance.log('$_tag $message');
 
   /// Initialises the SDK. No-op until a real API key is set in
   /// [RevenueCatConfig], so startup never crashes on the placeholder key.

@@ -16,11 +16,11 @@ final class ReplaceObjectsCubit extends Cubit<ReplaceObjectsState> {
     required CollectionCubit collectionCubit,
     required ImageGenerationRepository imageRepository,
     required CreditsCubit creditsCubit,
-  })  : _mediaPickerService = mediaPickerService,
-        _collectionCubit = collectionCubit,
-        _imageRepository = imageRepository,
-        _creditsCubit = creditsCubit,
-        super(const ReplaceObjectsState());
+  }) : _mediaPickerService = mediaPickerService,
+       _collectionCubit = collectionCubit,
+       _imageRepository = imageRepository,
+       _creditsCubit = creditsCubit,
+       super(const ReplaceObjectsState());
 
   final MediaPickerService _mediaPickerService;
   final CollectionCubit _collectionCubit;
@@ -28,6 +28,13 @@ final class ReplaceObjectsCubit extends Cubit<ReplaceObjectsState> {
   final CreditsCubit _creditsCubit;
 
   void reset() => emit(const ReplaceObjectsState());
+
+  Future<void> deleteCurrentResult() async {
+    final path = state.resultImagePath;
+    if (path != null && path.isNotEmpty) {
+      await _collectionCubit.deleteByImagePath(path);
+    }
+  }
 
   void setPhoto(String path) => emit(state.copyWith(photoPath: path));
 
@@ -47,10 +54,8 @@ final class ReplaceObjectsCubit extends Cubit<ReplaceObjectsState> {
 
   void setPrompt(String prompt) => emit(state.copyWith(prompt: prompt));
 
-  void selectResult(int index) =>
-      emit(state.copyWith(selectedResultIndex: index));
-
   Future<void> generate() async {
+    if (state.step == ReplaceObjectsStep.processing) return; // guard double-tap
     final source = state.photoPath;
     if (source == null) {
       emit(state.copyWith(step: ReplaceObjectsStep.error));
@@ -66,7 +71,8 @@ final class ReplaceObjectsCubit extends Cubit<ReplaceObjectsState> {
     );
 
     final result = await _imageRepository.generate(
-      prompt: '${state.prompt.trim()}. Keep the rest of the room, its layout, '
+      prompt:
+          '${state.prompt.trim()}. Keep the rest of the room, its layout, '
           'lighting, and camera perspective unchanged. Photorealistic, high '
           'detail.',
       sourceImagePath: source,
@@ -78,10 +84,12 @@ final class ReplaceObjectsCubit extends Cubit<ReplaceObjectsState> {
       await _collectionCubit.completeGenerating(id, resultPath);
       await _creditsCubit.refresh();
       if (state.step == ReplaceObjectsStep.processing) {
-        emit(state.copyWith(
-          step: ReplaceObjectsStep.result,
-          resultImagePath: resultPath,
-        ));
+        emit(
+          state.copyWith(
+            step: ReplaceObjectsStep.result,
+            resultImagePath: resultPath,
+          ),
+        );
       }
       return;
     }
@@ -91,8 +99,8 @@ final class ReplaceObjectsCubit extends Cubit<ReplaceObjectsState> {
     if (result.message == kInsufficientCreditsError) {
       if (state.step == ReplaceObjectsStep.processing) {
         emit(state.copyWith(step: ReplaceObjectsStep.editor));
+        Navigation.push(page: const PaywallView());
       }
-      Navigation.push(page: const PaywallView());
       return;
     }
 

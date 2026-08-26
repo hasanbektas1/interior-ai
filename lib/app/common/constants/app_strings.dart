@@ -14,7 +14,7 @@ final class AppStrings {
   // ONBOARDING
   static const String onboardingWelcomeTo = "Welcome to";
   static const String onboardingSubtitle =
-      "AI reimagines your space in seconds.";
+      "AI reimagines your space in moments.";
   static const String onboardingLetsCreate = "Let's Create";
   static const String onboardingPickSpaceTitle = "Pick a space to\ntransform.";
   static const String onboardingPickSpaceSubtitle =
@@ -51,8 +51,27 @@ final class AppStrings {
     "Mediterranean",
   ];
 
+  // Onboarding labels — order MUST match the OnboardingSpace / OnboardingStyle
+  // enums exactly (they are indexed by enum.index).
+  static const List<String> onboardingSpaceLabels = [
+    "Bedroom",
+    "Dining Room",
+    "Living Room",
+    "Workspace",
+    "Grey Sofa",
+    "Armchair",
+  ];
+  static const List<String> onboardingStyleLabels = [
+    "Modern",
+    "Baroque",
+    "Bohemian",
+    "Rustic",
+    "Vintage",
+    "Luxury",
+  ];
+
   // HOME
-  static const String homePro = "PRO";
+  static const String homePro = "Get Credits";
   static const String homeInteriorTitle = "Interior Design";
   static const String homeInteriorSubtitle =
       "Choose a style and let AI design your space";
@@ -74,14 +93,21 @@ final class AppStrings {
   // PAYWALL
   static const String paywallTitle = "Unlock Your\nDream Space";
   static const String paywallFeatureUnlimited = "Redesign any room with AI";
-  static const String paywallFeatureFaster = "Photorealistic, high-quality results";
-  static const String paywallFeatureAdFree = "Interior, exterior, garden & more";
+  static const String paywallFeatureFaster =
+      "Photorealistic, high-quality results";
+  static const String paywallFeatureAdFree =
+      "Interior, exterior, garden & more";
   static const String paywallBestPrice = "Best Price";
   static const String paywallTermsOfUse = "Terms of Use";
   static const String paywallPrivacyPolicy = "Privacy Policy";
   static const String paywallRestorePurchase = "Restore Purchase";
   static const String restoreDone = "Purchases restored.";
   static const String restoreFailed = "Couldn't restore. Please try again.";
+  static const String saveFailed =
+      "Couldn't save to your gallery. Please allow photo access and try again.";
+  static const String purchaseFailed =
+      "Purchase couldn't be completed. Please try again.";
+  static const String purchaseSuccess = "Credits added. Enjoy designing!";
 
   // SETTINGS
   static const String settingsTitle = "Settings";
@@ -127,7 +153,7 @@ final class AppStrings {
       "Select a style for AI to design your space";
   static const String interiorCustomStyleTitle = "Custom Style";
   static const String interiorPromptHint = "Enter your prompt here";
-  static const String interiorPromptLibrary = "Promt Library";
+  static const String interiorPromptLibrary = "Prompt Library";
   static const String interiorSave = "Save";
   static const String interiorChoosePaletteTitle = "Choose a Color Palette";
   static const String interiorProcessing = "Processing...";
@@ -178,7 +204,7 @@ final class AppStrings {
   static const String collectionGenerating = "Generating...";
   static const String collectionEmptyTitle = "No design here.";
   static const String collectionEmptySubtitle =
-      "Go to “Home” page and start create.";
+      "Go to the “Home” page to start creating.";
   static const String collectionDownload = "Download";
   static const String collectionShare = "Share";
   static const String collectionDelete = "Delete";

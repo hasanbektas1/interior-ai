@@ -6,13 +6,13 @@ import 'package:interior_ai/app/common/widgets/buttons/app_button.dart';
 import 'package:interior_ai/app/common/widgets/dialogs/result_action_dialog.dart';
 import 'package:interior_ai/app/common/widgets/result_info_chip.dart';
 import 'package:interior_ai/app/common/widgets/result_layout.dart';
-import 'package:interior_ai/app/common/widgets/result_variant_strip.dart';
+import 'package:interior_ai/app/common/widgets/result_prompt_section.dart';
 import 'package:interior_ai/app/features/presentation/collection/cubit/collection_cubit.dart';
 import 'package:interior_ai/app/features/presentation/collection/enums/collection_category.dart';
 import 'package:interior_ai/app/features/presentation/collection/models/collection_item.dart';
-import 'package:interior_ai/app/features/presentation/replace_objects/cubit/replace_objects_state.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 import 'package:interior_ai/core/helpers/app_share.dart';
+import 'package:interior_ai/core/widgets/snackbar/app_snackbar.dart';
 
 class CollectionResultView extends StatelessWidget {
   const CollectionResultView({
@@ -27,8 +27,14 @@ class CollectionResultView extends StatelessWidget {
   final VoidCallback onDeleted;
 
   Future<void> _onSave(BuildContext context) async {
-    await context.read<CollectionCubit>().saveToGallery(item.imagePath);
+    final ok = await context.read<CollectionCubit>().saveToGallery(
+      item.imagePath,
+    );
     if (!context.mounted) return;
+    if (!ok) {
+      AppSnackBar.show(AppStrings.saveFailed);
+      return;
+    }
     await ResultActionDialog.show(
       context,
       title: AppStrings.interiorImageSavedTitle,
@@ -94,7 +100,8 @@ class CollectionResultView extends StatelessWidget {
 }
 
 /// Content shown under the image. Replace Object designs mirror their result
-/// screen with the variant strip; every other category shows info chips.
+/// screen by showing the prompt the user typed; every other category shows
+/// info chips.
 class _ResultDetails extends StatelessWidget {
   const _ResultDetails({required this.item});
 
@@ -103,12 +110,11 @@ class _ResultDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (item.category == CollectionCategory.replaceObject) {
-      final int selectedIndex = kReplaceResultVariants
-          .indexWhere((variant) => variant.path == item.imagePath);
-      return ResultVariantStrip(
-        variants: kReplaceResultVariants,
-        selectedIndex: selectedIndex,
-      );
+      final prompt = item.prompt;
+      if (prompt == null || prompt.isEmpty) {
+        return const SizedBox.shrink();
+      }
+      return ResultPromptSection(prompt: prompt);
     }
     return Row(
       children: [

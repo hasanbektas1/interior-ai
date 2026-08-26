@@ -8,13 +8,13 @@ final class NetworkImageCacheManager extends CacheManager {
   static const String _defaultKey = 'customCacheKey';
 
   NetworkImageCacheManager._internal()
-      : super(
-          Config(
-            _defaultKey,
-            stalePeriod: const Duration(days: 3),
-            maxNrOfCacheObjects: 190,
-          ),
-        );
+    : super(
+        Config(
+          _defaultKey,
+          stalePeriod: const Duration(days: 3),
+          maxNrOfCacheObjects: 190,
+        ),
+      );
 
   /// Creates cache manager with custom configuration
   factory NetworkImageCacheManager.custom({
@@ -35,12 +35,12 @@ final class NetworkImageCacheManager extends CacheManager {
     required Duration stalePeriod,
     required int maxNrOfCacheObjects,
   }) : super(
-          Config(
-            key,
-            stalePeriod: stalePeriod,
-            maxNrOfCacheObjects: maxNrOfCacheObjects,
-          ),
-        );
+         Config(
+           key,
+           stalePeriod: stalePeriod,
+           maxNrOfCacheObjects: maxNrOfCacheObjects,
+         ),
+       );
 
   /// Clears cache
   Future<void> clearCache() async {

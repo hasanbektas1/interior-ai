@@ -40,11 +40,13 @@ final class GardenDesignState extends Equatable {
     return GardenDesignState(
       step: step ?? this.step,
       exampleIndex: clearExample ? null : (exampleIndex ?? this.exampleIndex),
-      addedPhotoPath:
-          clearAddedPhoto ? null : (addedPhotoPath ?? this.addedPhotoPath),
+      addedPhotoPath: clearAddedPhoto
+          ? null
+          : (addedPhotoPath ?? this.addedPhotoPath),
       style: style ?? this.style,
-      customPrompt:
-          clearCustomPrompt ? null : (customPrompt ?? this.customPrompt),
+      customPrompt: clearCustomPrompt
+          ? null
+          : (customPrompt ?? this.customPrompt),
       resultImagePath: resultImagePath ?? this.resultImagePath,
     );
   }
@@ -56,22 +58,23 @@ final class GardenDesignState extends Equatable {
   }
 
   bool get canContinue => switch (step) {
-        GardenStep.addPhoto => selectedPhotoPath != null,
-        GardenStep.style => style != null &&
-            (style != GardenStyle.custom ||
-                (customPrompt?.trim().isNotEmpty ?? false)),
-        GardenStep.processing => false,
-        GardenStep.result => false,
-        GardenStep.error => false,
-      };
+    GardenStep.addPhoto => selectedPhotoPath != null,
+    GardenStep.style =>
+      style != null &&
+          (style != GardenStyle.custom ||
+              (customPrompt?.trim().isNotEmpty ?? false)),
+    GardenStep.processing => false,
+    GardenStep.result => false,
+    GardenStep.error => false,
+  };
 
   @override
   List<Object?> get props => [
-        step,
-        exampleIndex,
-        addedPhotoPath,
-        style,
-        customPrompt,
-        resultImagePath,
-      ];
+    step,
+    exampleIndex,
+    addedPhotoPath,
+    style,
+    customPrompt,
+    resultImagePath,
+  ];
 }

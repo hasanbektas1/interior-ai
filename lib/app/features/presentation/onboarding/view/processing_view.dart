@@ -44,10 +44,7 @@ class ProcessingView extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                GradientProgressRing(
-                  size: context.width140,
-                  strokeWidth: 10,
-                ),
+                GradientProgressRing(size: context.width140, strokeWidth: 10),
                 const SizedBox(height: 24),
                 const Text(
                   AppStrings.onboardingProcessingLabel,

@@ -24,8 +24,9 @@ class _SplashViewState extends State<SplashView> {
   Future<void> init() async {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await Future.delayed(const Duration(seconds: 1));
-      final seenOnboarding =
-          getIt<TutorialStorage>().hasSeen(TutorialStorage.onboardingKey);
+      final seenOnboarding = getIt<TutorialStorage>().hasSeen(
+        TutorialStorage.onboardingKey,
+      );
       Navigation.pushAndRemoveAll(
         page: seenOnboarding ? const MainView() : const OnboardingView(),
       );

@@ -36,26 +36,28 @@ final class AppCheckCheckbox extends StatelessWidget {
         child: isSelected
             ? const Center(
                 child: SizedBox(
-                height: 16,
-                width: 16,
-                child: Icon(
-                  Icons.check,
-                  color: AppColors.hanPurple,
-                  size: 16,
+                  height: 16,
+                  width: 16,
+                  child: Icon(
+                    Icons.check,
+                    color: AppColors.hanPurple,
+                    size: 16,
+                  ),
                 ),
-              ))
+              )
             : isIndeterminate
-                ? const Center(
-                    child: SizedBox(
-                    height: 16,
-                    width: 16,
-                    child: Icon(
-                      Icons.remove,
-                      color: AppColors.hanPurple,
-                      size: 16,
-                    ),
-                  ))
-                : null,
+            ? const Center(
+                child: SizedBox(
+                  height: 16,
+                  width: 16,
+                  child: Icon(
+                    Icons.remove,
+                    color: AppColors.hanPurple,
+                    size: 16,
+                  ),
+                ),
+              )
+            : null,
       ),
     );
   }

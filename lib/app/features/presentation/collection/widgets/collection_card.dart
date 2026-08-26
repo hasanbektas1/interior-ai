@@ -148,8 +148,7 @@ class _MenuButton extends StatelessWidget {
 
   void _handleTap(BuildContext context) {
     final button = context.findRenderObject() as RenderBox;
-    final overlay =
-        Overlay.of(context).context.findRenderObject() as RenderBox;
+    final overlay = Overlay.of(context).context.findRenderObject() as RenderBox;
     // Anchor to the button's bottom edge so the menu opens just below it
     // (right-aligned to the dots, extending to the left) instead of on top.
     final position = RelativeRect.fromRect(

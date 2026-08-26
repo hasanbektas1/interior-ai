@@ -36,14 +36,24 @@ final class AppLogger {
     }
   }
 
+  /// Largest the on-device log file is allowed to grow before it's reset, so it
+  /// never accumulates without bound across the app's lifetime.
+  static const int _maxLogBytes = 256 * 1024;
+
   /// Save logs to a file
   Future<void> _writeLogToFile(String message) async {
     try {
       final directory = await getApplicationDocumentsDirectory();
       final file = File('${directory.path}/app_logs.txt');
-      await file.writeAsString("$message\n", mode: FileMode.append);
+      // Reset the file once it exceeds the cap instead of appending forever.
+      final mode = (await file.exists() && await file.length() > _maxLogBytes)
+          ? FileMode.write
+          : FileMode.append;
+      await file.writeAsString("$message\n", mode: mode);
     } catch (e) {
-      log("Failed to write to log file: $e", level: LogLevel.error);
+      // Never call log() here — in release that would recurse back into
+      // _writeLogToFile. Route the failure straight to the dev channel.
+      x.log("Failed to write to log file: $e");
     }
   }
 

@@ -19,10 +19,8 @@ class SettingsPremiumBanner extends StatelessWidget {
           AppAsset.settingsPremiumBanner.path,
           width: double.infinity,
           fit: BoxFit.cover,
-          errorBuilder: (_, __, ___) => Container(
-            height: context.height88,
-            color: AppColors.smokyBlack,
-          ),
+          errorBuilder: (_, __, ___) =>
+              Container(height: context.height88, color: AppColors.smokyBlack),
         ),
       ),
     );

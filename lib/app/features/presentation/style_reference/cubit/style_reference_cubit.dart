@@ -16,11 +16,11 @@ final class StyleReferenceCubit extends Cubit<StyleReferenceState> {
     required CollectionCubit collectionCubit,
     required ImageGenerationRepository imageRepository,
     required CreditsCubit creditsCubit,
-  })  : _mediaPickerService = mediaPickerService,
-        _collectionCubit = collectionCubit,
-        _imageRepository = imageRepository,
-        _creditsCubit = creditsCubit,
-        super(const StyleReferenceState());
+  }) : _mediaPickerService = mediaPickerService,
+       _collectionCubit = collectionCubit,
+       _imageRepository = imageRepository,
+       _creditsCubit = creditsCubit,
+       super(const StyleReferenceState());
 
   final MediaPickerService _mediaPickerService;
   final CollectionCubit _collectionCubit;
@@ -28,6 +28,13 @@ final class StyleReferenceCubit extends Cubit<StyleReferenceState> {
   final CreditsCubit _creditsCubit;
 
   void reset() => emit(const StyleReferenceState());
+
+  Future<void> deleteCurrentResult() async {
+    final path = state.resultImagePath;
+    if (path != null && path.isNotEmpty) {
+      await _collectionCubit.deleteByImagePath(path);
+    }
+  }
 
   void selectExample(int index) {
     if (state.step == StyleReferenceStep.yourPhoto) {
@@ -85,6 +92,7 @@ final class StyleReferenceCubit extends Cubit<StyleReferenceState> {
   }
 
   Future<void> startProcessing() async {
+    if (state.step == StyleReferenceStep.processing) return; // guard double-tap
     final source = state.photoSelectedPath;
     final reference = state.refSelectedPath;
     if (source == null || reference == null) {
@@ -100,7 +108,8 @@ final class StyleReferenceCubit extends Cubit<StyleReferenceState> {
     );
 
     final result = await _imageRepository.generate(
-      prompt: 'Restyle the first image so it adopts the interior style, '
+      prompt:
+          'Restyle the first image so it adopts the interior style, '
           'materials, colors, and mood of the second (reference) image. Keep '
           "the first image's room architecture, layout, windows, and camera "
           'perspective unchanged. Photorealistic, high detail.',
@@ -114,10 +123,12 @@ final class StyleReferenceCubit extends Cubit<StyleReferenceState> {
       await _collectionCubit.completeGenerating(id, resultPath);
       await _creditsCubit.refresh();
       if (state.step == StyleReferenceStep.processing) {
-        emit(state.copyWith(
-          step: StyleReferenceStep.result,
-          resultImagePath: resultPath,
-        ));
+        emit(
+          state.copyWith(
+            step: StyleReferenceStep.result,
+            resultImagePath: resultPath,
+          ),
+        );
       }
       return;
     }
@@ -127,8 +138,8 @@ final class StyleReferenceCubit extends Cubit<StyleReferenceState> {
     if (result.message == kInsufficientCreditsError) {
       if (state.step == StyleReferenceStep.processing) {
         emit(state.copyWith(step: StyleReferenceStep.referencePhoto));
+        Navigation.push(page: const PaywallView());
       }
-      Navigation.push(page: const PaywallView());
       return;
     }
 

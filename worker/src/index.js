@@ -27,6 +27,16 @@ export default {
       return json({ error: 'not_found' }, 404);
     }
 
+    // Optional shared-secret gate. Only enforced once APP_SHARED_SECRET is set
+    // as a Worker secret, so deploying this ahead of the client change never
+    // breaks an app build that doesn't send the header yet.
+    if (
+      env.APP_SHARED_SECRET &&
+      request.headers.get('x-app-key') !== env.APP_SHARED_SECRET
+    ) {
+      return json({ error: 'unauthorized' }, 401);
+    }
+
     let body;
     try {
       body = await request.json();
@@ -40,6 +50,16 @@ export default {
 
     if (!appUserId || !prompt || !imageB64) {
       return json({ error: 'missing_fields' }, 400);
+    }
+
+    // Guard against abusive/oversized payloads (~12MB of base64 per image).
+    const MAX_B64 = 12 * 1024 * 1024;
+    if (
+      imageB64.length > MAX_B64 ||
+      (refB64 && refB64.length > MAX_B64) ||
+      prompt.length > 4000
+    ) {
+      return json({ error: 'payload_too_large' }, 413);
     }
 
     const currency = env.CREDITS_CURRENCY || 'CREDITS';
@@ -113,16 +133,39 @@ export default {
 
       return json({ image_b64, balance: balanceAfter }, 200);
     } catch (_) {
-      // 3) Refund on failure — don't charge for a failed generation.
-      await fetch(`${rcBase}/transactions`, {
-        method: 'POST',
-        headers: rcHeaders,
-        body: JSON.stringify({ adjustments: { [currency]: cost } }),
-      }).catch(() => {});
+      // 3) Refund on failure — don't charge for a failed generation. Retry a
+      //    few times so a transient RC error can't silently eat the credit.
+      const refunded = await refundCredit(rcBase, rcHeaders, currency, cost);
+      if (!refunded) {
+        return json({ error: 'generation_failed_refund_failed' }, 502);
+      }
       return json({ error: 'generation_failed' }, 502);
     }
   },
 };
+
+/// Best-effort but persistent credit refund: retry the RC adjustment a few
+/// times with a short backoff. Returns whether the refund was confirmed.
+async function refundCredit(rcBase, rcHeaders, currency, cost) {
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      const res = await fetch(`${rcBase}/transactions`, {
+        method: 'POST',
+        headers: rcHeaders,
+        body: JSON.stringify({ adjustments: { [currency]: cost } }),
+      });
+      if (res.ok) return true;
+    } catch (_) {
+      // fall through to retry
+    }
+    await sleep(300 * (attempt + 1));
+  }
+  return false;
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 function json(obj, status = 200) {
   return new Response(JSON.stringify(obj), {

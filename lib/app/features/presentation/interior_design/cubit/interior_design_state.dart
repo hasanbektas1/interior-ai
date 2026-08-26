@@ -55,14 +55,17 @@ final class InteriorDesignState extends Equatable {
     return InteriorDesignState(
       step: step ?? this.step,
       exampleIndex: clearExample ? null : (exampleIndex ?? this.exampleIndex),
-      addedPhotoPath:
-          clearAddedPhoto ? null : (addedPhotoPath ?? this.addedPhotoPath),
+      addedPhotoPath: clearAddedPhoto
+          ? null
+          : (addedPhotoPath ?? this.addedPhotoPath),
       roomType: roomType ?? this.roomType,
-      customRoomName:
-          clearCustomRoomName ? null : (customRoomName ?? this.customRoomName),
+      customRoomName: clearCustomRoomName
+          ? null
+          : (customRoomName ?? this.customRoomName),
       style: style ?? this.style,
-      customPrompt:
-          clearCustomPrompt ? null : (customPrompt ?? this.customPrompt),
+      customPrompt: clearCustomPrompt
+          ? null
+          : (customPrompt ?? this.customPrompt),
       colorPalette: colorPalette ?? this.colorPalette,
       resultImagePath: resultImagePath ?? this.resultImagePath,
     );
@@ -92,29 +95,31 @@ final class InteriorDesignState extends Equatable {
   }
 
   bool get canContinue => switch (step) {
-        InteriorStep.addPhoto => hasPhoto,
-        InteriorStep.roomType => roomType != null &&
-            (roomType != RoomType.other ||
-                (customRoomName?.trim().isNotEmpty ?? false)),
-        InteriorStep.style => style != null &&
-            (style != DesignStyle.custom ||
-                (customPrompt?.trim().isNotEmpty ?? false)),
-        InteriorStep.colorPalette => colorPalette != null,
-        InteriorStep.processing => false,
-        InteriorStep.result => false,
-        InteriorStep.error => false,
-      };
+    InteriorStep.addPhoto => hasPhoto,
+    InteriorStep.roomType =>
+      roomType != null &&
+          (roomType != RoomType.other ||
+              (customRoomName?.trim().isNotEmpty ?? false)),
+    InteriorStep.style =>
+      style != null &&
+          (style != DesignStyle.custom ||
+              (customPrompt?.trim().isNotEmpty ?? false)),
+    InteriorStep.colorPalette => colorPalette != null,
+    InteriorStep.processing => false,
+    InteriorStep.result => false,
+    InteriorStep.error => false,
+  };
 
   @override
   List<Object?> get props => [
-        step,
-        exampleIndex,
-        addedPhotoPath,
-        roomType,
-        customRoomName,
-        style,
-        customPrompt,
-        colorPalette,
-        resultImagePath,
-      ];
+    step,
+    exampleIndex,
+    addedPhotoPath,
+    roomType,
+    customRoomName,
+    style,
+    customPrompt,
+    colorPalette,
+    resultImagePath,
+  ];
 }

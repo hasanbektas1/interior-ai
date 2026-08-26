@@ -22,8 +22,9 @@ class BrushToolbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color iconColor =
-        enabled ? AppColors.smokyBlack : AppColors.spanishGray;
+    final Color iconColor = enabled
+        ? AppColors.smokyBlack
+        : AppColors.spanishGray;
     return Row(
       children: [
         Icon(Icons.brush_rounded, size: context.width20, color: iconColor),

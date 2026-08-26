@@ -8,8 +8,11 @@ abstract final class AppLinkLauncher {
     try {
       await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
     } catch (e, s) {
-      AppLogger.instance.error('AppLinkLauncher open failed: $url',
-          error: e, stackTrace: s);
+      AppLogger.instance.error(
+        'AppLinkLauncher open failed: $url',
+        error: e,
+        stackTrace: s,
+      );
     }
   }
 }

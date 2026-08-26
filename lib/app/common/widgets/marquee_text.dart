@@ -53,13 +53,17 @@ class _MarqueeTextState extends State<MarqueeText>
           maxLines: 1,
           textDirection: Directionality.of(context),
         )..layout();
+        // TextPainter holds native resources; capture the metrics and free it.
+        final textWidth = painter.width;
+        final textHeight = painter.height;
+        painter.dispose();
 
-        if (painter.width <= maxWidth) {
+        if (textWidth <= maxWidth) {
           _controller.stop();
           return line;
         }
 
-        final scrollExtent = painter.width + widget.gap;
+        final scrollExtent = textWidth + widget.gap;
         if (!_controller.isAnimating) {
           _controller
             ..duration = Duration(
@@ -70,7 +74,7 @@ class _MarqueeTextState extends State<MarqueeText>
 
         return SizedBox(
           width: maxWidth,
-          height: painter.height,
+          height: textHeight,
           child: ClipRect(
             child: AnimatedBuilder(
               animation: _controller,

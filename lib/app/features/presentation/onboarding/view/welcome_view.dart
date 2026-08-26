@@ -135,4 +135,3 @@ class _WelcomeVideoPlayerState extends State<_WelcomeVideoPlayer> {
     );
   }
 }
-

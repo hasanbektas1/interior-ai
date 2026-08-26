@@ -6,22 +6,29 @@ import 'package:interior_ai/app/common/widgets/dialogs/result_action_dialog.dart
 import 'package:interior_ai/app/common/widgets/result_action_bar.dart';
 import 'package:interior_ai/app/common/widgets/result_layout.dart';
 import 'package:interior_ai/core/helpers/app_share.dart';
+import 'package:interior_ai/core/widgets/snackbar/app_snackbar.dart';
 
 class StyleReferenceResultView extends StatelessWidget {
   const StyleReferenceResultView({
     super.key,
     required this.imagePath,
     required this.onClose,
+    required this.onDelete,
     required this.onRegenerate,
   });
 
   final String imagePath;
   final VoidCallback onClose;
+  final VoidCallback onDelete;
   final VoidCallback onRegenerate;
 
   Future<void> _onSave(BuildContext context) async {
-    await context.read<CollectionCubit>().saveToGallery(imagePath);
+    final ok = await context.read<CollectionCubit>().saveToGallery(imagePath);
     if (!context.mounted) return;
+    if (!ok) {
+      AppSnackBar.show(AppStrings.saveFailed);
+      return;
+    }
     await ResultActionDialog.show(
       context,
       title: AppStrings.interiorImageSavedTitle,
@@ -38,7 +45,7 @@ class StyleReferenceResultView extends StatelessWidget {
       primaryLabel: AppStrings.interiorDeleteDesign,
       showCancel: true,
     );
-    if (confirmed ?? false) onClose();
+    if (confirmed ?? false) onDelete();
   }
 
   Future<void> _onRegeneratePressed(BuildContext context) async {

@@ -5,13 +5,9 @@ class ApiResponseModel<T> {
   final ApiErrorModel? error;
   final bool isSuccess;
 
-  ApiResponseModel.success(
-    T this.data,
-  )   : error = null,
-        isSuccess = true;
+  ApiResponseModel.success(T this.data) : error = null, isSuccess = true;
 
-  ApiResponseModel.error(
-    ApiErrorModel this.error,
-  )   : data = null,
-        isSuccess = false;
+  ApiResponseModel.error(ApiErrorModel this.error)
+    : data = null,
+      isSuccess = false;
 }

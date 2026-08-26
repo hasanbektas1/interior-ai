@@ -3,13 +3,9 @@ class Either<L, R> {
   late final R _right;
   final bool _isLeft;
 
-  Either.left(L l)
-      : _left = l,
-        _isLeft = true;
+  Either.left(L l) : _left = l, _isLeft = true;
 
-  Either.right(R r)
-      : _right = r,
-        _isLeft = false;
+  Either.right(R r) : _right = r, _isLeft = false;
 
   bool get isLeft => _isLeft;
   bool get isRight => !_isLeft;

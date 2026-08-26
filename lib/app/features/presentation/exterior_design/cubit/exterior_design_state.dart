@@ -49,12 +49,14 @@ final class ExteriorDesignState extends Equatable {
     return ExteriorDesignState(
       step: step ?? this.step,
       exampleIndex: clearExample ? null : (exampleIndex ?? this.exampleIndex),
-      addedPhotoPath:
-          clearAddedPhoto ? null : (addedPhotoPath ?? this.addedPhotoPath),
+      addedPhotoPath: clearAddedPhoto
+          ? null
+          : (addedPhotoPath ?? this.addedPhotoPath),
       buildingType: buildingType ?? this.buildingType,
       style: style ?? this.style,
-      customPrompt:
-          clearCustomPrompt ? null : (customPrompt ?? this.customPrompt),
+      customPrompt: clearCustomPrompt
+          ? null
+          : (customPrompt ?? this.customPrompt),
       colorPalette: colorPalette ?? this.colorPalette,
       resultImagePath: resultImagePath ?? this.resultImagePath,
     );
@@ -67,26 +69,27 @@ final class ExteriorDesignState extends Equatable {
   }
 
   bool get canContinue => switch (step) {
-        ExteriorStep.addPhoto => selectedPhotoPath != null,
-        ExteriorStep.buildingType => buildingType != null,
-        ExteriorStep.style => style != null &&
-            (style != ExteriorStyle.custom ||
-                (customPrompt?.trim().isNotEmpty ?? false)),
-        ExteriorStep.colorPalette => colorPalette != null,
-        ExteriorStep.processing => false,
-        ExteriorStep.result => false,
-        ExteriorStep.error => false,
-      };
+    ExteriorStep.addPhoto => selectedPhotoPath != null,
+    ExteriorStep.buildingType => buildingType != null,
+    ExteriorStep.style =>
+      style != null &&
+          (style != ExteriorStyle.custom ||
+              (customPrompt?.trim().isNotEmpty ?? false)),
+    ExteriorStep.colorPalette => colorPalette != null,
+    ExteriorStep.processing => false,
+    ExteriorStep.result => false,
+    ExteriorStep.error => false,
+  };
 
   @override
   List<Object?> get props => [
-        step,
-        exampleIndex,
-        addedPhotoPath,
-        buildingType,
-        style,
-        customPrompt,
-        colorPalette,
-        resultImagePath,
-      ];
+    step,
+    exampleIndex,
+    addedPhotoPath,
+    buildingType,
+    style,
+    customPrompt,
+    colorPalette,
+    resultImagePath,
+  ];
 }

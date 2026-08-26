@@ -7,7 +7,6 @@ import 'package:interior_ai/app/features/presentation/collection/cubit/collectio
 import 'package:interior_ai/app/features/presentation/exterior_design/cubit/exterior_design_cubit.dart';
 import 'package:interior_ai/app/features/presentation/floor_restyle/cubit/floor_restyle_cubit.dart';
 import 'package:interior_ai/app/features/presentation/garden_design/cubit/garden_design_cubit.dart';
-import 'package:interior_ai/app/features/presentation/home/cubit/home_cubit.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/cubit/interior_design_cubit.dart';
 import 'package:interior_ai/app/features/presentation/main/cubit/main_cubit.dart';
 import 'package:interior_ai/app/features/presentation/onboarding/cubit/onboarding_cubit.dart';
@@ -36,7 +35,6 @@ class MainApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => getIt.get<MainCubit>()),
-        BlocProvider(create: (context) => getIt.get<HomeCubit>()),
         BlocProvider(create: (context) => getIt.get<OnboardingCubit>()),
         BlocProvider(create: (context) => getIt.get<SettingsCubit>()),
         BlocProvider(create: (context) => getIt.get<InteriorDesignCubit>()),

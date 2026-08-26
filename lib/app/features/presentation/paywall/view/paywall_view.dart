@@ -39,8 +39,17 @@ class _PaywallViewState extends State<PaywallView> {
   }
 
   Future<void> _onContinue(StoreProduct product) async {
-    final ok = await context.read<CreditsCubit>().buy(product);
-    if (ok && mounted) Navigator.of(context).maybePop();
+    final outcome = await context.read<CreditsCubit>().buy(product);
+    if (!mounted) return;
+    switch (outcome) {
+      case PurchaseOutcome.success:
+        AppSnackBar.show(AppStrings.purchaseSuccess);
+        Navigator.of(context).maybePop();
+      case PurchaseOutcome.failed:
+        AppSnackBar.show(AppStrings.purchaseFailed);
+      case PurchaseOutcome.cancelled:
+        break;
+    }
   }
 
   Future<void> _onRestore() async {
@@ -164,8 +173,8 @@ class _Content extends StatelessWidget {
           onPressed: (!hasProducts || state.purchasing)
               ? null
               : () => onContinue(
-                    products.firstWhere((p) => p.identifier == selectedId),
-                  ),
+                  products.firstWhere((p) => p.identifier == selectedId),
+                ),
           borderRadius: 14,
           height: 54,
           backgroundColor: AppColors.hanPurple,

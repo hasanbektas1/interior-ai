@@ -19,6 +19,7 @@ import 'package:interior_ai/app/features/presentation/settings/widgets/settings_
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 import 'package:interior_ai/core/helpers/app_rate.dart';
 import 'package:interior_ai/core/helpers/app_share.dart';
+import 'package:interior_ai/core/widgets/snackbar/app_snackbar.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});
@@ -41,9 +42,16 @@ class _SettingsViewBody extends StatelessWidget {
   }
 
   Future<void> _onRestorePurchases(BuildContext context) async {
-    await context.read<CreditsCubit>().restore();
+    final ok = await context.read<CreditsCubit>().restore();
     if (!context.mounted) return;
-    SettingsConfirmationDialog.show(context, AppStrings.settingsPurchaseRestored);
+    if (ok) {
+      SettingsConfirmationDialog.show(
+        context,
+        AppStrings.settingsPurchaseRestored,
+      );
+    } else {
+      AppSnackBar.show(AppStrings.restoreFailed);
+    }
   }
 
   void _onGiveFeedback(BuildContext context) {
@@ -59,9 +67,9 @@ class _SettingsViewBody extends StatelessWidget {
   }
 
   void _openPaywall(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => const PaywallView()),
-    );
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (_) => const PaywallView()));
   }
 
   @override

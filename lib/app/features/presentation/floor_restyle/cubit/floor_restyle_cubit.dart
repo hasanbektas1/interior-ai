@@ -17,11 +17,11 @@ final class FloorRestyleCubit extends Cubit<FloorRestyleState> {
     required CollectionCubit collectionCubit,
     required ImageGenerationRepository imageRepository,
     required CreditsCubit creditsCubit,
-  })  : _mediaPickerService = mediaPickerService,
-        _collectionCubit = collectionCubit,
-        _imageRepository = imageRepository,
-        _creditsCubit = creditsCubit,
-        super(const FloorRestyleState());
+  }) : _mediaPickerService = mediaPickerService,
+       _collectionCubit = collectionCubit,
+       _imageRepository = imageRepository,
+       _creditsCubit = creditsCubit,
+       super(const FloorRestyleState());
 
   final MediaPickerService _mediaPickerService;
   final CollectionCubit _collectionCubit;
@@ -29,6 +29,13 @@ final class FloorRestyleCubit extends Cubit<FloorRestyleState> {
   final CreditsCubit _creditsCubit;
 
   void reset() => emit(const FloorRestyleState());
+
+  Future<void> deleteCurrentResult() async {
+    final path = state.resultImagePath;
+    if (path != null && path.isNotEmpty) {
+      await _collectionCubit.deleteByImagePath(path);
+    }
+  }
 
   void selectExample(int index) {
     emit(state.copyWith(exampleIndex: index, clearAddedPhoto: true));
@@ -97,6 +104,7 @@ final class FloorRestyleCubit extends Cubit<FloorRestyleState> {
   }
 
   Future<void> startProcessing() async {
+    if (state.step == FloorStep.processing) return; // guard double-tap
     final source = state.selectedPhotoPath;
     if (source == null) {
       emit(state.copyWith(step: FloorStep.error));
@@ -108,7 +116,9 @@ final class FloorRestyleCubit extends Cubit<FloorRestyleState> {
       title: AppStrings.floorCollectionTitle,
       placeholderImagePath: source,
       styleLabel: state.material?.label ?? '',
-      prompt: state.material == FloorMaterial.custom ? state.customPrompt : null,
+      prompt: state.material == FloorMaterial.custom
+          ? state.customPrompt
+          : null,
     );
 
     final result = await _imageRepository.generate(
@@ -122,10 +132,9 @@ final class FloorRestyleCubit extends Cubit<FloorRestyleState> {
       await _collectionCubit.completeGenerating(id, resultPath);
       await _creditsCubit.refresh();
       if (state.step == FloorStep.processing) {
-        emit(state.copyWith(
-          step: FloorStep.result,
-          resultImagePath: resultPath,
-        ));
+        emit(
+          state.copyWith(step: FloorStep.result, resultImagePath: resultPath),
+        );
       }
       return;
     }
@@ -135,8 +144,8 @@ final class FloorRestyleCubit extends Cubit<FloorRestyleState> {
     if (result.message == kInsufficientCreditsError) {
       if (state.step == FloorStep.processing) {
         emit(state.copyWith(step: FloorStep.material));
+        Navigation.push(page: const PaywallView());
       }
-      Navigation.push(page: const PaywallView());
       return;
     }
 

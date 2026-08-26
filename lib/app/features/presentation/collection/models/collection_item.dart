@@ -55,24 +55,24 @@ final class CollectionItem extends Equatable {
   }
 
   Map<String, dynamic> toMap() => {
-        'id': id,
-        'title': title,
-        'category': category.name,
-        'dateLabel': dateLabel,
-        'createdAt': createdAt,
-        'imagePath': imagePath,
-        'isGenerating': isGenerating,
-        'roomType': roomType?.name,
-        'styleLabel': styleLabel,
-        'prompt': prompt,
-      };
+    'id': id,
+    'title': title,
+    'category': category.name,
+    'dateLabel': dateLabel,
+    'createdAt': createdAt,
+    'imagePath': imagePath,
+    'isGenerating': isGenerating,
+    'roomType': roomType?.name,
+    'styleLabel': styleLabel,
+    'prompt': prompt,
+  };
 
   factory CollectionItem.fromMap(Map<dynamic, dynamic> map) {
     final roomTypeName = map['roomType'] as String?;
     return CollectionItem(
-      id: map['id'] as String,
-      title: map['title'] as String,
-      category: CollectionCategory.fromName(map['category'] as String),
+      id: map['id'] as String? ?? '',
+      title: map['title'] as String? ?? '',
+      category: CollectionCategory.fromName(map['category'] as String? ?? ''),
       dateLabel: map['dateLabel'] as String? ?? '',
       createdAt: map['createdAt'] as int? ?? 0,
       imagePath: map['imagePath'] as String? ?? '',
@@ -90,15 +90,15 @@ final class CollectionItem extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        title,
-        category,
-        dateLabel,
-        createdAt,
-        imagePath,
-        isGenerating,
-        roomType,
-        styleLabel,
-        prompt,
-      ];
+    id,
+    title,
+    category,
+    dateLabel,
+    createdAt,
+    imagePath,
+    isGenerating,
+    roomType,
+    styleLabel,
+    prompt,
+  ];
 }

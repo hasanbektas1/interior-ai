@@ -10,31 +10,22 @@ import 'package:interior_ai/core/storage/tutorial_storage.dart';
 class FeatureTutorial {
   const FeatureTutorial._();
 
-  static final List<TutorialStep> _interiorSteps = _zip(
-    const [
-      AppAsset.interiorTutorial1,
-      AppAsset.interiorTutorial2,
-      AppAsset.interiorTutorial3,
-    ],
-    AppStrings.interiorTutorialSteps,
-  );
+  static final List<TutorialStep> _interiorSteps = _zip(const [
+    AppAsset.interiorTutorial1,
+    AppAsset.interiorTutorial2,
+    AppAsset.interiorTutorial3,
+  ], AppStrings.interiorTutorialSteps);
 
-  static final List<TutorialStep> _styleReferenceSteps = _zip(
-    const [
-      AppAsset.styleReferenceTutorial1,
-      AppAsset.styleReferenceTutorial2,
-    ],
-    AppStrings.styleReferenceTutorialSteps,
-  );
+  static final List<TutorialStep> _styleReferenceSteps = _zip(const [
+    AppAsset.styleReferenceTutorial1,
+    AppAsset.styleReferenceTutorial2,
+  ], AppStrings.styleReferenceTutorialSteps);
 
-  static final List<TutorialStep> _replaceObjectSteps = _zip(
-    const [
-      AppAsset.replaceObjectTutorial1,
-      AppAsset.replaceObjectTutorial2,
-      AppAsset.replaceObjectTutorial3,
-    ],
-    AppStrings.replaceObjectTutorialSteps,
-  );
+  static final List<TutorialStep> _replaceObjectSteps = _zip(const [
+    AppAsset.replaceObjectTutorial1,
+    AppAsset.replaceObjectTutorial2,
+    AppAsset.replaceObjectTutorial3,
+  ], AppStrings.replaceObjectTutorialSteps);
 
   /// Guards against a second dialog being scheduled within the same session
   /// before the async [TutorialStorage.markSeen] write settles.

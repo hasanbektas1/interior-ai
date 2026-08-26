@@ -7,31 +7,37 @@ import 'package:interior_ai/app/common/widgets/result_layout.dart';
 import 'package:interior_ai/app/features/presentation/collection/cubit/collection_cubit.dart';
 import 'package:interior_ai/app/features/presentation/replace_objects/cubit/replace_objects_state.dart';
 import 'package:interior_ai/core/helpers/app_share.dart';
+import 'package:interior_ai/core/widgets/snackbar/app_snackbar.dart';
 
 class ReplaceObjectsResultView extends StatelessWidget {
   const ReplaceObjectsResultView({
     super.key,
     required this.state,
     required this.onClose,
+    required this.onDelete,
     required this.onRegenerate,
   });
 
   final ReplaceObjectsState state;
   final VoidCallback onClose;
+  final VoidCallback onDelete;
   final VoidCallback onRegenerate;
 
   Future<void> _onSave(BuildContext context) async {
-    await context.read<CollectionCubit>().saveToGallery(
-          state.resultImagePath ?? '',
-        );
+    final ok = await context.read<CollectionCubit>().saveToGallery(
+      state.resultImagePath ?? '',
+    );
     if (!context.mounted) return;
+    if (!ok) {
+      AppSnackBar.show(AppStrings.saveFailed);
+      return;
+    }
     await ResultActionDialog.show(
       context,
       title: AppStrings.interiorImageSavedTitle,
       subtitle: AppStrings.interiorImageSavedSubtitle,
       primaryLabel: AppStrings.interiorDone,
     );
-    if (context.mounted) onClose();
   }
 
   Future<void> _onDelete(BuildContext context) async {
@@ -42,7 +48,7 @@ class ReplaceObjectsResultView extends StatelessWidget {
       primaryLabel: AppStrings.interiorDeleteDesign,
       showCancel: true,
     );
-    if (confirmed ?? false) onClose();
+    if (confirmed ?? false) onDelete();
   }
 
   Future<void> _onRegeneratePressed(BuildContext context) async {

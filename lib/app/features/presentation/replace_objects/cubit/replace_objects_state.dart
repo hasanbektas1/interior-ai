@@ -11,26 +11,16 @@ const List<AppAsset> kReplaceExamplePhotos = [
   AppAsset.onboardingSelectArmchair,
 ];
 
-const List<AppAsset> kReplaceResultVariants = [
-  AppAsset.onboardingSelectLivingRoom,
-  AppAsset.onboardingSelectDiningRoom,
-  AppAsset.onboardingSelectArmchair,
-  AppAsset.onboardingSelectGreySofa,
-  AppAsset.onboardingSelectBedroom,
-];
-
 final class ReplaceObjectsState extends Equatable {
   final ReplaceObjectsStep step;
   final String? photoPath;
   final String prompt;
-  final int selectedResultIndex;
   final String? resultImagePath;
 
   const ReplaceObjectsState({
     this.step = ReplaceObjectsStep.editor,
     this.photoPath,
     this.prompt = '',
-    this.selectedResultIndex = 0,
     this.resultImagePath,
   });
 
@@ -38,7 +28,6 @@ final class ReplaceObjectsState extends Equatable {
     ReplaceObjectsStep? step,
     String? photoPath,
     String? prompt,
-    int? selectedResultIndex,
     String? resultImagePath,
     bool clearPhoto = false,
   }) {
@@ -46,16 +35,12 @@ final class ReplaceObjectsState extends Equatable {
       step: step ?? this.step,
       photoPath: clearPhoto ? null : (photoPath ?? this.photoPath),
       prompt: prompt ?? this.prompt,
-      selectedResultIndex: selectedResultIndex ?? this.selectedResultIndex,
       resultImagePath: resultImagePath ?? this.resultImagePath,
     );
   }
 
   bool get canGenerate => photoPath != null && prompt.trim().isNotEmpty;
 
-  AppAsset get selectedResult => kReplaceResultVariants[selectedResultIndex];
-
   @override
-  List<Object?> get props =>
-      [step, photoPath, prompt, selectedResultIndex, resultImagePath];
+  List<Object?> get props => [step, photoPath, prompt, resultImagePath];
 }

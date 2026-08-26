@@ -47,8 +47,7 @@ final class ImageGenerationRepositoryImpl implements ImageGenerationRepository {
         appUserId: appUserId,
         prompt: prompt,
         imageBase64: base64Encode(bytes),
-        referenceImageBase64:
-            refBytes != null ? base64Encode(refBytes) : null,
+        referenceImageBase64: refBytes != null ? base64Encode(refBytes) : null,
       );
 
       if (!response.isSuccess) {

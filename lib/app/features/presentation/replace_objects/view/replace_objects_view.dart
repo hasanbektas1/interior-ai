@@ -25,19 +25,20 @@ class ReplaceObjectsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const _ReplaceObjectsBody();
+    // The flow can only be left through its own close/back buttons — system
+    // back and the iOS edge-swipe are disabled (canPop: false) — so `_exit`
+    // is the single exit and always clears the state, letting re-entry start
+    // fresh (never re-showing the previous result).
+    return PopScope(canPop: false, child: const _ReplaceObjectsBody());
   }
 }
 
 class _ReplaceObjectsBody extends StatelessWidget {
   const _ReplaceObjectsBody();
 
-  // Leave the flow, then clear its state so re-entering always starts fresh
-  // (never re-shows the previous result). Reset runs after the pop completes.
   Future<void> _exit(BuildContext context) async {
-    final nav = Navigator.of(context);
     final cubit = context.read<ReplaceObjectsCubit>();
-    await nav.maybePop();
+    Navigator.of(context).pop();
     cubit.reset();
   }
 
@@ -59,6 +60,12 @@ class _ReplaceObjectsBody extends StatelessWidget {
             return ReplaceObjectsResultView(
               state: state,
               onClose: () => _exit(context),
+              onDelete: () async {
+                final nav = Navigator.of(context);
+                await cubit.deleteCurrentResult();
+                nav.pop();
+                cubit.reset();
+              },
               onRegenerate: cubit.retry,
             );
           case ReplaceObjectsStep.error:
@@ -84,8 +91,9 @@ class _Editor extends StatefulWidget {
 }
 
 class _EditorState extends State<_Editor> {
-  late final TextEditingController _controller =
-      TextEditingController(text: widget.state.prompt);
+  late final TextEditingController _controller = TextEditingController(
+    text: widget.state.prompt,
+  );
   final GlobalKey<PaintMaskCanvasState> _canvasKey = GlobalKey();
   double _brushSize = 0.3;
 
@@ -97,7 +105,10 @@ class _EditorState extends State<_Editor> {
 
   Future<void> _onAdd(BuildContext context) async {
     final cubit = context.read<ReplaceObjectsCubit>();
-    final source = await AddPhotoBottomSheet.show(context, showExampleOption: true);
+    final source = await AddPhotoBottomSheet.show(
+      context,
+      showExampleOption: true,
+    );
     if (!context.mounted) return;
     switch (source) {
       case PhotoSource.camera:
@@ -105,8 +116,10 @@ class _EditorState extends State<_Editor> {
       case PhotoSource.library:
         await cubit.pickPhotoFromGallery();
       case PhotoSource.example:
-        final picked =
-            await ExamplePhotosSheet.show(context, kReplaceExamplePhotos);
+        final picked = await ExamplePhotosSheet.show(
+          context,
+          kReplaceExamplePhotos,
+        );
         if (picked != null) cubit.setPhoto(picked.path);
       case null:
         break;
@@ -131,8 +144,7 @@ class _EditorState extends State<_Editor> {
             StepFlowHeader(
               title: AppStrings.replaceObjects,
               onClose: () async {
-                final nav = Navigator.of(context);
-                await nav.maybePop();
+                Navigator.of(context).pop();
                 cubit.reset();
               },
             ),

@@ -19,11 +19,11 @@ final class ExteriorDesignCubit extends Cubit<ExteriorDesignState> {
     required CollectionCubit collectionCubit,
     required ImageGenerationRepository imageRepository,
     required CreditsCubit creditsCubit,
-  })  : _mediaPickerService = mediaPickerService,
-        _collectionCubit = collectionCubit,
-        _imageRepository = imageRepository,
-        _creditsCubit = creditsCubit,
-        super(const ExteriorDesignState());
+  }) : _mediaPickerService = mediaPickerService,
+       _collectionCubit = collectionCubit,
+       _imageRepository = imageRepository,
+       _creditsCubit = creditsCubit,
+       super(const ExteriorDesignState());
 
   final MediaPickerService _mediaPickerService;
   final CollectionCubit _collectionCubit;
@@ -31,6 +31,13 @@ final class ExteriorDesignCubit extends Cubit<ExteriorDesignState> {
   final CreditsCubit _creditsCubit;
 
   void reset() => emit(const ExteriorDesignState());
+
+  Future<void> deleteCurrentResult() async {
+    final path = state.resultImagePath;
+    if (path != null && path.isNotEmpty) {
+      await _collectionCubit.deleteByImagePath(path);
+    }
+  }
 
   void selectExample(int index) {
     emit(state.copyWith(exampleIndex: index, clearAddedPhoto: true));
@@ -106,6 +113,7 @@ final class ExteriorDesignCubit extends Cubit<ExteriorDesignState> {
   }
 
   Future<void> startProcessing() async {
+    if (state.step == ExteriorStep.processing) return; // guard double-tap
     final source = state.selectedPhotoPath;
     if (source == null) {
       emit(state.copyWith(step: ExteriorStep.error));
@@ -131,10 +139,12 @@ final class ExteriorDesignCubit extends Cubit<ExteriorDesignState> {
       await _collectionCubit.completeGenerating(id, resultPath);
       await _creditsCubit.refresh();
       if (state.step == ExteriorStep.processing) {
-        emit(state.copyWith(
-          step: ExteriorStep.result,
-          resultImagePath: resultPath,
-        ));
+        emit(
+          state.copyWith(
+            step: ExteriorStep.result,
+            resultImagePath: resultPath,
+          ),
+        );
       }
       return;
     }
@@ -144,8 +154,8 @@ final class ExteriorDesignCubit extends Cubit<ExteriorDesignState> {
     if (result.message == kInsufficientCreditsError) {
       if (state.step == ExteriorStep.processing) {
         emit(state.copyWith(step: ExteriorStep.colorPalette));
+        Navigation.push(page: const PaywallView());
       }
-      Navigation.push(page: const PaywallView());
       return;
     }
 

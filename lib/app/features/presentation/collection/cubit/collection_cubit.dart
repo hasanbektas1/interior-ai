@@ -10,9 +10,9 @@ final class CollectionCubit extends Cubit<CollectionState> {
   CollectionCubit({
     required CollectionStorage storage,
     required GallerySaverService gallerySaver,
-  })  : _storage = storage,
-        _gallerySaver = gallerySaver,
-        super(const CollectionState()) {
+  }) : _storage = storage,
+       _gallerySaver = gallerySaver,
+       super(const CollectionState()) {
     _load();
   }
 
@@ -51,6 +51,17 @@ final class CollectionCubit extends Cubit<CollectionState> {
         items: state.items.where((item) => item.id != id).toList(),
       ),
     );
+  }
+
+  /// Deletes the collection item that holds [imagePath] (used by the design
+  /// flows' result screen "Delete" action, which only knows the result path).
+  Future<void> deleteByImagePath(String imagePath) async {
+    for (final item in state.items) {
+      if (item.imagePath == imagePath) {
+        await deleteItem(item.id);
+        return;
+      }
+    }
   }
 
   /// Adds a placeholder item shown as "generating" and returns its id so the
@@ -111,8 +122,7 @@ final class CollectionCubit extends Cubit<CollectionState> {
     return '$base #${maxIndex + 1}';
   }
 
-  Future<void> saveToGallery(String imagePath) =>
-      _gallerySaver.save(imagePath);
+  Future<bool> saveToGallery(String imagePath) => _gallerySaver.save(imagePath);
 
   static const List<String> _months = [
     'January',

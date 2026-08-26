@@ -5,9 +5,7 @@ import '../../keys/keys.dart';
 class AppSnackBar {
   final String message;
 
-  AppSnackBar({
-    required this.message,
-  });
+  AppSnackBar({required this.message});
 
   static show(
     String message, {

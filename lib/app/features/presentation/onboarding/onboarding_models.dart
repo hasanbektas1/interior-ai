@@ -13,7 +13,7 @@ enum OnboardingSpace {
 enum OnboardingStyle { modern, baroque, bohemian, rustic, vintage, luxury }
 
 extension OnboardingSpaceX on OnboardingSpace {
-  String get label => AppStrings.spaceTypes[index];
+  String get label => AppStrings.onboardingSpaceLabels[index];
 
   AppAsset get _selectImage => switch (this) {
     OnboardingSpace.bedroom => AppAsset.onboardingSelectBedroom,
@@ -39,7 +39,7 @@ extension OnboardingSpaceX on OnboardingSpace {
 }
 
 extension OnboardingStyleX on OnboardingStyle {
-  String get label => AppStrings.styleTypes[index];
+  String get label => AppStrings.onboardingStyleLabels[index];
 
   AppAsset get _selectImage => switch (this) {
     OnboardingStyle.modern => AppAsset.onboardingSelectModern,

@@ -10,7 +10,7 @@ enum CollectionCategory {
   const CollectionCategory(this.label);
 
   static CollectionCategory fromName(String name) => values.firstWhere(
-        (category) => category.name == name,
-        orElse: () => CollectionCategory.interiorDesign,
-      );
+    (category) => category.name == name,
+    orElse: () => CollectionCategory.interiorDesign,
+  );
 }

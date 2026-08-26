@@ -28,7 +28,8 @@ class PaywallBackground extends StatelessWidget {
         child: Image.asset(
           AppAsset.paywallBackground.path,
           fit: BoxFit.cover,
-          errorBuilder: (context, _, __) => Container(color: AppColors.magnolia),
+          errorBuilder: (context, _, __) =>
+              Container(color: AppColors.magnolia),
         ),
       ),
     );

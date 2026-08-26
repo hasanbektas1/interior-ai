@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:interior_ai/app/common/constants/app_colors.dart';
@@ -273,49 +272,37 @@ final class AppTextField extends StatelessWidget {
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(radius ?? 8),
           borderSide: hasBorder
-              ? const BorderSide(
-                  color: AppColors.platinum,
-                )
+              ? const BorderSide(color: AppColors.platinum)
               : BorderSide.none,
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(radius ?? 8),
           borderSide: hasBorder
-              ? const BorderSide(
-                  color: AppColors.palePink,
-                )
+              ? const BorderSide(color: AppColors.palePink)
               : BorderSide.none,
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(radius ?? 8),
           borderSide: hasBorder
-              ? const BorderSide(
-                  color: AppColors.platinum,
-                )
+              ? const BorderSide(color: AppColors.platinum)
               : BorderSide.none,
         ),
         disabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(radius ?? 8),
           borderSide: hasBorder
-              ? const BorderSide(
-                  color: AppColors.platinum,
-                )
+              ? const BorderSide(color: AppColors.platinum)
               : BorderSide.none,
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(radius ?? 8),
           borderSide: hasBorder
-              ? const BorderSide(
-                  color: AppColors.platinum,
-                )
+              ? const BorderSide(color: AppColors.platinum)
               : BorderSide.none,
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(radius ?? 8),
           borderSide: hasBorder
-              ? const BorderSide(
-                  color: AppColors.platinum,
-                )
+              ? const BorderSide(color: AppColors.platinum)
               : BorderSide.none,
         ),
       ),

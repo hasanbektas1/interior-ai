@@ -16,10 +16,13 @@ class DashedBorder extends BoxBorder {
   });
 
   @override
-  void paint(Canvas canvas, Rect rect,
-      {TextDirection? textDirection,
-      BoxShape shape = BoxShape.rectangle,
-      BorderRadius? borderRadius}) {
+  void paint(
+    Canvas canvas,
+    Rect rect, {
+    TextDirection? textDirection,
+    BoxShape shape = BoxShape.rectangle,
+    BorderRadius? borderRadius,
+  }) {
     final paint = Paint()
       ..color = color
       ..strokeWidth = strokeWidth

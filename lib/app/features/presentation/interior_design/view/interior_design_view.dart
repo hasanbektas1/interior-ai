@@ -27,78 +27,83 @@ class InteriorDesignView extends StatelessWidget {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (context.mounted) FeatureTutorial.interior(context);
     });
-    return BlocBuilder<InteriorDesignCubit, InteriorDesignState>(
-      builder: (context, state) {
-        final cubit = context.read<InteriorDesignCubit>();
+    // The flow can only be left through its own close/back buttons — system
+    // back and the iOS edge-swipe are disabled (canPop: false) — so `close()`
+    // is the single exit and always clears the state, letting re-entry start
+    // fresh (never re-showing the previous result).
+    return PopScope(
+      canPop: false,
+      child: BlocBuilder<InteriorDesignCubit, InteriorDesignState>(
+        builder: (context, state) {
+          final cubit = context.read<InteriorDesignCubit>();
 
-        // Leave the flow, then clear its state so re-entering always starts
-        // fresh (never re-shows the previous result). Reset runs after the pop
-        // completes so the exiting screen doesn't flash the first step.
-        Future<void> close() async {
-          final nav = Navigator.of(context);
-          await nav.maybePop();
-          cubit.reset();
-        }
+          Future<void> close() async {
+            Navigator.of(context).pop();
+            cubit.reset();
+          }
 
-        if (state.step == InteriorStep.processing) {
-          return GeneratedProcessingView(
-            onBackToHome: close,
-          );
-        }
-        if (state.step == InteriorStep.result) {
-          return InteriorResultView(
-            state: state,
-            onClose: close,
-            onRegenerate: cubit.retry,
-          );
-        }
-        if (state.step == InteriorStep.error) {
-          return GeneratedErrorView(
-            onTryAgain: cubit.retry,
-            onBackToHome: close,
-          );
-        }
+          if (state.step == InteriorStep.processing) {
+            return GeneratedProcessingView(onBackToHome: close, onBack: close);
+          }
+          if (state.step == InteriorStep.result) {
+            return InteriorResultView(
+              state: state,
+              onClose: close,
+              onDelete: () async {
+                await cubit.deleteCurrentResult();
+                await close();
+              },
+              onRegenerate: cubit.retry,
+            );
+          }
+          if (state.step == InteriorStep.error) {
+            return GeneratedErrorView(
+              onTryAgain: cubit.retry,
+              onBackToHome: close,
+            );
+          }
 
-        return Scaffold(
-          backgroundColor: AppColors.ghostWhite,
-          body: SafeArea(
-            child: Column(
-              children: [
-                StepFlowHeader(
-                  title: AppStrings.interiorDesign,
-                  filledCount: state.step.progressIndex + 1,
-                  onClose: close,
-                  onBack: state.step == InteriorStep.addPhoto
-                      ? null
-                      : cubit.back,
-                ),
-                Expanded(
-                  child: StepPageView(
-                    index: state.step.progressIndex,
-                    children: [
-                      AddPhotoStep(state: state),
-                      RoomTypeStep(state: state),
-                      StyleStep(state: state),
-                      ColorPaletteStep(state: state),
-                    ],
+          return Scaffold(
+            backgroundColor: AppColors.ghostWhite,
+            body: SafeArea(
+              child: Column(
+                children: [
+                  StepFlowHeader(
+                    title: AppStrings.interiorDesign,
+                    filledCount: state.step.progressIndex + 1,
+                    onClose: close,
+                    onBack: state.step == InteriorStep.addPhoto
+                        ? null
+                        : cubit.back,
                   ),
-                ),
-                SizedBox(height: context.height4),
-                AppButton.fill(
-                  text: AppStrings.interiorContinue,
-                  onPressed: state.canContinue ? cubit.next : null,
-                  backgroundColor: AppColors.hanPurple,
-                  disabledBackgroundColor: AppColors.disabledGray,
-                  disabledTextColor: AppColors.disabledText,
-                  borderRadius: 14,
-                  height: 54,
-                ),
-                SizedBox(height: context.height16),
-              ],
-            ).symmetricPadding(horizontal: context.width24),
-          ),
-        );
-      },
+                  Expanded(
+                    child: StepPageView(
+                      index: state.step.progressIndex,
+                      children: [
+                        AddPhotoStep(state: state),
+                        RoomTypeStep(state: state),
+                        StyleStep(state: state),
+                        ColorPaletteStep(state: state),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: context.height4),
+                  AppButton.fill(
+                    text: AppStrings.interiorContinue,
+                    onPressed: state.canContinue ? cubit.next : null,
+                    backgroundColor: AppColors.hanPurple,
+                    disabledBackgroundColor: AppColors.disabledGray,
+                    disabledTextColor: AppColors.disabledText,
+                    borderRadius: 14,
+                    height: 54,
+                  ),
+                  SizedBox(height: context.height16),
+                ],
+              ).symmetricPadding(horizontal: context.width24),
+            ),
+          );
+        },
+      ),
     );
   }
 }

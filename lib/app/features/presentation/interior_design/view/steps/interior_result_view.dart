@@ -10,24 +10,31 @@ import 'package:interior_ai/app/features/presentation/interior_design/cubit/inte
 import 'package:interior_ai/app/common/widgets/result_action_bar.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 import 'package:interior_ai/core/helpers/app_share.dart';
+import 'package:interior_ai/core/widgets/snackbar/app_snackbar.dart';
 
 class InteriorResultView extends StatelessWidget {
   const InteriorResultView({
     super.key,
     required this.state,
     required this.onClose,
+    required this.onDelete,
     required this.onRegenerate,
   });
 
   final InteriorDesignState state;
   final VoidCallback onClose;
+  final VoidCallback onDelete;
   final VoidCallback onRegenerate;
 
   Future<void> _onSave(BuildContext context) async {
-    await context.read<CollectionCubit>().saveToGallery(
-          state.resultImagePath ?? AppAsset.interiorResult.path,
-        );
+    final ok = await context.read<CollectionCubit>().saveToGallery(
+      state.resultImagePath ?? AppAsset.interiorResult.path,
+    );
     if (!context.mounted) return;
+    if (!ok) {
+      AppSnackBar.show(AppStrings.saveFailed);
+      return;
+    }
     await ResultActionDialog.show(
       context,
       title: AppStrings.interiorImageSavedTitle,
@@ -44,7 +51,7 @@ class InteriorResultView extends StatelessWidget {
       primaryLabel: AppStrings.interiorDeleteDesign,
       showCancel: true,
     );
-    if (confirmed ?? false) onClose();
+    if (confirmed ?? false) onDelete();
   }
 
   Future<void> _onRegenerate(BuildContext context) async {

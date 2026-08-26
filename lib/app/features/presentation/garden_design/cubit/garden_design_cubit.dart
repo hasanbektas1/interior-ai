@@ -17,11 +17,11 @@ final class GardenDesignCubit extends Cubit<GardenDesignState> {
     required CollectionCubit collectionCubit,
     required ImageGenerationRepository imageRepository,
     required CreditsCubit creditsCubit,
-  })  : _mediaPickerService = mediaPickerService,
-        _collectionCubit = collectionCubit,
-        _imageRepository = imageRepository,
-        _creditsCubit = creditsCubit,
-        super(const GardenDesignState());
+  }) : _mediaPickerService = mediaPickerService,
+       _collectionCubit = collectionCubit,
+       _imageRepository = imageRepository,
+       _creditsCubit = creditsCubit,
+       super(const GardenDesignState());
 
   final MediaPickerService _mediaPickerService;
   final CollectionCubit _collectionCubit;
@@ -29,6 +29,13 @@ final class GardenDesignCubit extends Cubit<GardenDesignState> {
   final CreditsCubit _creditsCubit;
 
   void reset() => emit(const GardenDesignState());
+
+  Future<void> deleteCurrentResult() async {
+    final path = state.resultImagePath;
+    if (path != null && path.isNotEmpty) {
+      await _collectionCubit.deleteByImagePath(path);
+    }
+  }
 
   void selectExample(int index) {
     emit(state.copyWith(exampleIndex: index, clearAddedPhoto: true));
@@ -82,6 +89,7 @@ final class GardenDesignCubit extends Cubit<GardenDesignState> {
   }
 
   Future<void> startProcessing() async {
+    if (state.step == GardenStep.processing) return; // guard double-tap
     final source = state.selectedPhotoPath;
     if (source == null) {
       emit(state.copyWith(step: GardenStep.error));
@@ -107,10 +115,9 @@ final class GardenDesignCubit extends Cubit<GardenDesignState> {
       await _collectionCubit.completeGenerating(id, resultPath);
       await _creditsCubit.refresh();
       if (state.step == GardenStep.processing) {
-        emit(state.copyWith(
-          step: GardenStep.result,
-          resultImagePath: resultPath,
-        ));
+        emit(
+          state.copyWith(step: GardenStep.result, resultImagePath: resultPath),
+        );
       }
       return;
     }
@@ -120,8 +127,8 @@ final class GardenDesignCubit extends Cubit<GardenDesignState> {
     if (result.message == kInsufficientCreditsError) {
       if (state.step == GardenStep.processing) {
         emit(state.copyWith(step: GardenStep.style));
+        Navigation.push(page: const PaywallView());
       }
-      Navigation.push(page: const PaywallView());
       return;
     }
 

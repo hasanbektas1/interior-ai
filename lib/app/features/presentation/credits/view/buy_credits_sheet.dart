@@ -6,6 +6,8 @@ import 'package:interior_ai/app/features/presentation/credits/cubit/credits_cubi
 import 'package:interior_ai/app/features/presentation/credits/cubit/credits_cubit/credits_state.dart';
 import 'package:interior_ai/app/features/presentation/credits/widgets/credit_pack_tile.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
+import 'package:interior_ai/core/widgets/snackbar/app_snackbar.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 
 class BuyCreditsSheet extends StatelessWidget {
   const BuyCreditsSheet({super.key});
@@ -23,6 +25,20 @@ class BuyCreditsSheet extends StatelessWidget {
         child: const BuyCreditsSheet(),
       ),
     );
+  }
+
+  Future<void> _onBuy(BuildContext context, StoreProduct product) async {
+    final navigator = Navigator.of(context);
+    final outcome = await context.read<CreditsCubit>().buy(product);
+    switch (outcome) {
+      case PurchaseOutcome.success:
+        AppSnackBar.show(AppStrings.purchaseSuccess);
+        navigator.maybePop();
+      case PurchaseOutcome.failed:
+        AppSnackBar.show(AppStrings.purchaseFailed);
+      case PurchaseOutcome.cancelled:
+        break;
+    }
   }
 
   @override
@@ -74,7 +90,7 @@ class BuyCreditsSheet extends StatelessWidget {
                   for (final product in state.products) ...[
                     CreditPackTile(
                       product: product,
-                      onTap: () => cubit.buy(product),
+                      onTap: () => _onBuy(context, product),
                     ),
                     SizedBox(height: context.height12),
                   ],

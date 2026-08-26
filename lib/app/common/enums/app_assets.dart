@@ -15,8 +15,12 @@ enum AppAsset {
 
   // ONBOARDING SELECT
   onboardingSelectBedroom('assets/png/onboarding/select_bedroom_png.png'),
-  onboardingSelectDiningRoom('assets/png/onboarding/select_dining_room_png.png'),
-  onboardingSelectLivingRoom('assets/png/onboarding/select_living_room_png.png'),
+  onboardingSelectDiningRoom(
+    'assets/png/onboarding/select_dining_room_png.png',
+  ),
+  onboardingSelectLivingRoom(
+    'assets/png/onboarding/select_living_room_png.png',
+  ),
   onboardingSelectWorkspace('assets/png/onboarding/select_workspace_png.png'),
   onboardingSelectGreySofa('assets/png/onboarding/select_grey_sofa_png.png'),
   onboardingSelectArmchair('assets/png/onboarding/select_armchair_png.png'),
@@ -29,8 +33,12 @@ enum AppAsset {
 
   // ONBOARDING MINI
   onboardingMiniBedroom('assets/png/onboarding_mini/mini_bedroom_png.png'),
-  onboardingMiniDiningRoom('assets/png/onboarding_mini/mini_dining_room_png.png'),
-  onboardingMiniLivingRoom('assets/png/onboarding_mini/mini_living_room_png.png'),
+  onboardingMiniDiningRoom(
+    'assets/png/onboarding_mini/mini_dining_room_png.png',
+  ),
+  onboardingMiniLivingRoom(
+    'assets/png/onboarding_mini/mini_living_room_png.png',
+  ),
   onboardingMiniWorkspace('assets/png/onboarding_mini/mini_workspace_png.png'),
   onboardingMiniGreySofa('assets/png/onboarding_mini/mini_grey_sofa_png.png'),
   onboardingMiniArmchair('assets/png/onboarding_mini/mini_armchair_png.png'),
@@ -102,26 +110,36 @@ enum AppAsset {
   styleBohemian(
     'assets/png/interrior_design/select_style/interrior_bohemian.png',
   ),
-  styleVintage('assets/png/interrior_design/select_style/interrior_vintage.png'),
+  styleVintage(
+    'assets/png/interrior_design/select_style/interrior_vintage.png',
+  ),
   styleLuxury('assets/png/interrior_design/select_style/interrior_luxury.png'),
-  styleBaroque('assets/png/interrior_design/select_style/interrior_baroque.png'),
+  styleBaroque(
+    'assets/png/interrior_design/select_style/interrior_baroque.png',
+  ),
   styleMediterranean(
     'assets/png/interrior_design/select_style/interrior_mediterranean.png',
   ),
   styleCyberpunk(
     'assets/png/interrior_design/select_style/interrior_cyberpunk.jpg',
   ),
-  styleJapandi('assets/png/interrior_design/select_style/interrior_japandi.png'),
+  styleJapandi(
+    'assets/png/interrior_design/select_style/interrior_japandi.png',
+  ),
   styleSoho('assets/png/interrior_design/select_style/interrior_soho.png'),
   styleTropical(
     'assets/png/interrior_design/select_style/interrior_tropical.png',
   ),
   styleGamer('assets/png/interrior_design/select_style/interrior_gamer.jpg'),
   styleCozy('assets/png/interrior_design/select_style/interrior_cozy.png'),
-  styleCoastal('assets/png/interrior_design/select_style/interrior_coastal.png'),
+  styleCoastal(
+    'assets/png/interrior_design/select_style/interrior_coastal.png',
+  ),
   styleAirbnb('assets/png/interrior_design/select_style/interrior_airbnb.png'),
   styleDisco('assets/png/interrior_design/select_style/interrior_disco.png'),
-  styleAncient('assets/png/interrior_design/select_style/interrior_ancient.png'),
+  styleAncient(
+    'assets/png/interrior_design/select_style/interrior_ancient.png',
+  ),
   styleBiophilic(
     'assets/png/interrior_design/select_style/interrior_biophilic.png',
   ),
@@ -138,8 +156,12 @@ enum AppAsset {
     'assets/png/interrior_design/select_style/interrior_chocolate.png',
   ),
   styleCreepy('assets/png/interrior_design/select_style/interrior_creepy.png'),
-  styleCartoon('assets/png/interrior_design/select_style/interrior_cartoon.png'),
-  styleRainbow('assets/png/interrior_design/select_style/interrior_rainbow.png'),
+  styleCartoon(
+    'assets/png/interrior_design/select_style/interrior_cartoon.png',
+  ),
+  styleRainbow(
+    'assets/png/interrior_design/select_style/interrior_rainbow.png',
+  ),
   styleSkiChalet(
     'assets/png/interrior_design/select_style/interrior_skichalet.png',
   ),
@@ -165,7 +187,9 @@ enum AppAsset {
   gardenStyleLowBudget('assets/png/garden_design/garden_design_lowbudget.png'),
   gardenStyleWedding('assets/png/garden_design/garden_design_wedding.png'),
   gardenStyleRural('assets/png/garden_design/garden_design_rural.png'),
-  gardenStyleRestaurant('assets/png/garden_design/garden_design_restaurant.png'),
+  gardenStyleRestaurant(
+    'assets/png/garden_design/garden_design_restaurant.png',
+  ),
   gardenStyleInformal('assets/png/garden_design/garden_design_informal.png'),
   gardenStyleAmerican('assets/png/garden_design/garden_design_american.png'),
   gardenStyleEnglish('assets/png/garden_design/garden_design_english.png'),
@@ -192,12 +216,18 @@ enum AppAsset {
     'assets/png/exterior_design/exterior_design_retail.png',
   ),
   exteriorBuildingVilla('assets/png/exterior_design/exterior_design_villa.png'),
-  exteriorStyleArtDeco('assets/png/exterior_design/exterior_design_artdeco.png'),
+  exteriorStyleArtDeco(
+    'assets/png/exterior_design/exterior_design_artdeco.png',
+  ),
   exteriorStyleBrutalist(
     'assets/png/exterior_design/exterior_design_brutalist.png',
   ),
-  exteriorStyleChinese('assets/png/exterior_design/exterior_design_chinese.png'),
-  exteriorStyleCottage('assets/png/exterior_design/exterior_design_contage.png'),
+  exteriorStyleChinese(
+    'assets/png/exterior_design/exterior_design_chinese.png',
+  ),
+  exteriorStyleCottage(
+    'assets/png/exterior_design/exterior_design_contage.png',
+  ),
   exteriorStyleFarmHouse(
     'assets/png/exterior_design/exterior_design_farmhouse.png',
   ),
@@ -222,8 +252,12 @@ enum AppAsset {
     'assets/png/exterior_design/exterior_design_minimalistic.png',
   ),
   exteriorStyleModern('assets/png/exterior_design/exterior_design_modern.png'),
-  exteriorStyleMorocco('assets/png/exterior_design/exterior_design_morocco.png'),
-  exteriorStyleSpanish('assets/png/exterior_design/exterior_design_spanish.png'),
+  exteriorStyleMorocco(
+    'assets/png/exterior_design/exterior_design_morocco.png',
+  ),
+  exteriorStyleSpanish(
+    'assets/png/exterior_design/exterior_design_spanish.png',
+  ),
   exteriorStyleSkiChalet(
     'assets/png/exterior_design/exterior_design_skichalet.png',
   ),
@@ -238,9 +272,13 @@ enum AppAsset {
   floorMaterialClassicParquet(
     'assets/png/floor_restyle/floor_restyle_classicparquet.png',
   ),
-  floorMaterialRusticWood('assets/png/floor_restyle/floor_restyle_rusticwood.png'),
+  floorMaterialRusticWood(
+    'assets/png/floor_restyle/floor_restyle_rusticwood.png',
+  ),
   floorMaterialLightOak('assets/png/floor_restyle/floor_restyle_lightoak.png'),
-  floorMaterialDarkWalnut('assets/png/floor_restyle/floor_restyle_darkwalnut.png'),
+  floorMaterialDarkWalnut(
+    'assets/png/floor_restyle/floor_restyle_darkwalnut.png',
+  ),
   floorMaterialGlossyWhiteTile(
     'assets/png/floor_restyle/floor_restyle_glossywhitetile.png',
   ),
@@ -259,7 +297,9 @@ enum AppAsset {
   interiorTutorial1('assets/png/exterior_design/interrior_design_show.jpg'),
   interiorTutorial2('assets/png/exterior_design/interrior_design_show1.jpg'),
   interiorTutorial3('assets/png/exterior_design/interrior_design_show2.png'),
-  styleReferenceTutorial1('assets/png/style_reference/style_reference_show.jpg'),
+  styleReferenceTutorial1(
+    'assets/png/style_reference/style_reference_show.jpg',
+  ),
   styleReferenceTutorial2(
     'assets/png/style_reference/style_reference_show1.jpg',
   ),
@@ -283,7 +323,8 @@ enum AppOnboardingResultSpaceImage {
   const AppOnboardingResultSpaceImage(this.filenamePrefix);
 }
 
-extension AppOnboardingResultSpaceImageExtension on AppOnboardingResultSpaceImage {
+extension AppOnboardingResultSpaceImageExtension
+    on AppOnboardingResultSpaceImage {
   String basePath() => 'assets/png/onboarding_result/${filenamePrefix}_png.png';
 
   String variantPath(int variantIndex) {

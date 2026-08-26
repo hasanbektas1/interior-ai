@@ -10,14 +10,20 @@ class Navigation {
       navigationKey.currentState?.pushNamed(root, arguments: arg);
   static void ofPop() => navigationKey.currentState?.pop();
   static Future<T?>? pushAndRemoveAll<T>({required Widget page}) =>
-      navigationKey.currentState
-          ?.pushAndRemoveUntil(materialPageRoute(page), (route) => false);
+      navigationKey.currentState?.pushAndRemoveUntil(
+        materialPageRoute(page),
+        (route) => false,
+      );
   static Future<T?>? pushReplace<T>({required Widget page}) =>
       navigationKey.currentState?.pushReplacement(materialPageRoute(page));
-  static Future<T?>? pushNamedAndRemoveAll<T>(
-          {required String root, Object? arg}) =>
-      navigationKey.currentState
-          ?.pushNamedAndRemoveUntil(root, (route) => false, arguments: arg);
+  static Future<T?>? pushNamedAndRemoveAll<T>({
+    required String root,
+    Object? arg,
+  }) => navigationKey.currentState?.pushNamedAndRemoveUntil(
+    root,
+    (route) => false,
+    arguments: arg,
+  );
 
   static Future<T?>? pushReplacementNamed<T>({required String root}) =>
       navigationKey.currentState?.pushReplacementNamed(root);
@@ -34,8 +40,10 @@ class Navigation {
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           const begin = Offset(0, 1);
           const end = Offset.zero;
-          final tween = Tween(begin: begin, end: end)
-              .chain(CurveTween(curve: Curves.easeInOut));
+          final tween = Tween(
+            begin: begin,
+            end: end,
+          ).chain(CurveTween(curve: Curves.easeInOut));
           return SlideTransition(
             position: animation.drive(tween),
             child: child,

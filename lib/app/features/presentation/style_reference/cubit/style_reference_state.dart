@@ -72,20 +72,20 @@ final class StyleReferenceState extends Equatable {
   }
 
   bool get canContinue => switch (step) {
-        StyleReferenceStep.yourPhoto => photoSelectedPath != null,
-        StyleReferenceStep.referencePhoto => refSelectedPath != null,
-        StyleReferenceStep.processing => false,
-        StyleReferenceStep.result => false,
-        StyleReferenceStep.error => false,
-      };
+    StyleReferenceStep.yourPhoto => photoSelectedPath != null,
+    StyleReferenceStep.referencePhoto => refSelectedPath != null,
+    StyleReferenceStep.processing => false,
+    StyleReferenceStep.result => false,
+    StyleReferenceStep.error => false,
+  };
 
   @override
   List<Object?> get props => [
-        step,
-        photoIndex,
-        photoPath,
-        refIndex,
-        refPath,
-        resultImagePath,
-      ];
+    step,
+    photoIndex,
+    photoPath,
+    refIndex,
+    refPath,
+    resultImagePath,
+  ];
 }

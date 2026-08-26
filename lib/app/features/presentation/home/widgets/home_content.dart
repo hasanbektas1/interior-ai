@@ -1,19 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:interior_ai/app/common/constants/app_strings.dart';
 import 'package:interior_ai/app/common/enums/app_assets.dart';
-import 'package:interior_ai/app/features/presentation/exterior_design/cubit/exterior_design_cubit.dart';
 import 'package:interior_ai/app/features/presentation/exterior_design/view/exterior_design_view.dart';
-import 'package:interior_ai/app/features/presentation/floor_restyle/cubit/floor_restyle_cubit.dart';
 import 'package:interior_ai/app/features/presentation/floor_restyle/view/floor_restyle_view.dart';
-import 'package:interior_ai/app/features/presentation/garden_design/cubit/garden_design_cubit.dart';
 import 'package:interior_ai/app/features/presentation/garden_design/view/garden_design_view.dart';
 import 'package:interior_ai/app/features/presentation/home/widgets/home_card.dart';
-import 'package:interior_ai/app/features/presentation/interior_design/cubit/interior_design_cubit.dart';
 import 'package:interior_ai/app/features/presentation/interior_design/view/interior_design_view.dart';
-import 'package:interior_ai/app/features/presentation/replace_objects/cubit/replace_objects_cubit.dart';
 import 'package:interior_ai/app/features/presentation/replace_objects/view/replace_objects_view.dart';
-import 'package:interior_ai/app/features/presentation/style_reference/cubit/style_reference_cubit.dart';
 import 'package:interior_ai/app/features/presentation/style_reference/view/style_reference_view.dart';
 import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 import 'package:interior_ai/core/helpers/navigation_helper/navigation_helper.dart';
@@ -46,12 +39,9 @@ class HomeContent extends StatelessWidget {
                   image: AppAsset.homeInteriorDesign,
                   title: AppStrings.homeInteriorTitle,
                   subtitle: AppStrings.homeInteriorSubtitle,
-                  onTap: () {
-                    context.read<InteriorDesignCubit>().reset();
-                    Navigation.pushBottomToTop(
-                      page: const InteriorDesignView(),
-                    );
-                  },
+                  onTap: () => Navigation.pushBottomToTop(
+                    page: const InteriorDesignView(),
+                  ),
                 ),
               ),
               SizedBox(height: context.height12),
@@ -65,12 +55,9 @@ class HomeContent extends StatelessWidget {
                       image: AppAsset.homeExteriorDesign,
                       title: AppStrings.homeExteriorTitle,
                       subtitle: AppStrings.homeExteriorSubtitle,
-                      onTap: () {
-                        context.read<ExteriorDesignCubit>().reset();
-                        Navigation.pushBottomToTop(
-                          page: const ExteriorDesignView(),
-                        );
-                      },
+                      onTap: () => Navigation.pushBottomToTop(
+                        page: const ExteriorDesignView(),
+                      ),
                     ),
                   ),
                   SizedBox(width: context.width12),
@@ -81,12 +68,9 @@ class HomeContent extends StatelessWidget {
                       image: AppAsset.homeReplaceObjects,
                       title: AppStrings.homeReplaceObjectsTitle,
                       subtitle: AppStrings.homeReplaceObjectsSubtitle,
-                      onTap: () {
-                        context.read<ReplaceObjectsCubit>().reset();
-                        Navigation.pushBottomToTop(
-                          page: const ReplaceObjectsView(),
-                        );
-                      },
+                      onTap: () => Navigation.pushBottomToTop(
+                        page: const ReplaceObjectsView(),
+                      ),
                     ),
                   ),
                 ],
@@ -105,12 +89,9 @@ class HomeContent extends StatelessWidget {
                             image: AppAsset.homeFloorRestyle,
                             title: AppStrings.homeFloorRestyleTitle,
                             subtitle: AppStrings.homeFloorRestyleSubtitle,
-                            onTap: () {
-                              context.read<FloorRestyleCubit>().reset();
-                              Navigation.pushBottomToTop(
-                                page: const FloorRestyleView(),
-                              );
-                            },
+                            onTap: () => Navigation.pushBottomToTop(
+                              page: const FloorRestyleView(),
+                            ),
                           ),
                         ),
                         SizedBox(height: context.height12),
@@ -120,12 +101,9 @@ class HomeContent extends StatelessWidget {
                             image: AppAsset.homeGardenDesign,
                             title: AppStrings.homeGardenTitle,
                             subtitle: AppStrings.homeGardenSubtitle,
-                            onTap: () {
-                              context.read<GardenDesignCubit>().reset();
-                              Navigation.pushBottomToTop(
-                                page: const GardenDesignView(),
-                              );
-                            },
+                            onTap: () => Navigation.pushBottomToTop(
+                              page: const GardenDesignView(),
+                            ),
                           ),
                         ),
                       ],
@@ -139,12 +117,9 @@ class HomeContent extends StatelessWidget {
                       image: AppAsset.homeStyleReference,
                       title: AppStrings.homeStyleReferenceTitle,
                       subtitle: AppStrings.homeStyleReferenceSubtitle,
-                      onTap: () {
-                        context.read<StyleReferenceCubit>().reset();
-                        Navigation.pushBottomToTop(
-                          page: const StyleReferenceView(),
-                        );
-                      },
+                      onTap: () => Navigation.pushBottomToTop(
+                        page: const StyleReferenceView(),
+                      ),
                     ),
                   ),
                 ],

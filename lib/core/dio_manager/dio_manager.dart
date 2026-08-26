@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:interior_ai/core/dio_manager/api_error_model.dart';
 import 'package:interior_ai/core/dio_manager/api_response_model.dart';
 import 'package:interior_ai/core/dio_manager/interceptors/auth_interceptor.dart';
@@ -12,15 +13,27 @@ class DioApiManager {
   final Dio _dio;
 
   DioApiManager({required String baseUrl, String? token})
-      : _dio = Dio(BaseOptions(baseUrl: baseUrl)) {
+    : _dio = Dio(
+        BaseOptions(
+          baseUrl: baseUrl,
+          // Without timeouts a stalled request leaves the generation screen
+          // spinning forever. receiveTimeout is generous to cover the AI job.
+          connectTimeout: const Duration(seconds: 30),
+          sendTimeout: const Duration(seconds: 90),
+          receiveTimeout: const Duration(seconds: 180),
+        ),
+      ) {
     _dio.interceptors.addAll([
-      LogInterceptor(
-        request: true,
-        requestBody: true,
-        responseBody: true,
-        responseHeader: true,
-        requestHeader: true,
-      ),
+      // Debug-only, and never log bodies: /generate carries multi-MB base64
+      // photos (privacy) that would also spam logs and spike memory.
+      if (kDebugMode)
+        LogInterceptor(
+          request: true,
+          requestBody: false,
+          responseBody: false,
+          responseHeader: false,
+          requestHeader: true,
+        ),
       if (token != null) AuthInterceptor(token: token), // Token management
       RetryInterceptor(dio: _dio), // Auth retry management
       ErrorLoggingInterceptor(), // Error logging
@@ -111,7 +124,8 @@ class DioApiManager {
     } catch (e) {
       log("Unexpected Error: $e");
       return ApiResponseModel.error(
-          ApiErrorModel(message: "Unexpected error occurred."));
+        ApiErrorModel(message: "Unexpected error occurred."),
+      );
     }
   }
 
@@ -121,33 +135,40 @@ class DioApiManager {
       switch (e.response?.statusCode) {
         case 400:
           return ApiErrorModel(
-              message: "Bad request. Please check your data.",
-              statusCode: e.response?.statusCode);
+            message: "Bad request. Please check your data.",
+            statusCode: e.response?.statusCode,
+          );
         case 401:
           return ApiErrorModel(
-              message: "Unauthorized. Please login again.",
-              statusCode: e.response?.statusCode);
+            message: "Unauthorized. Please login again.",
+            statusCode: e.response?.statusCode,
+          );
         case 404:
           return ApiErrorModel(
-              message: "Resource not found.",
-              statusCode: e.response?.statusCode);
+            message: "Resource not found.",
+            statusCode: e.response?.statusCode,
+          );
         case 500:
           return ApiErrorModel(
-              message: "Internal server error. Please try again later.",
-              statusCode: e.response?.statusCode);
+            message: "Internal server error. Please try again later.",
+            statusCode: e.response?.statusCode,
+          );
         default:
           return ApiErrorModel(
-              message: "Error: ${e.response?.statusMessage}",
-              statusCode: e.response?.statusCode);
+            message: "Error: ${e.response?.statusMessage}",
+            statusCode: e.response?.statusCode,
+          );
       }
     } else if (e.type == DioExceptionType.connectionTimeout ||
         e.type == DioExceptionType.sendTimeout ||
         e.type == DioExceptionType.receiveTimeout) {
       return ApiErrorModel(
-          message: "Connection timed out. Please check your internet.");
+        message: "Connection timed out. Please check your internet.",
+      );
     } else if (e.message != null && e.message!.contains('SocketException')) {
       return ApiErrorModel(
-          message: "No internet connection. Please try again.");
+        message: "No internet connection. Please try again.",
+      );
     } else {
       return ApiErrorModel(message: "Unexpected error occurred.");
     }

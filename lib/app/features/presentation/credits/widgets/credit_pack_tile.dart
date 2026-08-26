@@ -5,11 +5,7 @@ import 'package:interior_ai/core/extensions/build_context_extensions.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 class CreditPackTile extends StatelessWidget {
-  const CreditPackTile({
-    super.key,
-    required this.product,
-    required this.onTap,
-  });
+  const CreditPackTile({super.key, required this.product, required this.onTap});
 
   final StoreProduct product;
   final VoidCallback onTap;

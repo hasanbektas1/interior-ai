@@ -23,19 +23,20 @@ class ExteriorDesignView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const _ExteriorDesignBody();
+    // The flow can only be left through its own close/back buttons — system
+    // back and the iOS edge-swipe are disabled (canPop: false) — so `_exit`
+    // is the single exit and always clears the state, letting re-entry start
+    // fresh (never re-showing the previous result).
+    return PopScope(canPop: false, child: const _ExteriorDesignBody());
   }
 }
 
 class _ExteriorDesignBody extends StatelessWidget {
   const _ExteriorDesignBody();
 
-  // Leave the flow, then clear its state so re-entering always starts fresh
-  // (never re-shows the previous result). Reset runs after the pop completes.
   Future<void> _exit(BuildContext context) async {
-    final nav = Navigator.of(context);
     final cubit = context.read<ExteriorDesignCubit>();
-    await nav.maybePop();
+    Navigator.of(context).pop();
     cubit.reset();
   }
 
@@ -58,6 +59,12 @@ class _ExteriorDesignBody extends StatelessWidget {
             styleLabel: state.style?.label ?? '',
             customPrompt: state.customPrompt,
             onClose: () => _exit(context),
+            onDelete: () async {
+              final nav = Navigator.of(context);
+              await cubit.deleteCurrentResult();
+              nav.pop();
+              cubit.reset();
+            },
             onRegenerate: cubit.retry,
           );
         }
@@ -78,8 +85,9 @@ class _ExteriorDesignBody extends StatelessWidget {
                   filledCount: state.step.progressIndex + 1,
                   count: 4,
                   onClose: () => _exit(context),
-                  onBack:
-                      state.step == ExteriorStep.addPhoto ? null : cubit.back,
+                  onBack: state.step == ExteriorStep.addPhoto
+                      ? null
+                      : cubit.back,
                 ),
                 Expanded(
                   child: StepPageView(

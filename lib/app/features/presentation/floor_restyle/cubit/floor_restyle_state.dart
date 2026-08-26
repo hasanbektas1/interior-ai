@@ -44,12 +44,14 @@ final class FloorRestyleState extends Equatable {
     return FloorRestyleState(
       step: step ?? this.step,
       exampleIndex: clearExample ? null : (exampleIndex ?? this.exampleIndex),
-      addedPhotoPath:
-          clearAddedPhoto ? null : (addedPhotoPath ?? this.addedPhotoPath),
+      addedPhotoPath: clearAddedPhoto
+          ? null
+          : (addedPhotoPath ?? this.addedPhotoPath),
       hasPainted: hasPainted ?? this.hasPainted,
       material: material ?? this.material,
-      customPrompt:
-          clearCustomPrompt ? null : (customPrompt ?? this.customPrompt),
+      customPrompt: clearCustomPrompt
+          ? null
+          : (customPrompt ?? this.customPrompt),
       resultImagePath: resultImagePath ?? this.resultImagePath,
     );
   }
@@ -61,24 +63,25 @@ final class FloorRestyleState extends Equatable {
   }
 
   bool get canContinue => switch (step) {
-        FloorStep.addPhoto => selectedPhotoPath != null,
-        FloorStep.paint => hasPainted,
-        FloorStep.material => material != null &&
-            (material != FloorMaterial.custom ||
-                (customPrompt?.trim().isNotEmpty ?? false)),
-        FloorStep.processing => false,
-        FloorStep.result => false,
-        FloorStep.error => false,
-      };
+    FloorStep.addPhoto => selectedPhotoPath != null,
+    FloorStep.paint => hasPainted,
+    FloorStep.material =>
+      material != null &&
+          (material != FloorMaterial.custom ||
+              (customPrompt?.trim().isNotEmpty ?? false)),
+    FloorStep.processing => false,
+    FloorStep.result => false,
+    FloorStep.error => false,
+  };
 
   @override
   List<Object?> get props => [
-        step,
-        exampleIndex,
-        addedPhotoPath,
-        hasPainted,
-        material,
-        customPrompt,
-        resultImagePath,
-      ];
+    step,
+    exampleIndex,
+    addedPhotoPath,
+    hasPainted,
+    material,
+    customPrompt,
+    resultImagePath,
+  ];
 }

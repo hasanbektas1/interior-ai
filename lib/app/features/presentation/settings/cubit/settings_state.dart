@@ -11,7 +11,11 @@ final class SettingsState extends Equatable {
     this.userId = '',
   });
 
-  SettingsState copyWith({bool? isPremium, bool? isUserIdCopied, String? userId}) {
+  SettingsState copyWith({
+    bool? isPremium,
+    bool? isUserIdCopied,
+    String? userId,
+  }) {
     return SettingsState(
       isPremium: isPremium ?? this.isPremium,
       isUserIdCopied: isUserIdCopied ?? this.isUserIdCopied,

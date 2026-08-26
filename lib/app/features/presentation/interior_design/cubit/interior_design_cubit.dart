@@ -19,11 +19,11 @@ final class InteriorDesignCubit extends Cubit<InteriorDesignState> {
     required CollectionCubit collectionCubit,
     required ImageGenerationRepository imageRepository,
     required CreditsCubit creditsCubit,
-  })  : _mediaPickerService = mediaPickerService,
-        _collectionCubit = collectionCubit,
-        _imageRepository = imageRepository,
-        _creditsCubit = creditsCubit,
-        super(const InteriorDesignState());
+  }) : _mediaPickerService = mediaPickerService,
+       _collectionCubit = collectionCubit,
+       _imageRepository = imageRepository,
+       _creditsCubit = creditsCubit,
+       super(const InteriorDesignState());
 
   final MediaPickerService _mediaPickerService;
   final CollectionCubit _collectionCubit;
@@ -31,6 +31,15 @@ final class InteriorDesignCubit extends Cubit<InteriorDesignState> {
   final CreditsCubit _creditsCubit;
 
   void reset() => emit(const InteriorDesignState());
+
+  /// Removes the just-generated result from the collection (result screen
+  /// "Delete" action).
+  Future<void> deleteCurrentResult() async {
+    final path = state.resultImagePath;
+    if (path != null && path.isNotEmpty) {
+      await _collectionCubit.deleteByImagePath(path);
+    }
+  }
 
   void selectExample(int index) {
     emit(state.copyWith(exampleIndex: index, clearAddedPhoto: true));
@@ -114,6 +123,7 @@ final class InteriorDesignCubit extends Cubit<InteriorDesignState> {
   }
 
   Future<void> startProcessing() async {
+    if (state.step == InteriorStep.processing) return; // guard double-tap
     final source = state.selectedPhotoPath;
     if (source == null) {
       emit(state.copyWith(step: InteriorStep.error));
@@ -140,10 +150,12 @@ final class InteriorDesignCubit extends Cubit<InteriorDesignState> {
       await _collectionCubit.completeGenerating(id, resultPath);
       await _creditsCubit.refresh();
       if (state.step == InteriorStep.processing) {
-        emit(state.copyWith(
-          step: InteriorStep.result,
-          resultImagePath: resultPath,
-        ));
+        emit(
+          state.copyWith(
+            step: InteriorStep.result,
+            resultImagePath: resultPath,
+          ),
+        );
       }
       return;
     }
@@ -152,10 +164,11 @@ final class InteriorDesignCubit extends Cubit<InteriorDesignState> {
 
     // Out of credits: send the user back a step and open the paywall.
     if (result.message == kInsufficientCreditsError) {
+      // Only surface the paywall if the user is still waiting in this flow.
       if (state.step == InteriorStep.processing) {
         emit(state.copyWith(step: InteriorStep.colorPalette));
+        Navigation.push(page: const PaywallView());
       }
-      Navigation.push(page: const PaywallView());
       return;
     }
 
