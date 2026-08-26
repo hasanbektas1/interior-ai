@@ -73,9 +73,9 @@ final class AppStrings {
 
   // PAYWALL
   static const String paywallTitle = "Unlock Your\nDream Space";
-  static const String paywallFeatureUnlimited = "Unlimited Design";
-  static const String paywallFeatureFaster = "Faster Rendering";
-  static const String paywallFeatureAdFree = "Ad-free Experience";
+  static const String paywallFeatureUnlimited = "Redesign any room with AI";
+  static const String paywallFeatureFaster = "Photorealistic, high-quality results";
+  static const String paywallFeatureAdFree = "Interior, exterior, garden & more";
   static const String paywallBestPrice = "Best Price";
   static const String paywallTermsOfUse = "Terms of Use";
   static const String paywallPrivacyPolicy = "Privacy Policy";

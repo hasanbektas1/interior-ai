@@ -118,17 +118,17 @@ class _Content extends StatelessWidget {
         ),
         SizedBox(height: context.height24),
         const PaywallFeatureRow(
-          icon: Icons.design_services_outlined,
+          icon: Icons.auto_awesome_outlined,
           label: AppStrings.paywallFeatureUnlimited,
         ),
         SizedBox(height: context.height16),
         const PaywallFeatureRow(
-          icon: Icons.bolt_outlined,
+          icon: Icons.high_quality_outlined,
           label: AppStrings.paywallFeatureFaster,
         ),
         SizedBox(height: context.height16),
         const PaywallFeatureRow(
-          icon: Icons.block_outlined,
+          icon: Icons.home_outlined,
           label: AppStrings.paywallFeatureAdFree,
         ),
         SizedBox(height: context.height28),
